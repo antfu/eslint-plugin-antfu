@@ -41,7 +41,7 @@
     "@typescript-eslint/utils": "^6.7.2"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^1.0.0-beta.1",
+    "@antfu/eslint-config": "^1.0.0-beta.2",
     "@antfu/ni": "^0.21.8",
     "@antfu/utils": "^0.7.6",
     "@types/node": "^20.6.3",
