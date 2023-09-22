@@ -1,4 +1,5 @@
 // Forked from https://github.com/eslint/eslint/blob/ad9dd6a933fd098a0d99c6a9aa059850535c23ee/lib/rule-tester/rule-tester.js
+// @ts-nocheck
 
 import assert from 'node:assert'
 import path from 'node:path'
@@ -567,12 +568,10 @@ export class RuleTester extends TestFramework {
     // validate(config, 'rule-tester', id => (id === ruleName ? rule : null))
 
     // Verify the code.
-    // @ts-expect-error -- we don't define deprecated members on our types
     const { getComments } = SourceCode.prototype as { getComments: unknown }
     let messages
 
     try {
-      // @ts-expect-error -- we don't define deprecated members on our types
       SourceCode.prototype.getComments = getCommentsDeprecation
       messages = this.#linter.verify(code, config, filename)
     }
@@ -737,7 +736,7 @@ export class RuleTester extends TestFramework {
       const hasMessageOfThisRule = messages.some(m => m.ruleId === ruleName)
 
       for (let i = 0, l = item.errors.length; i < l; i++) {
-        const error = item.errors[i]
+        const error = item.errors[i] as any
         const message = messages[i]
 
         assert(
@@ -763,7 +762,6 @@ export class RuleTester extends TestFramework {
             )
           })
 
-          // @ts-expect-error -- we purposely don't define `message` on our types as the current standard is `messageId`
           if (hasOwnProperty(error, 'message')) {
             assert.ok(
               !hasOwnProperty(error, 'messageId'),
