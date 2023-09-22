@@ -26,7 +26,7 @@ export default createEslintRule<Options, MessageIds>({
     function removeLines(fixer: RuleFixer, start: number, end: number) {
       const range = [start, end] as const
       const code = context.getSourceCode().text.slice(...range)
-      return fixer.replaceTextRange(range, code.replace(/\n/g, ''))
+      return fixer.replaceTextRange(range, code.replace(/(\r\n|\n)/g, ''))
     }
 
     function check(node: TSESTree.Node, items: TSESTree.Node[]) {

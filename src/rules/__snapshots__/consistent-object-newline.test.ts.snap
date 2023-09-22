@@ -25,6 +25,10 @@ exports[`consistent-object-newline > invalid > const a = {foo: "bar",
 bar: 2
 } 1`] = `"const a = {foo: \\"bar\\", bar: 2}"`;
 
+exports[`consistent-object-newline > invalid > const a = {foo: "bar", \\u000d
+bar: 2\\u000d
+} 1`] = `"const a = {foo: \\"bar\\", bar: 2}"`;
+
 exports[`consistent-object-newline > invalid > import {
 foo, bar } from "foo" 1`] = `
 "import {
