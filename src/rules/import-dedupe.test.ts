@@ -1,4 +1,4 @@
-import { RuleTester } from '@typescript-eslint/rule-tester'
+import { RuleTester } from '../../vendor/rule-tester/src/RuleTester'
 import rule, { RULE_NAME } from './import-dedupe'
 
 const valids = [
