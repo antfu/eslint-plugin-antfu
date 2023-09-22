@@ -67,8 +67,10 @@ export interface InvalidTestCase<
 > extends ValidTestCase<TOptions> {
   /**
    * Expected errors.
+   * 
+   * Can be `null` to bypass the assertion.
    */
-  readonly errors: readonly TestCaseError<TMessageIds>[]
+  readonly errors: readonly TestCaseError<TMessageIds>[] | null
   /**
    * The expected code after autofixes are applied. If set to `null`, the test runner will assert that no autofix is suggested.
    */
@@ -77,4 +79,8 @@ export interface InvalidTestCase<
    * Constraints that must pass in the current environment for the test to run
    */
   readonly dependencyConstraints?: DependencyConstraint
+  /**
+   * Custom function to check the output.
+   */
+  readonly onOutput?: (output: string) => void
 }

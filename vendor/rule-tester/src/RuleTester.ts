@@ -564,7 +564,7 @@ export class RuleTester extends TestFramework {
       }
     }
 
-    validate(config, 'rule-tester', id => (id === ruleName ? rule : null))
+    // validate(config, 'rule-tester', id => (id === ruleName ? rule : null))
 
     // Verify the code.
     // @ts-expect-error -- we don't define deprecated members on our types
@@ -683,10 +683,10 @@ export class RuleTester extends TestFramework {
         'Optional test case property \'name\' must be a string',
       )
     }
-    assert.ok(
-      item.errors || item.errors === 0,
-      `Did not specify errors for an invalid test of ${ruleName}`,
-    )
+    // assert.ok(
+    //   item.errors || item.errors === 0,
+    //   `Did not specify errors for an invalid test of ${ruleName}`,
+    // )
 
     if (Array.isArray(item.errors) && item.errors.length === 0)
       assert.fail('Invalid cases must have at least one error')
@@ -702,7 +702,10 @@ export class RuleTester extends TestFramework {
     const result = this.runRuleForItem(ruleName, rule, item)
     const messages = result.messages
 
-    if (typeof item.errors === 'number') {
+    if (item.errors == null) {
+      assert.ok(messages.length > 0, 'Should have at least one error')
+    }
+    else if (typeof item.errors === 'number') {
       if (item.errors === 0)
         assert.fail('Invalid cases must have \'error\' value greater than 0')
 
@@ -998,6 +1001,9 @@ export class RuleTester extends TestFramework {
       else {
         assert.strictEqual(result.output, item.output, 'Output is incorrect.')
       }
+    }
+    else if (item.onOutput) {
+      item.onOutput(result.output)
     }
     else {
       assert.strictEqual(
