@@ -20,6 +20,7 @@ const invalid = [
   'const a = [1, \n2, 3\n]',
   'import {\nfoo, bar } from "foo"',
   'import { foo, \nbar } from "foo"',
+  'const a = {foo: "bar", \r\nbar: 2\r\n}',
 ] as const
 
 const ruleTester: RuleTester = new RuleTester({
