@@ -5,4 +5,10 @@ export default antfu(
   {
     ignores: ['vendor'],
   },
+  {
+    rules: {
+      'antfu/consistent-object-newline': 'error',
+      'style/object-curly-newline': 'off',
+    },
+  },
 )

@@ -1,0 +1,37 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`consistent-object-newline > invalid > const a = [
+1, 2, 3] 1`] = `
+"const a = [
+1, 
+2, 
+3
+]"
+`;
+
+exports[`consistent-object-newline > invalid > const a = [1, 
+2, 3
+] 1`] = `"const a = [1, 2, 3]"`;
+
+exports[`consistent-object-newline > invalid > const a = {
+foo: "bar", bar: 2 } 1`] = `
+"const a = {
+foo: \\"bar\\", 
+bar: 2
+ }"
+`;
+
+exports[`consistent-object-newline > invalid > const a = {foo: "bar", 
+bar: 2
+} 1`] = `"const a = {foo: \\"bar\\", bar: 2}"`;
+
+exports[`consistent-object-newline > invalid > import {
+foo, bar } from "foo" 1`] = `
+"import {
+foo, 
+bar
+ } from \\"foo\\""
+`;
+
+exports[`consistent-object-newline > invalid > import { foo, 
+bar } from "foo" 1`] = `"import { foo, bar } from \\"foo\\""`;

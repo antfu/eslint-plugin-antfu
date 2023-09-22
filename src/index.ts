@@ -8,18 +8,20 @@ import noTsExportEqual from './rules/no-ts-export-equal'
 import noCjsExports from './rules/no-cjs-exports'
 import noConstEnum from './rules/no-const-enum'
 import namedTupleSpacing from './rules/named-tuple-spacing'
+import consistentObjectNewline from './rules/consistent-object-newline'
 
 export default {
   rules: {
+    'consistent-object-newline': consistentObjectNewline,
+    'generic-spacing': genericSpacing,
     'if-newline': ifNewline,
     'import-dedupe': importDedupe,
-    'prefer-inline-type-import': preferInlineTypeImport,
-    'generic-spacing': genericSpacing,
-    'top-level-function': topLevelFunction,
-    'no-import-node-modules-by-path': noImportNodeModulesByPath,
-    'no-cjs-exports': noCjsExports,
-    'no-ts-export-equal': noTsExportEqual,
-    'no-const-enum': noConstEnum,
     'named-tuple-spacing': namedTupleSpacing,
+    'no-cjs-exports': noCjsExports,
+    'no-const-enum': noConstEnum,
+    'no-import-node-modules-by-path': noImportNodeModulesByPath,
+    'no-ts-export-equal': noTsExportEqual,
+    'prefer-inline-type-import': preferInlineTypeImport,
+    'top-level-function': topLevelFunction,
   },
 }
