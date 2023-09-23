@@ -14,6 +14,11 @@ const valids = [
   'log(\na,\nb\n)',
   'function foo(a, b) {}',
   'function foo(\na,\nb\n) {}',
+  'const foo = (a, b) => {\n\n}',
+  'const foo = (a, b): {a:b} => {\n\n}',
+  'interface Foo { a: 1, b: 2 }',
+  'interface Foo {\na: 1\nb: 2\n}',
+  'a\n.filter(items => {\n\n})',
 ]
 
 // Check snapshot for fixed code
@@ -28,6 +33,11 @@ const invalid = [
   'log(\na, b)',
   'function foo(\na, b) {}',
   'const foo = (\na, b) => {}',
+  'const foo = (\na, b): {\na:b} => {}',
+  'const foo = (\na, b): {a:b} => {}',
+  'interface Foo {\na: 1,b: 2\n}',
+  'type Foo = {\na: 1,b: 2\n}',
+  'type Foo = [1,2,\n3]',
 ] as const
 
 const ruleTester: RuleTester = new RuleTester({

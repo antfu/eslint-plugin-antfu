@@ -37,6 +37,25 @@ b
 ) => {}"
 `;
 
+exports[`consistent-list-newline > invalid > const foo = (
+a, b): {
+a:b} => {} 1`] = `
+"const foo = (
+a, 
+b
+): {
+a:b
+} => {}"
+`;
+
+exports[`consistent-list-newline > invalid > const foo = (
+a, b): {a:b} => {} 1`] = `
+"const foo = (
+a, 
+b
+): {a:b} => {}"
+`;
+
 exports[`consistent-list-newline > invalid > function foo(
 a, b) {} 1`] = `
 "function foo(
@@ -56,10 +75,31 @@ bar
 exports[`consistent-list-newline > invalid > import { foo, 
 bar } from "foo" 1`] = `"import { foo, bar } from \\"foo\\""`;
 
+exports[`consistent-list-newline > invalid > interface Foo {
+a: 1,b: 2
+} 1`] = `
+"interface Foo {
+a: 1,
+b: 2
+}"
+`;
+
 exports[`consistent-list-newline > invalid > log(
 a, b) 1`] = `
 "log(
 a, 
 b
 )"
+`;
+
+exports[`consistent-list-newline > invalid > type Foo = [1,2,
+3] 1`] = `"type Foo = [1,2,3]"`;
+
+exports[`consistent-list-newline > invalid > type Foo = {
+a: 1,b: 2
+} 1`] = `
+"type Foo = {
+a: 1,
+b: 2
+}"
 `;

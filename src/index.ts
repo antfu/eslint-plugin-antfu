@@ -23,5 +23,8 @@ export default {
     'no-ts-export-equal': noTsExportEqual,
     'prefer-inline-type-import': preferInlineTypeImport,
     'top-level-function': topLevelFunction,
+
+    // deprecated
+    'consistent-object-newline': consistentListNewline,
   },
 }

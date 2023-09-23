@@ -13,6 +13,9 @@ export type Options = [{
   ArrayExpression?: boolean
   ImportDeclaration?: boolean
   ExportNamedDeclaration?: boolean
+  TSInterfaceDeclaration?: boolean
+  TSTypeLiteral?: boolean
+  TSTupleType?: boolean
 }]
 
 export default createEslintRule<Options, MessageIds>({
@@ -26,20 +29,11 @@ export default createEslintRule<Options, MessageIds>({
     fixable: 'code',
     schema: [],
     messages: {
-      shouldWrap: 'Should have line breaks between properties',
-      shouldNotWrap: 'Should not have line breaks between properties',
+      shouldWrap: 'Should have line breaks between items',
+      shouldNotWrap: 'Should not have line breaks between items',
     },
   },
-  defaultOptions: [{
-    FunctionDeclaration: true,
-    FunctionExpression: true,
-    ArrowFunctionExpression: true,
-    CallExpression: true,
-    ObjectExpression: true,
-    ArrayExpression: true,
-    ImportDeclaration: true,
-    ExportNamedDeclaration: true,
-  }],
+  defaultOptions: [{}],
   create: (context, [options = {}] = [{}]) => {
     function removeLines(fixer: RuleFixer, start: number, end: number) {
       const range = [start, end] as const
@@ -47,12 +41,18 @@ export default createEslintRule<Options, MessageIds>({
       return fixer.replaceTextRange(range, code.replace(/(\r\n|\n)/g, ''))
     }
 
-    function check(node: TSESTree.Node, children: (TSESTree.Node | null)[]) {
+    function check(
+      node: TSESTree.Node,
+      children: (TSESTree.Node | null)[],
+      startNode = node,
+      nextNode?: TSESTree.Node,
+    ) {
       const items = children.filter(Boolean) as TSESTree.Node[]
       if (items.length === 0)
         return
+
       let mode: 'inline' | 'newline' | null = null
-      let lastLine = node.loc.start.line
+      let lastLine = startNode.loc.start.line
 
       items.forEach((item, idx) => {
         if (mode == null) {
@@ -86,8 +86,13 @@ export default createEslintRule<Options, MessageIds>({
         lastLine = item.loc.end.line
       })
 
+      const endLoc = nextNode?.loc.start ?? node.loc.end
+      const endRange = nextNode?.range[0]
+        ? nextNode?.range[0] - 1
+        : node.range[1]
+
       const lastItem = items[items.length - 1]!
-      if (mode === 'newline' && node.loc.end.line === lastLine) {
+      if (mode === 'newline' && endLoc.line === lastLine) {
         context.report({
           node: lastItem,
           messageId: 'shouldWrap',
@@ -96,18 +101,18 @@ export default createEslintRule<Options, MessageIds>({
           },
         })
       }
-      else if (mode === 'inline' && node.loc.end.line !== lastLine) {
+      else if (mode === 'inline' && endLoc.line !== lastLine) {
         context.report({
           node: lastItem,
           messageId: 'shouldNotWrap',
           *fix(fixer) {
-            yield removeLines(fixer, lastItem.range[1], node.range[1] - 1)
+            yield removeLines(fixer, lastItem.range[1], endRange)
           },
         })
       }
     }
 
-    const listenser: RuleListener = {
+    const listenser = {
       ObjectExpression: (node) => {
         check(node, node.properties)
       },
@@ -121,20 +126,39 @@ export default createEslintRule<Options, MessageIds>({
         check(node, node.specifiers)
       },
       FunctionDeclaration: (node) => {
-        check(node, node.params)
+        check(node, node.params, node, node.returnType || node.body)
       },
       FunctionExpression: (node) => {
-        check(node, node.params)
+        check(node, node.params, node, node.returnType || node.body)
       },
       ArrowFunctionExpression: (node) => {
-        check(node, node.params)
+        check(node, node.params, node, node.returnType || node.body)
       },
       CallExpression: (node) => {
-        check(node, node.arguments)
+        const startNode = node.callee.type === 'MemberExpression'
+          ? node.callee.property
+          : node.callee
+        check(node, node.arguments, startNode)
       },
-    }
+      TSInterfaceDeclaration: (node) => {
+        check(node, node.body.body)
+      },
+      TSTypeLiteral: (node) => {
+        check(node, node.members)
+      },
+      TSTupleType: (node) => {
+        check(node, node.elementTypes)
+      },
+    } satisfies RuleListener
 
-    ;(Object.keys(options) as (keyof Options[0])[])
+    type KeysListener = keyof typeof listenser
+    type KeysOptions = keyof Options[0]
+
+    // Type assertion to check if all keys are exported
+    exportType<KeysListener, KeysOptions>()
+    exportType<KeysOptions, KeysListener>()
+
+    ;(Object.keys(options) as KeysOptions[])
       .forEach((key) => {
         if (options[key] === false)
           // eslint-disable-next-line ts/no-dynamic-delete
@@ -144,3 +168,6 @@ export default createEslintRule<Options, MessageIds>({
     return listenser
   },
 })
+
+// eslint-disable-next-line unused-imports/no-unused-vars
+function exportType<A, B extends A>() {}
