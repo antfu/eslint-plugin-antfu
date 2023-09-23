@@ -92,6 +92,19 @@ b
 )"
 `;
 
+exports[`consistent-list-newline > invalid > new Foo(
+1,2,
+3) 1`] = `
+"new Foo(
+1,
+2,
+3
+)"
+`;
+
+exports[`consistent-list-newline > invalid > new Foo(1,2,
+3) 1`] = `"new Foo(1,2,3)"`;
+
 exports[`consistent-list-newline > invalid > type Foo = [1,2,
 3] 1`] = `"type Foo = [1,2,3]"`;
 

@@ -19,6 +19,9 @@ const valids = [
   'interface Foo { a: 1, b: 2 }',
   'interface Foo {\na: 1\nb: 2\n}',
   'a\n.filter(items => {\n\n})',
+  'new Foo(a, b)',
+  'new Foo(\na,\nb\n)',
+  'function foo<T = {\na: 1,\nb: 2\n}>(a, b) {}',
 ]
 
 // Check snapshot for fixed code
@@ -38,6 +41,8 @@ const invalid = [
   'interface Foo {\na: 1,b: 2\n}',
   'type Foo = {\na: 1,b: 2\n}',
   'type Foo = [1,2,\n3]',
+  'new Foo(1,2,\n3)',
+  'new Foo(\n1,2,\n3)',
 ] as const
 
 const ruleTester: RuleTester = new RuleTester({

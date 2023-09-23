@@ -16,6 +16,7 @@ export type Options = [{
   TSInterfaceDeclaration?: boolean
   TSTypeLiteral?: boolean
   TSTupleType?: boolean
+  NewExpression?: boolean
 }]
 
 export default createEslintRule<Options, MessageIds>({
@@ -44,15 +45,18 @@ export default createEslintRule<Options, MessageIds>({
     function check(
       node: TSESTree.Node,
       children: (TSESTree.Node | null)[],
-      startNode = node,
+      prevNode?: TSESTree.Node,
       nextNode?: TSESTree.Node,
     ) {
       const items = children.filter(Boolean) as TSESTree.Node[]
       if (items.length === 0)
         return
 
+      const startLine = prevNode
+        ? prevNode.loc.end.line
+        : node.loc.start.line
       let mode: 'inline' | 'newline' | null = null
-      let lastLine = startNode.loc.start.line
+      let lastLine = startLine
 
       items.forEach((item, idx) => {
         if (mode == null) {
@@ -126,13 +130,28 @@ export default createEslintRule<Options, MessageIds>({
         check(node, node.specifiers)
       },
       FunctionDeclaration: (node) => {
-        check(node, node.params, node, node.returnType || node.body)
+        check(
+          node,
+          node.params,
+          node.typeParameters || undefined,
+          node.returnType || node.body,
+        )
       },
       FunctionExpression: (node) => {
-        check(node, node.params, node, node.returnType || node.body)
+        check(
+          node,
+          node.params,
+          node.typeParameters || undefined,
+          node.returnType || node.body,
+        )
       },
       ArrowFunctionExpression: (node) => {
-        check(node, node.params, node, node.returnType || node.body)
+        check(
+          node,
+          node.params,
+          node.typeParameters || undefined,
+          node.returnType || node.body,
+        )
       },
       CallExpression: (node) => {
         const startNode = node.callee.type === 'MemberExpression'
@@ -148,6 +167,9 @@ export default createEslintRule<Options, MessageIds>({
       },
       TSTupleType: (node) => {
         check(node, node.elementTypes)
+      },
+      NewExpression: (node) => {
+        check(node, node.arguments, node.callee)
       },
     } satisfies RuleListener
 
