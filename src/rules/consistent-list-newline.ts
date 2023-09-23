@@ -1,10 +1,19 @@
-import type { RuleFixer } from '@typescript-eslint/utils/ts-eslint'
+import type { RuleFixer, RuleListener } from '@typescript-eslint/utils/ts-eslint'
 import type { TSESTree } from '@typescript-eslint/utils'
 import { createEslintRule } from '../utils'
 
-export const RULE_NAME = 'consistent-object-newline'
+export const RULE_NAME = 'consistent-list-newline'
 export type MessageIds = 'shouldWrap' | 'shouldNotWrap'
-export type Options = []
+export type Options = [{
+  FunctionDeclaration?: boolean
+  FunctionExpression?: boolean
+  ArrowFunctionExpression?: boolean
+  CallExpression?: boolean
+  ObjectExpression?: boolean
+  ArrayExpression?: boolean
+  ImportDeclaration?: boolean
+  ExportNamedDeclaration?: boolean
+}]
 
 export default createEslintRule<Options, MessageIds>({
   name: RULE_NAME,
@@ -21,15 +30,27 @@ export default createEslintRule<Options, MessageIds>({
       shouldNotWrap: 'Should not have line breaks between properties',
     },
   },
-  defaultOptions: [],
-  create: (context) => {
+  defaultOptions: [{
+    FunctionDeclaration: true,
+    FunctionExpression: true,
+    ArrowFunctionExpression: true,
+    CallExpression: true,
+    ObjectExpression: true,
+    ArrayExpression: true,
+    ImportDeclaration: true,
+    ExportNamedDeclaration: true,
+  }],
+  create: (context, [options = {}] = [{}]) => {
     function removeLines(fixer: RuleFixer, start: number, end: number) {
       const range = [start, end] as const
       const code = context.getSourceCode().text.slice(...range)
       return fixer.replaceTextRange(range, code.replace(/(\r\n|\n)/g, ''))
     }
 
-    function check(node: TSESTree.Node, items: TSESTree.Node[]) {
+    function check(node: TSESTree.Node, children: (TSESTree.Node | null)[]) {
+      const items = children.filter(Boolean) as TSESTree.Node[]
+      if (items.length === 0)
+        return
       let mode: 'inline' | 'newline' | null = null
       let lastLine = node.loc.start.line
 
@@ -86,29 +107,40 @@ export default createEslintRule<Options, MessageIds>({
       }
     }
 
-    return {
+    const listenser: RuleListener = {
       ObjectExpression: (node) => {
-        if (node.properties.length === 0)
-          return
         check(node, node.properties)
       },
       ArrayExpression: (node) => {
-        if (node.elements.length === 0)
-          return
-        check(node, node.elements.filter(Boolean) as TSESTree.Expression[])
+        check(node, node.elements)
       },
-
       ImportDeclaration: (node) => {
-        if (node.specifiers.length === 0)
-          return
         check(node, node.specifiers)
       },
-
       ExportNamedDeclaration: (node) => {
-        if (node.specifiers.length === 0)
-          return
         check(node, node.specifiers)
+      },
+      FunctionDeclaration: (node) => {
+        check(node, node.params)
+      },
+      FunctionExpression: (node) => {
+        check(node, node.params)
+      },
+      ArrowFunctionExpression: (node) => {
+        check(node, node.params)
+      },
+      CallExpression: (node) => {
+        check(node, node.arguments)
       },
     }
+
+    ;(Object.keys(options) as (keyof Options[0])[])
+      .forEach((key) => {
+        if (options[key] === false)
+          // eslint-disable-next-line ts/no-dynamic-delete
+          delete listenser[key]
+      })
+
+    return listenser
   },
 })

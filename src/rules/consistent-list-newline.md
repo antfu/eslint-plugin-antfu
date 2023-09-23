@@ -1,4 +1,4 @@
-# consistent-object-newline
+# consistent-list-newline
 
 Enforce consistent line breaks inside braces of object/array/named imports/exports and function parameters.
 

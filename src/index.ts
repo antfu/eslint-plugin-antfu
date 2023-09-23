@@ -8,11 +8,11 @@ import noTsExportEqual from './rules/no-ts-export-equal'
 import noCjsExports from './rules/no-cjs-exports'
 import noConstEnum from './rules/no-const-enum'
 import namedTupleSpacing from './rules/named-tuple-spacing'
-import consistentObjectNewline from './rules/consistent-object-newline'
+import consistentListNewline from './rules/consistent-list-newline'
 
 export default {
   rules: {
-    'consistent-object-newline': consistentObjectNewline,
+    'consistent-list-newline': consistentListNewline,
     'generic-spacing': genericSpacing,
     'if-newline': ifNewline,
     'import-dedupe': importDedupe,
