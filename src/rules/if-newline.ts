@@ -7,12 +7,12 @@ export type Options = []
 export default createEslintRule<Options, MessageIds>({
   name: RULE_NAME,
   meta: {
-    type: 'problem',
+    type: 'layout',
     docs: {
       description: 'Newline after if',
       recommended: 'stylistic',
     },
-    fixable: 'code',
+    fixable: 'whitespace',
     schema: [],
     messages: {
       missingIfNewline: 'Expect newline after if',

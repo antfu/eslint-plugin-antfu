@@ -7,12 +7,12 @@ export type Options = []
 export default createEslintRule<Options, MessageIds>({
   name: RULE_NAME,
   meta: {
-    type: 'suggestion',
+    type: 'layout',
     docs: {
       description: 'Spaces around generic type parameters',
       recommended: 'stylistic',
     },
-    fixable: 'code',
+    fixable: 'whitespace',
     schema: [],
     messages: {
       genericSpacingMismatch: 'Generic spaces mismatch',

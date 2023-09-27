@@ -9,12 +9,12 @@ const RE = /^([\w_$]+)(\s*)(\?\s*)?:(\s*)(.*)$/
 export default createEslintRule<Options, MessageIds>({
   name: RULE_NAME,
   meta: {
-    type: 'suggestion',
+    type: 'layout',
     docs: {
       description: 'Expect space before type declaration in named tuple',
       recommended: 'stylistic',
     },
-    fixable: 'code',
+    fixable: 'whitespace',
     schema: [],
     messages: {
       expectedSpaceAfter: 'Expected a space after the \':\'.',
