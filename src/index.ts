@@ -25,6 +25,13 @@ export default {
     'top-level-function': topLevelFunction,
 
     // deprecated
-    'consistent-object-newline': consistentListNewline,
+    'consistent-object-newline': {
+      ...consistentListNewline,
+      name: 'consistent-object-newline',
+      meta: {
+        ...consistentListNewline.meta,
+        deprecated: true,
+      },
+    } as typeof consistentListNewline,
   },
 }
