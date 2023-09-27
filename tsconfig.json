@@ -1,12 +1,9 @@
 {
   "compilerOptions": {
-    "target": "es2018",
+    "target": "es2020",
     "lib": ["esnext"],
     "module": "esnext",
     "moduleResolution": "Bundler",
-    "types": [
-      "vitest/globals"
-    ],
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "strict": true,
