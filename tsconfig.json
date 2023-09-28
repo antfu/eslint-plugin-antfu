@@ -4,6 +4,9 @@
     "lib": ["esnext"],
     "module": "esnext",
     "moduleResolution": "Bundler",
+    "types": [
+      "vitest/globals"
+    ],
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "strict": true,
