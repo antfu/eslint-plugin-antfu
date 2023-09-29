@@ -1,4 +1,4 @@
-import { ESLintUtils } from '@typescript-eslint/utils'
+import { RuleCreator } from '@typescript-eslint/utils/eslint-utils'
 
 const hasDocs = [
   'consistent-list-newline',
@@ -9,7 +9,7 @@ const hasDocs = [
 
 const blobUrl = 'https://github.com/antfu/eslint-plugin-antfu/blob/main/src/rules/'
 
-export const createEslintRule = ESLintUtils.RuleCreator(
+export const createEslintRule = RuleCreator(
   ruleName => hasDocs.includes(ruleName)
     ? `${blobUrl}${ruleName}.md`
     : `${blobUrl}${ruleName}.test.ts`,
