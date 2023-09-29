@@ -22,6 +22,8 @@ const valids = [
   'new Foo(a, b)',
   'new Foo(\na,\nb\n)',
   'function foo<T = {\na: 1,\nb: 2\n}>(a, b) {}',
+  'foo(() =>\nbar())',
+  'foo(() =>\nbar()\n)',
 ]
 
 // Check snapshot for fixed code
@@ -43,6 +45,8 @@ const invalid = [
   'type Foo = [1,2,\n3]',
   'new Foo(1,2,\n3)',
   'new Foo(\n1,2,\n3)',
+  'foo(\n()=>bar(),\n()=>\nbaz())',
+  'foo(()=>bar(),\n()=>\nbaz())',
 ] as const
 
 const ruleTester: RuleTester = new RuleTester({

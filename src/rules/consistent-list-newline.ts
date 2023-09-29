@@ -106,6 +106,9 @@ export default createEslintRule<Options, MessageIds>({
         })
       }
       else if (mode === 'inline' && endLoc.line !== lastLine) {
+        // If there is only one multiline item, we allow the closing bracket to be on the a different line
+        if (items.length === 1 && items[0].loc.start.line !== items[1]?.loc.start.line)
+          return
         context.report({
           node: lastItem,
           messageId: 'shouldNotWrap',

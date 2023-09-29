@@ -56,6 +56,24 @@ b
 ): {a:b} => {}"
 `;
 
+exports[`consistent-list-newline > invalid > foo(
+()=>bar(),
+()=>
+baz()) 1`] = `
+"foo(
+()=>bar(),
+()=>
+baz()
+)"
+`;
+
+exports[`consistent-list-newline > invalid > foo(()=>bar(),
+()=>
+baz()) 1`] = `
+"foo(()=>bar(),()=>
+baz())"
+`;
+
 exports[`consistent-list-newline > invalid > function foo(
 a, b) {} 1`] = `
 "function foo(
