@@ -22,6 +22,7 @@ type Foo<
 `interface Foo {
   foo?: <T>(name: T) => void
 }`,
+`type Foo<\r\nT = true,\r\nK = false,\r\n> = T`,
 ]
 const invalids = [
   ['type Foo<T=true> = T', 'type Foo<T = true> = T'],

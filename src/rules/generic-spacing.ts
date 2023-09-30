@@ -46,7 +46,7 @@ export default createEslintRule<Options, MessageIds>({
           const from = prev.range[1]
           const to = current.range[0]
           const span = sourceCode.text.slice(from, to)
-          if (span !== ', ' && !span.match(/,\n/)) {
+          if (span !== ', ' && !span.match(/,\s*\r?\n/)) {
             context.report({
               *fix(fixer) {
                 yield fixer.replaceTextRange([from, to], ', ')
