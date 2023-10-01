@@ -7,6 +7,7 @@ import noImportNodeModulesByPath from './rules/no-import-node-modules-by-path'
 import noTsExportEqual from './rules/no-ts-export-equal'
 import noCjsExports from './rules/no-cjs-exports'
 import noConstEnum from './rules/no-const-enum'
+import noDeclareInTsFile from './rules/no-declare-in-ts-file'
 import namedTupleSpacing from './rules/named-tuple-spacing'
 import consistentListNewline from './rules/consistent-list-newline'
 
@@ -19,6 +20,7 @@ export default {
     'named-tuple-spacing': namedTupleSpacing,
     'no-cjs-exports': noCjsExports,
     'no-const-enum': noConstEnum,
+    'no-declare-in-ts-file': noDeclareInTsFile,
     'no-import-node-modules-by-path': noImportNodeModulesByPath,
     'no-ts-export-equal': noTsExportEqual,
     'prefer-inline-type-import': preferInlineTypeImport,
