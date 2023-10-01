@@ -74,8 +74,20 @@ baz()) 1`] = `
 baz())"
 `;
 
+exports[`consistent-list-newline > invalid > foo<
+X,Y>(
+1, 2) 1`] = `
+"foo<
+X,
+Y
+>(
+1, 
+2
+)"
+`;
+
 exports[`consistent-list-newline > invalid > foo<X,
-Y>() 1`] = `"foo<X,Y>()"`;
+Y>(1, 2) 1`] = `"foo<X,Y>(1, 2)"`;
 
 exports[`consistent-list-newline > invalid > function foo(
 a, b) {} 1`] = `

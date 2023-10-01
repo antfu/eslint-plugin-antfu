@@ -24,6 +24,7 @@ const valids = [
   'function foo<T = {\na: 1,\nb: 2\n}>(a, b) {}',
   'foo(() =>\nbar())',
   'foo(() =>\nbar()\n)',
+  `call<{\nfoo: 'bar'\n}>('')`,
 ]
 
 // Check snapshot for fixed code
@@ -47,7 +48,8 @@ const invalid = [
   'new Foo(\n1,2,\n3)',
   'foo(\n()=>bar(),\n()=>\nbaz())',
   'foo(()=>bar(),\n()=>\nbaz())',
-  'foo<X,\nY>()',
+  'foo<X,\nY>(1, 2)',
+  'foo<\nX,Y>(\n1, 2)',
   'function foo<\nX,Y>() {}',
 ] as const
 

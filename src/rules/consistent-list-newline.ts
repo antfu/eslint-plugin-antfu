@@ -159,9 +159,16 @@ export default createEslintRule<Options, MessageIds>({
         )
       },
       CallExpression: (node) => {
-        const startNode = node.callee.type === 'MemberExpression'
-          ? node.callee.property
-          : node.callee
+        const startNode
+        // if has type generic, check the last type argument
+        = node.typeArguments?.params.length
+          ? node.typeArguments.params[node.typeArguments.params.length - 1]
+          // if the callee is a member expression, get the property
+          : node.callee.type === 'MemberExpression'
+            ? node.callee.property
+            // else get the callee
+            : node.callee
+
         check(node, node.arguments, startNode)
       },
       TSInterfaceDeclaration: (node) => {
