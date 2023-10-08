@@ -1,7 +1,7 @@
 {
   "name": "eslint-plugin-antfu",
   "type": "module",
-  "version": "1.0.0-beta.10",
+  "version": "1.0.0-beta.11",
   "packageManager": "pnpm@8.8.0",
   "description": "Anthony extended ESLint rules",
   "author": "Anthony Fu <anthonyfu117@hotmail.com>",
