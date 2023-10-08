@@ -38,22 +38,22 @@
     "prepare": "simple-git-hooks"
   },
   "dependencies": {
-    "@typescript-eslint/utils": "^6.7.3"
+    "@typescript-eslint/utils": "^6.7.4"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^1.0.0-beta.17",
+    "@antfu/eslint-config": "^1.0.0-beta.21",
     "@antfu/ni": "^0.21.8",
     "@antfu/utils": "^0.7.6",
     "@types/eslint": "^8.44.3",
     "@types/lodash.merge": "^4.6.7",
-    "@types/node": "^20.7.1",
+    "@types/node": "^20.8.3",
     "@types/semver": "^7.5.3",
-    "@typescript-eslint/rule-tester": "^6.7.3",
-    "@typescript-eslint/typescript-estree": "^6.7.3",
-    "@typescript-eslint/utils": "^6.7.3",
+    "@typescript-eslint/rule-tester": "^6.7.4",
+    "@typescript-eslint/typescript-estree": "^6.7.4",
+    "@typescript-eslint/utils": "^6.7.4",
     "ajv": "^6.10.0",
     "bumpp": "^9.2.0",
-    "eslint": "^8.50.0",
+    "eslint": "^8.51.0",
     "eslint-define-config": "^1.23.0",
     "esno": "^0.17.0",
     "lint-staged": "^14.0.1",
@@ -65,7 +65,7 @@
     "tsup": "^7.2.0",
     "typescript": "^5.2.2",
     "unbuild": "^2.0.0",
-    "vite": "^4.4.9",
+    "vite": "^4.4.11",
     "vitest": "^0.34.6"
   },
   "resolutions": {
