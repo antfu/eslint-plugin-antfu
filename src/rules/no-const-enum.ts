@@ -9,13 +9,13 @@ export default createEslintRule<Options, MessageIds>({
   meta: {
     type: 'problem',
     docs: {
-      description: 'Disallow using `const enum` expression',
-      recommended: 'recommended',
+      description: `Deprecated. Use \`'no-restricted-syntax': ['error', 'TSEnumDeclaration[const=true]']\` instead.`,
     },
     schema: [],
     messages: {
       noConstEnum: 'Do not use `const enum` expression',
     },
+    deprecated: true,
   },
   defaultOptions: [],
   create: (context) => {

@@ -18,10 +18,14 @@ export default {
     'import-dedupe': importDedupe,
     'named-tuple-spacing': namedTupleSpacing,
     'no-cjs-exports': noCjsExports,
-    'no-const-enum': noConstEnum,
     'no-import-node-modules-by-path': noImportNodeModulesByPath,
     'no-ts-export-equal': noTsExportEqual,
     'prefer-inline-type-import': preferInlineTypeImport,
     'top-level-function': topLevelFunction,
+
+    /**
+     * @deprecated Use `'no-restricted-syntax': ['error', 'TSEnumDeclaration[const=true]']` instead.
+     */
+    'no-const-enum': noConstEnum,
   },
 }
