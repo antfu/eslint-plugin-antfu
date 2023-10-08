@@ -1,4 +1,4 @@
-import type { ESLint, Linter, Rule } from 'eslint'
+import type { ESLint, Linter } from 'eslint'
 import { version } from '../package.json'
 import genericSpacing from './rules/generic-spacing'
 import ifNewline from './rules/if-newline'
