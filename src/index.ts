@@ -1,3 +1,5 @@
+import type { ESLint, Linter, Rule } from 'eslint'
+import { version } from '../package.json'
 import genericSpacing from './rules/generic-spacing'
 import ifNewline from './rules/if-newline'
 import importDedupe from './rules/import-dedupe'
@@ -10,7 +12,11 @@ import noConstEnum from './rules/no-const-enum'
 import namedTupleSpacing from './rules/named-tuple-spacing'
 import consistentListNewline from './rules/consistent-list-newline'
 
-export default {
+const plugin = {
+  meta: {
+    name: 'antfu',
+    version,
+  },
   rules: {
     'consistent-list-newline': consistentListNewline,
     'generic-spacing': genericSpacing,
@@ -28,4 +34,16 @@ export default {
      */
     'no-const-enum': noConstEnum,
   },
+} satisfies ESLint.Plugin
+
+export default plugin
+
+type RuleDefinitations = typeof plugin['rules']
+
+export type RuleOptions = {
+  [K in keyof RuleDefinitations]: RuleDefinitations[K]['defaultOptions']
+}
+
+export type Rules = {
+  [K in keyof RuleOptions]: Linter.RuleEntry<RuleOptions[K]>
 }
