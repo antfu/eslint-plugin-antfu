@@ -51,6 +51,9 @@ const invalid = [
   'foo<X,\nY>(1, 2)',
   'foo<\nX,Y>(\n1, 2)',
   'function foo<\nX,Y>() {}',
+  'const {a,\nb\n} = c',
+  'const [\na,b] = c',
+  'foo(([\na,b]) => {})',
 ] as const
 
 const ruleTester: RuleTester = new RuleTester({

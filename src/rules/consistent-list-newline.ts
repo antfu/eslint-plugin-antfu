@@ -19,6 +19,8 @@ export type Options = [{
   TSTypeLiteral?: boolean
   TSTypeParameterDeclaration?: boolean
   TSTypeParameterInstantiation?: boolean
+  ObjectPattern?: boolean
+  ArrayPattern?: boolean
 }]
 
 export default createEslintRule<Options, MessageIds>({
@@ -188,6 +190,12 @@ export default createEslintRule<Options, MessageIds>({
       },
       TSTypeParameterInstantiation(node) {
         check(node, node.params)
+      },
+      ObjectPattern(node) {
+        check(node, node.properties)
+      },
+      ArrayPattern(node) {
+        check(node, node.elements)
       },
     } satisfies RuleListener
 

@@ -1,5 +1,17 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`consistent-list-newline > invalid > const [
+a,b] = c 1`] = `
+"const [
+a,
+b
+] = c"
+`;
+
+exports[`consistent-list-newline > invalid > const {a,
+b
+} = c 1`] = `"const {a,b} = c"`;
+
 exports[`consistent-list-newline > invalid > const a = [
 1, 2, 3] 1`] = `
 "const a = [
@@ -72,6 +84,14 @@ exports[`consistent-list-newline > invalid > foo(()=>bar(),
 baz()) 1`] = `
 "foo(()=>bar(),()=>
 baz())"
+`;
+
+exports[`consistent-list-newline > invalid > foo(([
+a,b]) => {}) 1`] = `
+"foo(([
+a,
+b
+]) => {})"
 `;
 
 exports[`consistent-list-newline > invalid > foo<
