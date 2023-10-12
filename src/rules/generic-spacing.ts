@@ -3,6 +3,7 @@ import { createEslintRule } from '../utils'
 export const RULE_NAME = 'generic-spacing'
 export type MessageIds = 'genericSpacingMismatch'
 export type Options = []
+const PRESERVE_PREFIX_SPACE_BEFORE_GENERIC = new Set(['TSCallSignatureDeclaration', 'ArrowFunctionExpression', 'TSFunctionType', 'FunctionExpression'])
 
 export default createEslintRule<Options, MessageIds>({
   name: RULE_NAME,
@@ -23,7 +24,7 @@ export default createEslintRule<Options, MessageIds>({
     const sourceCode = context.getSourceCode()
     return {
       TSTypeParameterDeclaration: (node) => {
-        if (!['TSCallSignatureDeclaration', 'ArrowFunctionExpression', 'TSFunctionType'].includes(node.parent.type)) {
+        if (!PRESERVE_PREFIX_SPACE_BEFORE_GENERIC.has(node.parent.type)) {
           const pre = sourceCode.text.slice(0, node.range[0])
           const preSpace = pre.match(/(\s+)$/)?.[0]
           // strip space before <T>
