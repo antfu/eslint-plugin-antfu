@@ -209,7 +209,6 @@ export default createEslintRule<Options, MessageIds>({
     ;(Object.keys(options) as KeysOptions[])
       .forEach((key) => {
         if (options[key] === false)
-          // eslint-disable-next-line ts/no-dynamic-delete
           delete listenser[key]
       })
 
