@@ -192,7 +192,7 @@ export default createEslintRule<Options, MessageIds>({
         check(node, node.params)
       },
       ObjectPattern(node) {
-        check(node, node.properties)
+        check(node, node.properties, undefined, node.typeAnnotation)
       },
       ArrayPattern(node) {
         check(node, node.elements)

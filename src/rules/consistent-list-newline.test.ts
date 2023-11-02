@@ -25,6 +25,8 @@ const valids = [
   'foo(() =>\nbar())',
   'foo(() =>\nbar()\n)',
   `call<{\nfoo: 'bar'\n}>('')`,
+  // https://github.com/antfu/eslint-plugin-antfu/issues/11
+  `function fn({ foo, bar }: {\nfoo: 'foo'\nbar: 'bar'\n}) {}`,
 ]
 
 // Check snapshot for fixed code

@@ -1,5 +1,18 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`consistent-list-newline > invalid > 
+// before
+function fn({ foo, bar }: {
+  foo: 'foo',
+  bar: 'bar'
+}) {}
+ 1`] = `
+"
+// before
+function fn({ foo, bar }: {  foo: 'foo',  bar: 'bar'}) {}
+"
+`;
+
 exports[`consistent-list-newline > invalid > const [
 a,b] = c 1`] = `
 "const [
