@@ -27,6 +27,10 @@ const valids = [
   `call<{\nfoo: 'bar'\n}>('')`,
   // https://github.com/antfu/eslint-plugin-antfu/issues/11
   `function fn({ foo, bar }: {\nfoo: 'foo'\nbar: 'bar'\n}) {}`,
+  {
+    code: 'foo(\na, b\n)',
+    options: [{ CallExpression: false }],
+  },
 ]
 
 // Check snapshot for fixed code
