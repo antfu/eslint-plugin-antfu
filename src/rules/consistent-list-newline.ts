@@ -51,7 +51,7 @@ export default createEslintRule<Options, MessageIds>({
         TSTypeParameterInstantiation: { type: 'boolean' },
         ObjectPattern: { type: 'boolean' },
         ArrayPattern: { type: 'boolean' },
-      } satisfies Record<keyof Options[0], any>,
+      } satisfies Record<keyof Options[0], { type: 'boolean' }>,
       additionalProperties: false,
     }],
     messages: {
