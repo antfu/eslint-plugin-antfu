@@ -38,10 +38,10 @@ const plugin = {
 
 export default plugin
 
-type RuleDefinitations = typeof plugin['rules']
+type RuleDefinitions = typeof plugin['rules']
 
 export type RuleOptions = {
-  [K in keyof RuleDefinitations]: RuleDefinitations[K]['defaultOptions']
+  [K in keyof RuleDefinitions]: RuleDefinitions[K]['defaultOptions']
 }
 
 export type Rules = {
