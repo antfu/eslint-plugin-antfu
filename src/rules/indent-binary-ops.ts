@@ -1,10 +1,9 @@
 import type { TSESTree } from '@typescript-eslint/typescript-estree'
-import { createEslintRule, warnOnce } from '../utils'
+import { createEslintRule } from '../utils'
 
 export const RULE_NAME = 'indent-binary-ops'
 export type MessageIds = 'space'
 export type Options = [{
-  warn?: boolean
   indent?: number | 'tab'
 }]
 
@@ -44,11 +43,8 @@ export default createEslintRule<Options, MessageIds>({
       space: 'Expect indentation to be consistent',
     },
   },
-  defaultOptions: [{ indent: 2, warn: true }],
+  defaultOptions: [{ indent: 2 }],
   create: (context, options) => {
-    if (options[0]?.warn !== false)
-      warnOnce(`"${RULE_NAME}" is an experimental rule. It does not follow semver and can be removed at any time. Use at your own risk.`)
-
     const { sourceCode } = context
 
     const indentStr = options[0]?.indent === 'tab' ? '\t' : ' '.repeat(options[0]?.indent ?? 2)
