@@ -23,9 +23,9 @@ exports[`indent-binary-ops > invalid >
  1`] = `
 "
   function isNamedFunction(node:
-  | Tree.ArrowFunctionExpression
-  | Tree.FunctionDeclaration
-  | Tree.FunctionExpression,
+    | Tree.ArrowFunctionExpression
+    | Tree.FunctionDeclaration
+    | Tree.FunctionExpression,
   ) {
     if (node.id)
       return true
@@ -34,7 +34,7 @@ exports[`indent-binary-ops > invalid >
 
     return parent.type === 'MethodDefinition'
       || (parent.type === 'Property'
-              && (
+      && (
                     parent.kind === 'get'
                     || parent.kind === 'set'
                       || parent.method
@@ -112,4 +112,52 @@ if (
   bbbbb
 ) {}
 "
+`;
+
+exports[`indent-binary-ops > invalid > type Foo = 
+    | A
+ 1`] = `
+"type Foo = 
+  | A
+"
+`;
+
+exports[`indent-binary-ops > invalid > type Foo = 
+  | A | C
+    | B
+ 1`] = `
+"type Foo = 
+  | A | C
+  | B
+"
+`;
+
+exports[`indent-binary-ops > invalid > type Foo = A | B
+| C | D
+  | E 1`] = `
+"type Foo = A | B
+  | C | D
+  | E"
+`;
+
+exports[`indent-binary-ops > invalid > type T =
+& A
+  & (B
+  | A
+  | D) 1`] = `
+"type T =
+  & A
+  & (B
+  | A
+  | D)"
+`;
+
+exports[`indent-binary-ops > invalid > type T = 
+  a 
+  | b 
+    | c 1`] = `
+"type T = 
+  a 
+  | b 
+  | c"
 `;

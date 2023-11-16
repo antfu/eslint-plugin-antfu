@@ -57,6 +57,25 @@ function foo() {
               )
   }
 `,
+`type Foo = A | B
+| C | D
+  | E`,
+`type Foo = 
+    | A
+`,
+`type Foo = 
+  | A | C
+    | B
+`,
+`type T = 
+  a 
+  | b 
+    | c`,
+`type T =
+& A
+  & (B
+  | A
+  | D)`,
 ]
 
 const ruleTester: RuleTester = new RuleTester({

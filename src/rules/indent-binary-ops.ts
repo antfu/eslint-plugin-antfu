@@ -49,19 +49,25 @@ export default createEslintRule<Options, MessageIds>({
 
     const indentStr = options[0]?.indent === 'tab' ? '\t' : ' '.repeat(options[0]?.indent ?? 2)
 
+    const indentCache = new Map<number, string>()
     function getIndentOfLine(line: number) {
+      if (indentCache.has(line))
+        return indentCache.get(line)!
       return sourceCode.lines[line - 1].match(/^\s*/)?.[0] ?? ''
     }
 
     function firstTokenOfLine(line: number) {
       return sourceCode.tokensAndComments.find(token => token.loc.start.line === line)
     }
-    function handler(node: TSESTree.BinaryExpression | TSESTree.LogicalExpression) {
-      let tokenRight = sourceCode.getFirstToken(node.right)!
+
+    function handler(right: TSESTree.Node) {
+      let tokenRight = sourceCode.getFirstToken(right)!
       let tokenOperator = sourceCode.getTokenBefore(tokenRight)!
       while (tokenOperator.value === '(') {
         tokenRight = tokenOperator
         tokenOperator = sourceCode.getTokenBefore(tokenRight)!
+        if (tokenOperator.range[0] <= right.parent!.range[0])
+          return
       }
       const tokenLeft = sourceCode.getTokenBefore(tokenOperator)!
 
@@ -72,6 +78,7 @@ export default createEslintRule<Options, MessageIds>({
       // If the first token of the line is a keyword (`if`, `return`, etc)
       const firstTokenOfLineLeft = firstTokenOfLine(tokenLeft.loc.start.line)
       const needAdditionIndent = firstTokenOfLineLeft?.type === 'Keyword'
+        || (firstTokenOfLineLeft?.type === 'Identifier' && firstTokenOfLineLeft.value === 'type')
 
       const indentTarget = getIndentOfLine(tokenLeft.loc.start.line) + (needAdditionIndent ? indentStr : '')
       const indentRight = getIndentOfLine(tokenRight.loc.start.line)
@@ -85,7 +92,6 @@ export default createEslintRule<Options, MessageIds>({
           column: indentRight.length,
         }
         context.report({
-          node,
           loc: {
             start,
             end,
@@ -98,12 +104,31 @@ export default createEslintRule<Options, MessageIds>({
             )
           },
         })
+        indentCache.set(tokenRight.loc.start.line, indentTarget)
       }
     }
 
     return {
-      BinaryExpression: handler,
-      LogicalExpression: handler,
+      BinaryExpression(node) {
+        handler(node.right)
+      },
+      LogicalExpression(node) {
+        handler(node.right)
+      },
+      TSUnionType(node) {
+        if (node.type.length > 1) {
+          node.types.forEach((type) => {
+            handler(type)
+          })
+        }
+      },
+      TSIntersectionType(node) {
+        if (node.type.length > 1) {
+          node.types.forEach((type) => {
+            handler(type)
+          })
+        }
+      },
     }
   },
 })
