@@ -76,6 +76,16 @@ function foo() {
   & (B
   | A
   | D)`,
+` 
+function TSPropertySignatureToProperty(
+  node: 
+  | TSESTree.TSEnumMember
+    | TSESTree.TSPropertySignature
+  | TSESTree.TypeElement,
+  type: 
+  | AST_NODE_TYPES.Property
+    | AST_NODE_TYPES.PropertyDefinition = AST_NODE_TYPES.Property,
+): TSESTree.Node | null {}`,
 ]
 
 const ruleTester: RuleTester = new RuleTester({

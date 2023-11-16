@@ -114,6 +114,28 @@ if (
 "
 `;
 
+exports[`indent-binary-ops > invalid >  
+function TSPropertySignatureToProperty(
+  node: 
+  | TSESTree.TSEnumMember
+    | TSESTree.TSPropertySignature
+  | TSESTree.TypeElement,
+  type: 
+  | AST_NODE_TYPES.Property
+    | AST_NODE_TYPES.PropertyDefinition = AST_NODE_TYPES.Property,
+): TSESTree.Node | null {} 1`] = `
+" 
+function TSPropertySignatureToProperty(
+  node: 
+    | TSESTree.TSEnumMember
+    | TSESTree.TSPropertySignature
+    | TSESTree.TypeElement,
+  type: 
+    | AST_NODE_TYPES.Property
+    | AST_NODE_TYPES.PropertyDefinition = AST_NODE_TYPES.Property,
+): TSESTree.Node | null {}"
+`;
+
 exports[`indent-binary-ops > invalid > type Foo = 
     | A
  1`] = `

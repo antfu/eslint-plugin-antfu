@@ -60,6 +60,10 @@ export default createEslintRule<Options, MessageIds>({
       return sourceCode.tokensAndComments.find(token => token.loc.start.line === line)
     }
 
+    function lastTokenOfLine(line: number) {
+      return [...sourceCode.tokensAndComments].reverse().find(token => token.loc.end.line === line)
+    }
+
     function handler(right: TSESTree.Node) {
       let tokenRight = sourceCode.getFirstToken(right)!
       let tokenOperator = sourceCode.getTokenBefore(tokenRight)!
@@ -77,8 +81,12 @@ export default createEslintRule<Options, MessageIds>({
 
       // If the first token of the line is a keyword (`if`, `return`, etc)
       const firstTokenOfLineLeft = firstTokenOfLine(tokenLeft.loc.start.line)
+      const lastTokenOfLineLeft = lastTokenOfLine(tokenLeft.loc.start.line)
       const needAdditionIndent = firstTokenOfLineLeft?.type === 'Keyword'
         || (firstTokenOfLineLeft?.type === 'Identifier' && firstTokenOfLineLeft.value === 'type')
+        || lastTokenOfLineLeft?.value === ':'
+        || lastTokenOfLineLeft?.value === '['
+        || lastTokenOfLineLeft?.value === '('
 
       const indentTarget = getIndentOfLine(tokenLeft.loc.start.line) + (needAdditionIndent ? indentStr : '')
       const indentRight = getIndentOfLine(tokenRight.loc.start.line)
