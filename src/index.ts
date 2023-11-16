@@ -11,6 +11,7 @@ import noCjsExports from './rules/no-cjs-exports'
 import noConstEnum from './rules/no-const-enum'
 import namedTupleSpacing from './rules/named-tuple-spacing'
 import consistentListNewline from './rules/consistent-list-newline'
+import indentBinaryOps from './rules/indent-binary-ops'
 
 const plugin = {
   meta: {
@@ -28,6 +29,7 @@ const plugin = {
     'no-ts-export-equal': noTsExportEqual,
     'prefer-inline-type-import': preferInlineTypeImport,
     'top-level-function': topLevelFunction,
+    'indent-binary-ops': indentBinaryOps,
 
     /**
      * @deprecated Use `'no-restricted-syntax': ['error', 'TSEnumDeclaration[const=true]']` instead.

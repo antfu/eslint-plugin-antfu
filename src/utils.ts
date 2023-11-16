@@ -83,3 +83,12 @@ export const createEslintRule = RuleCreator(
     ? `${blobUrl}${ruleName}.md`
     : `${blobUrl}${ruleName}.test.ts`,
 ) as any as <TOptions extends readonly unknown[], TMessageIds extends string>({ name, meta, ...rule }: Readonly<RuleWithMetaAndName<TOptions, TMessageIds>>) => RuleModule<TOptions>
+
+const warned = new Set<string>()
+
+export function warnOnce(message: string) {
+  if (warned.has(message))
+    return
+  warned.add(message)
+  console.warn(message)
+}

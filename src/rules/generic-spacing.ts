@@ -3,7 +3,13 @@ import { createEslintRule } from '../utils'
 export const RULE_NAME = 'generic-spacing'
 export type MessageIds = 'genericSpacingMismatch'
 export type Options = []
-const PRESERVE_PREFIX_SPACE_BEFORE_GENERIC = new Set(['TSCallSignatureDeclaration', 'ArrowFunctionExpression', 'TSFunctionType', 'FunctionExpression'])
+
+const PRESERVE_PREFIX_SPACE_BEFORE_GENERIC = new Set([
+  'TSCallSignatureDeclaration',
+  'ArrowFunctionExpression',
+  'TSFunctionType',
+  'FunctionExpression',
+])
 
 export default createEslintRule<Options, MessageIds>({
   name: RULE_NAME,
