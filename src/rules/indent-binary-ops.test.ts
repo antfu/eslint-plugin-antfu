@@ -9,13 +9,13 @@ const invalids = [
 if (
   a && (
     a.b ||
-    a.c
+      a.c
   ) &&
-  a.d
+    a.d
 ) {}
 `,
 `
-const a = 
+const a =
 x +
    y * z
 `,
@@ -27,14 +27,35 @@ bbbbb
 `,
 `
 function foo() {
-  if (a 
-  || b 
+  if (a
+  || b
       || c || d
         || (d && b)
   ) {
     foo()
   }
 }
+`,
+`
+  function isNamedFunction(node:
+  | Tree.ArrowFunctionExpression
+  | Tree.FunctionDeclaration
+  | Tree.FunctionExpression,
+  ) {
+    if (node.id)
+      return true
+
+    const parent = node.parent
+
+    return parent.type === 'MethodDefinition'
+              || (parent.type === 'Property'
+                  && (
+                    parent.kind === 'get'
+                      || parent.kind === 'set'
+                      || parent.method
+                  )
+              )
+  }
 `,
 ]
 
