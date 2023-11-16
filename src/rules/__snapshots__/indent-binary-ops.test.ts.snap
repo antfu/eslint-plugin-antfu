@@ -114,6 +114,20 @@ if (
 "
 `;
 
+exports[`indent-binary-ops > invalid > 
+type Foo = Merge<
+    A 
+  & B
+    & C
+> 1`] = `
+"
+type Foo = Merge<
+  A 
+  & B
+  & C
+>"
+`;
+
 exports[`indent-binary-ops > invalid >  
 function TSPropertySignatureToProperty(
   node: 

@@ -86,6 +86,12 @@ function TSPropertySignatureToProperty(
   | AST_NODE_TYPES.Property
     | AST_NODE_TYPES.PropertyDefinition = AST_NODE_TYPES.Property,
 ): TSESTree.Node | null {}`,
+`
+type Foo = Merge<
+    A 
+  & B
+    & C
+>`,
 ]
 
 const ruleTester: RuleTester = new RuleTester({

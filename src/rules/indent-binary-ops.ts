@@ -87,6 +87,7 @@ export default createEslintRule<Options, MessageIds>({
         || lastTokenOfLineLeft?.value === ':'
         || lastTokenOfLineLeft?.value === '['
         || lastTokenOfLineLeft?.value === '('
+        || lastTokenOfLineLeft?.value === '<'
 
       const indentTarget = getIndentOfLine(tokenLeft.loc.start.line) + (needAdditionIndent ? indentStr : '')
       const indentRight = getIndentOfLine(tokenRight.loc.start.line)
