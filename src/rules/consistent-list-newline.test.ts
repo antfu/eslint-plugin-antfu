@@ -31,6 +31,24 @@ const valids = [
     code: 'foo(\na, b\n)',
     options: [{ CallExpression: false }],
   },
+  // https://github.com/antfu/eslint-plugin-antfu/issues/14
+  {
+    code: `
+const a = (
+  <div>
+    {text.map((item, index) => (
+      <p>
+      </p>
+    ))}
+  </div>
+)
+  `,
+    parserOptions: {
+      ecmaFeatures: {
+        jsx: true,
+      },
+    },
+  },
 ]
 
 // Check snapshot for fixed code
@@ -60,6 +78,25 @@ const invalid = [
   'const {a,\nb\n} = c',
   'const [\na,b] = c',
   'foo(([\na,b]) => {})',
+  // https://github.com/antfu/eslint-plugin-antfu/issues/14
+  {
+    code: `
+const a = (
+  <div>
+    {text.map((
+      item, index) => (
+      <p>
+      </p>
+    ))}
+  </div>
+)
+  `,
+    parserOptions: {
+      ecmaFeatures: {
+        jsx: true,
+      },
+    },
+  },
 ] as const
 
 const ruleTester: RuleTester = new RuleTester({
@@ -68,11 +105,20 @@ const ruleTester: RuleTester = new RuleTester({
 
 ruleTester.run(RULE_NAME, rule as any, {
   valid: valids,
-  invalid: invalid.map(i => ({
-    code: i,
-    errors: null,
-    onOutput: (output: string) => {
-      expect(output).toMatchSnapshot()
-    },
-  })),
+  invalid: invalid.map(i => typeof i === 'string'
+    ? {
+        code: i,
+        errors: null,
+        onOutput: (output: string) => {
+          expect(output).toMatchSnapshot()
+        },
+      }
+    : {
+        ...i,
+        errors: null,
+        onOutput: (output: string) => {
+          expect(output).toMatchSnapshot()
+        },
+      },
+  ),
 })

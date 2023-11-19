@@ -55,15 +55,15 @@ export default createEslintRule<Options, MessageIds>({
       additionalProperties: false,
     }],
     messages: {
-      shouldWrap: 'Should have line breaks between items',
-      shouldNotWrap: 'Should not have line breaks between items',
+      shouldWrap: 'Should have line breaks between items, in node {{name}}',
+      shouldNotWrap: 'Should not have line breaks between items, in node {{name}}',
     },
   },
   defaultOptions: [{}],
   create: (context, [options = {}] = [{}]) => {
     function removeLines(fixer: RuleFixer, start: number, end: number) {
       const range = [start, end] as const
-      const code = context.getSourceCode().text.slice(...range)
+      const code = context.sourceCode.text.slice(...range)
       return fixer.replaceTextRange(range, code.replace(/(\r\n|\n)/g, ''))
     }
 
@@ -115,10 +115,13 @@ export default createEslintRule<Options, MessageIds>({
         lastLine = item.loc.end.line
       })
 
-      const endLoc = nextNode?.loc.start ?? node.loc.end
-      const endRange = nextNode?.range[0]
-        ? nextNode?.range[0] - 1
+      const endRange = nextNode
+        ? Math.min(
+          context.sourceCode.getTokenBefore(nextNode)!.range[0],
+          node.range[1],
+        )
         : node.range[1]
+      const endLoc = context.sourceCode.getLocFromIndex(endRange)
 
       const lastItem = items[items.length - 1]!
       if (mode === 'newline' && endLoc.line === lastLine) {
@@ -134,13 +137,20 @@ export default createEslintRule<Options, MessageIds>({
         // If there is only one multiline item, we allow the closing bracket to be on the a different line
         if (items.length === 1 && items[0].loc.start.line !== items[1]?.loc.start.line)
           return
-        context.report({
-          node: lastItem,
-          messageId: 'shouldNotWrap',
-          *fix(fixer) {
-            yield removeLines(fixer, lastItem.range[1], endRange)
-          },
-        })
+
+        const content = context.sourceCode.text.slice(lastItem.range[1], endRange)
+        if (content.includes('\n')) {
+          context.report({
+            node: lastItem,
+            messageId: 'shouldNotWrap',
+            data: {
+              name: node.type,
+            },
+            *fix(fixer) {
+              yield removeLines(fixer, lastItem.range[1], endRange)
+            },
+          })
+        }
       }
     }
 
