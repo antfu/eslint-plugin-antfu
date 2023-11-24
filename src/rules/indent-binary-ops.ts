@@ -64,7 +64,10 @@ export default createEslintRule<Options, MessageIds>({
       return [...sourceCode.tokensAndComments].reverse().find(token => token.loc.end.line === line)
     }
 
-    function handler(right: TSESTree.Node) {
+    function handler(node: TSESTree.Node, right: TSESTree.Node) {
+      if (node.loc.start.line === node.loc.end.line)
+        return
+
       let tokenRight = sourceCode.getFirstToken(right)!
       let tokenOperator = sourceCode.getTokenBefore(tokenRight)!
       while (tokenOperator.value === '(') {
@@ -119,22 +122,22 @@ export default createEslintRule<Options, MessageIds>({
 
     return {
       BinaryExpression(node) {
-        handler(node.right)
+        handler(node, node.right)
       },
       LogicalExpression(node) {
-        handler(node.right)
+        handler(node, node.right)
       },
       TSUnionType(node) {
-        if (node.type.length > 1) {
+        if (node.types.length > 1) {
           node.types.forEach((type) => {
-            handler(type)
+            handler(node, type)
           })
         }
       },
       TSIntersectionType(node) {
-        if (node.type.length > 1) {
+        if (node.types.length > 1) {
           node.types.forEach((type) => {
-            handler(type)
+            handler(node, type)
           })
         }
       },

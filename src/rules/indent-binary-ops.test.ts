@@ -2,8 +2,18 @@ import { RuleTester } from '../../vendor/rule-tester/src/RuleTester'
 import rule, { RULE_NAME } from './indent-binary-ops'
 
 const valids = [
-  '',
+`type a = {
+  [K in keyof T]: T[K] extends Date
+    ? Date | string
+    : T[K] extends (Date | null)
+      ? Date | string | null
+      : T[K];
+}`,
+`type Foo =
+  | A
+`,
 ]
+
 const invalids = [
 `
 if (
@@ -60,9 +70,7 @@ function foo() {
 `type Foo = A | B
 | C | D
   | E`,
-`type Foo = 
-    | A
-`,
+
 `type Foo = 
   | A | C
     | B
