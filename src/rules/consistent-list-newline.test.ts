@@ -56,6 +56,22 @@ export const getTodoList = request.post<
   ResponseData,
 >('/api/todo-list')
 `,
+  // https://github.com/antfu/eslint-plugin-antfu/issues/16
+  {
+    code: `
+function TodoList() {
+  const { data, isLoading } = useSwrInfinite(
+    (page) => ['/api/todo/list', { page }],
+    ([, params]) => getToDoList(params),
+  )
+  return <div></div>
+}`,
+    parserOptions: {
+      ecmaFeatures: {
+        jsx: true,
+      },
+    },
+  },
 ]
 
 // Check snapshot for fixed code
