@@ -194,6 +194,8 @@ export default createEslintRule<Options, MessageIds>({
         )
       },
       ArrowFunctionExpression: (node) => {
+        if (node.params.length <= 1)
+          return
         check(
           node,
           node.params,

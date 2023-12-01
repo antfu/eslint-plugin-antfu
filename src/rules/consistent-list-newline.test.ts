@@ -72,6 +72,20 @@ function TodoList() {
       },
     },
   },
+  `
+bar(
+  foo => foo
+    ? ''
+    : ''
+)
+    `,
+  `
+bar(
+  (ruleName, foo) => foo
+    ? ''
+    : ''
+)
+  `,
 ]
 
 // Check snapshot for fixed code
