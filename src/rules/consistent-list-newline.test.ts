@@ -49,6 +49,13 @@ const a = (
       },
     },
   },
+  // https://github.com/antfu/eslint-plugin-antfu/issues/15
+  `
+export const getTodoList = request.post<
+  Params,
+  ResponseData,
+>('/api/todo-list')
+`,
 ]
 
 // Check snapshot for fixed code

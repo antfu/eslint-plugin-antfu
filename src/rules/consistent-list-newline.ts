@@ -70,16 +70,19 @@ export default createEslintRule<Options, MessageIds>({
     function check(
       node: TSESTree.Node,
       children: (TSESTree.Node | null)[],
-      prevNode?: TSESTree.Node,
       nextNode?: TSESTree.Node,
     ) {
       const items = children.filter(Boolean) as TSESTree.Node[]
       if (items.length === 0)
         return
 
-      const startLine = prevNode
-        ? prevNode.loc.end.line
-        : node.loc.start.line
+      const startToken = context.sourceCode.getTokenBefore(items[0])
+      const endToken = context.sourceCode.getTokenAfter(items[items.length - 1])
+      const startLine = startToken!.loc.start.line
+
+      if (startToken!.loc.start.line === endToken!.loc.end.line)
+        return
+
       let mode: 'inline' | 'newline' | null = null
       let lastLine = startLine
 
@@ -96,6 +99,9 @@ export default createEslintRule<Options, MessageIds>({
           context.report({
             node: item,
             messageId: 'shouldWrap',
+            data: {
+              name: node.type,
+            },
             *fix(fixer) {
               yield fixer.insertTextBefore(item, '\n')
             },
@@ -106,6 +112,9 @@ export default createEslintRule<Options, MessageIds>({
           context.report({
             node: item,
             messageId: 'shouldNotWrap',
+            data: {
+              name: node.type,
+            },
             *fix(fixer) {
               yield removeLines(fixer, lastItem!.range[1], item.range[0])
             },
@@ -128,6 +137,9 @@ export default createEslintRule<Options, MessageIds>({
         context.report({
           node: lastItem,
           messageId: 'shouldWrap',
+          data: {
+            name: node.type,
+          },
           *fix(fixer) {
             yield fixer.insertTextAfter(lastItem, '\n')
           },
@@ -171,7 +183,6 @@ export default createEslintRule<Options, MessageIds>({
         check(
           node,
           node.params,
-          node.typeParameters || undefined,
           node.returnType || node.body,
         )
       },
@@ -179,7 +190,6 @@ export default createEslintRule<Options, MessageIds>({
         check(
           node,
           node.params,
-          node.typeParameters || undefined,
           node.returnType || node.body,
         )
       },
@@ -187,22 +197,11 @@ export default createEslintRule<Options, MessageIds>({
         check(
           node,
           node.params,
-          node.typeParameters || undefined,
           node.returnType || node.body,
         )
       },
       CallExpression: (node) => {
-        const startNode
-        // if has type generic, check the last type argument
-        = node.typeArguments?.params.length
-          ? node.typeArguments.params[node.typeArguments.params.length - 1]
-          // if the callee is a member expression, get the property
-          : node.callee.type === 'MemberExpression'
-            ? node.callee.property
-            // else get the callee
-            : node.callee
-
-        check(node, node.arguments, startNode)
+        check(node, node.arguments)
       },
       TSInterfaceDeclaration: (node) => {
         check(node, node.body.body)
@@ -214,7 +213,7 @@ export default createEslintRule<Options, MessageIds>({
         check(node, node.elementTypes)
       },
       NewExpression: (node) => {
-        check(node, node.arguments, node.callee)
+        check(node, node.arguments)
       },
       TSTypeParameterDeclaration(node) {
         check(node, node.params)
@@ -223,7 +222,7 @@ export default createEslintRule<Options, MessageIds>({
         check(node, node.params)
       },
       ObjectPattern(node) {
-        check(node, node.properties, undefined, node.typeAnnotation)
+        check(node, node.properties, node.typeAnnotation)
       },
       ArrayPattern(node) {
         check(node, node.elements)
