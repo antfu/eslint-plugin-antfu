@@ -20,9 +20,8 @@ export default createEslintRule<Options, MessageIds>({
   defaultOptions: [],
   create: (context) => {
     function isDist(path: string) {
-      return path.includes('/dist/')
+      return (path.startsWith('.') && path.match(/\/dist(\/|$)/))
         || path === 'dist'
-        || path.endsWith('/dist')
     }
 
     return {
