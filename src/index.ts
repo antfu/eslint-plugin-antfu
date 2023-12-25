@@ -4,6 +4,7 @@ import ifNewline from './rules/if-newline'
 import importDedupe from './rules/import-dedupe'
 import topLevelFunction from './rules/top-level-function'
 import noImportNodeModulesByPath from './rules/no-import-node-modules-by-path'
+import noImportDist from './rules/no-import-dist'
 import noTsExportEqual from './rules/no-ts-export-equal'
 import consistentListNewline from './rules/consistent-list-newline'
 
@@ -17,6 +18,7 @@ const plugin = {
     'if-newline': ifNewline,
     'import-dedupe': importDedupe,
     'no-import-node-modules-by-path': noImportNodeModulesByPath,
+    'no-import-dist': noImportDist,
     'no-ts-export-equal': noTsExportEqual,
     'top-level-function': topLevelFunction,
   },
