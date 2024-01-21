@@ -26,6 +26,48 @@ index
   "
 `;
 
+exports[`consistent-list-newline > invalid > 
+export default antfu({
+},
+// some comment
+{
+  foo: 'bar'
+},
+{
+}
+  // hello
+) 1`] = `
+"
+export default antfu({
+},
+// some comment
+{
+  foo: 'bar'
+},{
+}
+  // hello
+)"
+`;
+
+exports[`consistent-list-newline > invalid > 
+export default antfu({
+},
+{
+  foo: 'bar'
+}
+  // some comment
+  // hello
+) 1`] = `
+"
+export default antfu({
+},{
+  foo: 'bar'
+}
+  // some comment
+  // hello
+)"
+`;
+
 exports[`consistent-list-newline > invalid > const [
 a,b] = c 1`] = `
 "const [

@@ -142,15 +142,39 @@ const a = (
       },
     },
   },
+  // https://github.com/antfu/eslint-plugin-antfu/issues/18
+  `
+export default antfu({
+},
+{
+  foo: 'bar'
+}
+  // some comment
+  // hello
+)`,
+  // https://github.com/antfu/eslint-plugin-antfu/issues/18
+`
+export default antfu({
+},
+// some comment
+{
+  foo: 'bar'
+},
+{
+}
+  // hello
+)`,
 ]
 
 const ruleTester: RuleTester = new RuleTester({
   parser: require.resolve('@typescript-eslint/parser'),
 })
 
+// For debugging
 // valids.length = 0
+// const last = invalid[invalid.length - 1]
 // invalid.length = 0
-// valids.push()
+// invalid.push(last)
 
 ruleTester.run(RULE_NAME, rule as any, {
   valid: valids,

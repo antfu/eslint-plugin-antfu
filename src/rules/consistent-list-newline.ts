@@ -114,6 +114,8 @@ export default createEslintRule<Options, MessageIds>({
         }
         else if (mode === 'inline' && currentStart !== lastLine) {
           const lastItem = items[idx - 1]
+          if (context.sourceCode.getCommentsBefore(item).length > 0)
+            return
           context.report({
             node: item,
             messageId: 'shouldNotWrap',
@@ -153,6 +155,8 @@ export default createEslintRule<Options, MessageIds>({
       else if (mode === 'inline' && endLoc.line !== lastLine) {
         // If there is only one multiline item, we allow the closing bracket to be on the a different line
         if (items.length === 1 && items[0].loc.start.line !== items[1]?.loc.start.line)
+          return
+        if (context.sourceCode.getCommentsAfter(lastItem).length > 0)
           return
 
         const content = context.sourceCode.text.slice(lastItem.range[1], endRange)
