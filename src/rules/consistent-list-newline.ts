@@ -78,7 +78,9 @@ export default createEslintRule<Options, MessageIds>({
 
       // Look for the opening bracket, we first try to get the first token of the parent node
       // and fallback to the token before the first item
-      let startToken = context.sourceCode.getFirstToken(node)
+      let startToken = ['CallExpression', 'NewExpression'].includes(node.type)
+        ? undefined
+        : context.sourceCode.getFirstToken(node)
       if (startToken?.type !== 'Punctuator')
         startToken = context.sourceCode.getTokenBefore(items[0])
 
@@ -251,7 +253,8 @@ export default createEslintRule<Options, MessageIds>({
       .forEach((key) => {
         if (options[key] === false)
           delete listenser[key]
-      })
+      },
+      )
 
     return listenser
   },

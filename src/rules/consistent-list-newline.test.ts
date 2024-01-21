@@ -25,6 +25,13 @@ const valids = [
   'foo(() =>\nbar())',
   'foo(() =>\nbar()\n)',
   `call<{\nfoo: 'bar'\n}>('')`,
+  `
+(Object.keys(options) as KeysOptions[])
+.forEach((key) => {
+  if (options[key] === false)
+    delete listenser[key]
+})
+  `,
   // https://github.com/antfu/eslint-plugin-antfu/issues/11
   `function fn({ foo, bar }: {\nfoo: 'foo'\nbar: 'bar'\n}) {}`,
   {
@@ -94,6 +101,7 @@ const a = [
 ];
   `,
   `const a = [(1), (2)];`,
+
 ]
 
 // Check snapshot for fixed code
