@@ -86,6 +86,14 @@ bar(
     : ''
 )
   `,
+  // https://github.com/antfu/eslint-plugin-antfu/issues/19
+  `
+const a = [
+  (1),
+  (2)
+];
+  `,
+  `const a = [(1), (2)];`,
 ]
 
 // Check snapshot for fixed code
@@ -134,11 +142,15 @@ const a = (
       },
     },
   },
-] as const
+]
 
 const ruleTester: RuleTester = new RuleTester({
   parser: require.resolve('@typescript-eslint/parser'),
 })
+
+// valids.length = 0
+// invalid.length = 0
+// valids.push()
 
 ruleTester.run(RULE_NAME, rule as any, {
   valid: valids,

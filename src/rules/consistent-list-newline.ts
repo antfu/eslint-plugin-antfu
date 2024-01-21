@@ -76,7 +76,12 @@ export default createEslintRule<Options, MessageIds>({
       if (items.length === 0)
         return
 
-      const startToken = context.sourceCode.getTokenBefore(items[0])
+      // Look for the opening bracket, we first try to get the first token of the parent node
+      // and fallback to the token before the first item
+      let startToken = context.sourceCode.getFirstToken(node)
+      if (startToken?.type !== 'Punctuator')
+        startToken = context.sourceCode.getTokenBefore(items[0])
+
       const endToken = context.sourceCode.getTokenAfter(items[items.length - 1])
       const startLine = startToken!.loc.start.line
 
