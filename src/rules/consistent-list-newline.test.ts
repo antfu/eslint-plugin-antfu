@@ -101,7 +101,25 @@ const a = [
 ];
   `,
   `const a = [(1), (2)];`,
-
+  {
+    code: `function Foo() {
+    return (
+      <div 
+        className="text-white" onClick="bar"
+        style={{
+          color: 'red' 
+        }}
+      >
+        hi
+      </div>
+    );
+  }`,
+    parserOptions: {
+      ecmaFeatures: {
+        jsx: true,
+      },
+    },
+  },
 ]
 
 // Check snapshot for fixed code
