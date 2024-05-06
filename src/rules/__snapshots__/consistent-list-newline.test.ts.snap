@@ -37,10 +37,6 @@ exports[`consistent-list-newline > invalid > const a = {foo: "bar",
 bar: 2
 } 1`] = `"const a = {foo: "bar", bar: 2}"`;
 
-exports[`consistent-list-newline > invalid > const a = {foo: "bar", 
-bar: 2
-} 1`] = `"const a = {foo: "bar", bar: 2}"`;
-
 exports[`consistent-list-newline > invalid > const foo = (
 a, b) => {} 1`] = `
 "const foo = (

@@ -133,7 +133,6 @@ const invalid: InvalidTestCase[] = [
   'const a = [1, \n2, 3\n]',
   'import {\nfoo, bar } from "foo"',
   'import { foo, \nbar } from "foo"',
-  'const a = {foo: "bar", \r\nbar: 2\r\n}',
   'log(\na, b)',
   'function foo(\na, b) {}',
   'const foo = (\na, b) => {}',
@@ -153,6 +152,12 @@ const invalid: InvalidTestCase[] = [
   'const [\na,b] = c',
   'foo(([\na,b]) => {})',
 
+  {
+    description: 'CRLF',
+    code: 'const a = {foo: "bar", \r\nbar: 2\r\n}',
+    output: o => expect(o.replace(/\r/g, '\\r'))
+      .toMatchInlineSnapshot(`"const a = {foo: "bar", bar: 2}"`),
+  },
   // https://github.com/antfu/eslint-plugin-antfu/issues/14
   {
     code: $`
