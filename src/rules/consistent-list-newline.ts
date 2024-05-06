@@ -21,6 +21,7 @@ export type Options = [{
   TSTypeParameterInstantiation?: boolean
   ObjectPattern?: boolean
   ArrayPattern?: boolean
+  JSXOpeningElement?: boolean
 }]
 
 export default createEslintRule<Options, MessageIds>({
@@ -51,6 +52,7 @@ export default createEslintRule<Options, MessageIds>({
         TSTypeParameterInstantiation: { type: 'boolean' },
         ObjectPattern: { type: 'boolean' },
         ArrayPattern: { type: 'boolean' },
+        JSXOpeningElement: { type: 'boolean' },
       } satisfies Record<keyof Options[0], { type: 'boolean' }>,
       additionalProperties: false,
     }],
@@ -239,6 +241,9 @@ export default createEslintRule<Options, MessageIds>({
       },
       ArrayPattern(node) {
         check(node, node.elements)
+      },
+      JSXOpeningElement(node) {
+        check(node, node.attributes)
       },
     } satisfies RuleListener
 

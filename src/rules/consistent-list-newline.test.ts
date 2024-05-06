@@ -172,6 +172,40 @@ export default antfu({
 }
   // hello
 )`,
+{
+  code: `function Foo() {
+  return (
+    <div className="text-white"
+      onClick="bar"
+      style={{ color: 'red' }}
+    >
+      hi
+    </div>
+  );
+}`,
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+  },
+},
+{
+  code: `function Foo() {
+  return (
+    <div 
+      className="text-white" onClick="bar"
+      style={{ color: 'red' }}
+    >
+      hi
+    </div>
+  );
+}`,
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+  },
+},
 ]
 
 const ruleTester: RuleTester = new RuleTester({

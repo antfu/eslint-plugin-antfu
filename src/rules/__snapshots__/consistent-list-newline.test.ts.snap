@@ -177,6 +177,48 @@ Y
 exports[`consistent-list-newline > invalid > foo<X,
 Y>(1, 2) 1`] = `"foo<X,Y>(1, 2)"`;
 
+exports[`consistent-list-newline > invalid > function Foo() {
+  return (
+    <div 
+      className="text-white" onClick="bar"
+      style={{ color: 'red' }}
+    >
+      hi
+    </div>
+  );
+} 1`] = `
+"function Foo() {
+  return (
+    <div 
+      className="text-white" 
+onClick="bar"
+      style={{ color: 'red' }}
+    >
+      hi
+    </div>
+  );
+}"
+`;
+
+exports[`consistent-list-newline > invalid > function Foo() {
+  return (
+    <div className="text-white"
+      onClick="bar"
+      style={{ color: 'red' }}
+    >
+      hi
+    </div>
+  );
+} 1`] = `
+"function Foo() {
+  return (
+    <div className="text-white"      onClick="bar"      style={{ color: 'red' }}    >
+      hi
+    </div>
+  );
+}"
+`;
+
 exports[`consistent-list-newline > invalid > function foo(
 a, b) {} 1`] = `
 "function foo(
