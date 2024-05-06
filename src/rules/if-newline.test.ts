@@ -1,4 +1,4 @@
-import { RuleTester } from '../../vendor/rule-tester/src/RuleTester'
+import { createRuleTester } from './_test'
 import rule, { RULE_NAME } from './if-newline'
 
 const valids = [
@@ -13,11 +13,12 @@ const invalids = [
   ['if (true) console.log(\'hello\')', 'if (true) \nconsole.log(\'hello\')'],
 ]
 
-const ruleTester: RuleTester = new RuleTester({
-  parser: require.resolve('@typescript-eslint/parser'),
+const ruleTester = createRuleTester({
+  name: RULE_NAME,
+  rule,
 })
 
-ruleTester.run(RULE_NAME, rule as any, {
+ruleTester.run({
   valid: valids,
   invalid: invalids.map(i => ({
     code: i[0],

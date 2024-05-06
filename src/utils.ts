@@ -23,7 +23,7 @@ export interface RuleModule<
  * @param urlCreator Creates a documentation URL for a given rule name.
  * @returns Function to create a rule with the docs URL format.
  */
-function RuleCreator(urlCreator: (ruleName: string) => string) {
+function RuleCreator(urlCreator: (name: string) => string) {
   // This function will get much easier to call when this is merged https://github.com/Microsoft/TypeScript/pull/26349
   // TODO - when the above PR lands; add type checking for the context.report `data` property
   return function createNamedRule<

@@ -1,8 +1,10 @@
 import { expect } from 'vitest'
-import { RuleTester } from '../../vendor/rule-tester/src/RuleTester'
+import type { InvalidTestCase, ValidTestCase } from 'eslint-vitest-rule-tester'
+import { unindent as $ } from 'eslint-vitest-rule-tester'
 import rule, { RULE_NAME } from './consistent-list-newline'
+import { createRuleTester } from './_test'
 
-const valids = [
+const valids: ValidTestCase[] = [
   'const a = { foo: "bar", bar: 2 }',
   'const a = {\nfoo: "bar",\nbar: 2\n}',
   'const a = [1, 2, 3]',
@@ -25,12 +27,12 @@ const valids = [
   'foo(() =>\nbar())',
   'foo(() =>\nbar()\n)',
   `call<{\nfoo: 'bar'\n}>('')`,
-  `
-(Object.keys(options) as KeysOptions[])
-.forEach((key) => {
-  if (options[key] === false)
-    delete listenser[key]
-})
+  $`
+  (Object.keys(options) as KeysOptions[])
+  .forEach((key) => {
+    if (options[key] === false)
+      delete listenser[key]
+  })
   `,
   // https://github.com/antfu/eslint-plugin-antfu/issues/11
   `function fn({ foo, bar }: {\nfoo: 'foo'\nbar: 'bar'\n}) {}`,
@@ -40,16 +42,16 @@ const valids = [
   },
   // https://github.com/antfu/eslint-plugin-antfu/issues/14
   {
-    code: `
-const a = (
-  <div>
-    {text.map((item, index) => (
-      <p>
-      </p>
-    ))}
-  </div>
-)
-  `,
+    code: $`
+      const a = (
+        <div>
+          {text.map((item, index) => (
+            <p>
+            </p>
+          ))}
+        </div>
+      )
+    `,
     parserOptions: {
       ecmaFeatures: {
         jsx: true,
@@ -57,63 +59,64 @@ const a = (
     },
   },
   // https://github.com/antfu/eslint-plugin-antfu/issues/15
-  `
-export const getTodoList = request.post<
-  Params,
-  ResponseData,
->('/api/todo-list')
-`,
+  $`
+  export const getTodoList = request.post<
+    Params,
+    ResponseData,
+  >('/api/todo-list')
+  `,
   // https://github.com/antfu/eslint-plugin-antfu/issues/16
   {
-    code: `
-function TodoList() {
-  const { data, isLoading } = useSwrInfinite(
-    (page) => ['/api/todo/list', { page }],
-    ([, params]) => getToDoList(params),
-  )
-  return <div></div>
-}`,
+    code: $`
+      function TodoList() {
+        const { data, isLoading } = useSwrInfinite(
+          (page) => ['/api/todo/list', { page }],
+          ([, params]) => getToDoList(params),
+        )
+        return <div></div>
+      }`,
     parserOptions: {
       ecmaFeatures: {
         jsx: true,
       },
     },
   },
-  `
-bar(
-  foo => foo
-    ? ''
-    : ''
-)
-    `,
-  `
-bar(
-  (ruleName, foo) => foo
-    ? ''
-    : ''
-)
+  $`
+  bar(
+    foo => foo
+      ? ''
+      : ''
+  )
+  `,
+  $`
+  bar(
+    (ruleName, foo) => foo
+      ? ''
+      : ''
+  )
   `,
   // https://github.com/antfu/eslint-plugin-antfu/issues/19
-  `
-const a = [
-  (1),
-  (2)
-];
+  $`
+  const a = [
+    (1),
+    (2)
+  ];
   `,
   `const a = [(1), (2)];`,
   {
-    code: `function Foo() {
-    return (
-      <div 
-        className="text-white" onClick="bar"
-        style={{
-          color: 'red' 
-        }}
-      >
-        hi
-      </div>
-    );
-  }`,
+    code: $`
+    function Foo() {
+      return (
+        <div 
+          className="text-white" onClick="bar"
+          style={{
+            color: 'red' 
+          }}
+        >
+          hi
+        </div>
+      );
+    }`,
     parserOptions: {
       ecmaFeatures: {
         jsx: true,
@@ -123,7 +126,7 @@ const a = [
 ]
 
 // Check snapshot for fixed code
-const invalid = [
+const invalid: InvalidTestCase[] = [
   'const a = {\nfoo: "bar", bar: 2 }',
   'const a = {foo: "bar", \nbar: 2\n}',
   'const a = [\n1, 2, 3]',
@@ -149,19 +152,35 @@ const invalid = [
   'const {a,\nb\n} = c',
   'const [\na,b] = c',
   'foo(([\na,b]) => {})',
+
   // https://github.com/antfu/eslint-plugin-antfu/issues/14
   {
-    code: `
-const a = (
-  <div>
-    {text.map((
-      item, index) => (
-      <p>
-      </p>
-    ))}
-  </div>
-)
-  `,
+    code: $`
+      const a = (
+        <div>
+          {text.map((
+            item, index) => (
+            <p>
+            </p>
+          ))}
+        </div>
+      )
+    `,
+    output: o => expect(o).toMatchInlineSnapshot(`
+      "
+      const a = (
+        <div>
+          {text.map((
+            item, 
+      index
+      ) => (
+            <p>
+            </p>
+          ))}
+        </div>
+      )
+      "
+    `),
     parserOptions: {
       ecmaFeatures: {
         jsx: true,
@@ -169,89 +188,130 @@ const a = (
     },
   },
   // https://github.com/antfu/eslint-plugin-antfu/issues/18
-  `
-export default antfu({
-},
-{
-  foo: 'bar'
-}
-  // some comment
-  // hello
-)`,
-  // https://github.com/antfu/eslint-plugin-antfu/issues/18
-`
-export default antfu({
-},
-// some comment
-{
-  foo: 'bar'
-},
-{
-}
-  // hello
-)`,
-{
-  code: `function Foo() {
-  return (
-    <div className="text-white"
+  {
+    code: $`
+      export default antfu({
+      },
+      {
+        foo: 'bar'
+      }
+        // some comment
+        // hello
+      )
+    `,
+    output: o => expect(o).toMatchInlineSnapshot(`
+      "
+      export default antfu({
+      },{
+        foo: 'bar'
+      }
+        // some comment
+        // hello
+      )
+      "
+    `),
+  },
+  {
+    code: $`
+      function Foo() {
+        return (
+          <div className="text-white"
+            onClick="bar"
+            style={{ color: 'red' }}
+          >
+            hi
+          </div>
+        );
+      }`,
+    output: o => expect(o).toMatchInlineSnapshot(`
+      "
+      function Foo() {
+        return (
+          <div className="text-white"      onClick="bar"      style={{ color: 'red' }}    >
+            hi
+          </div>
+        );
+      }"
+    `),
+    parserOptions: {
+      ecmaFeatures: {
+        jsx: true,
+      },
+    },
+  },
+  {
+    code: $`
+      function Foo() {
+        return (
+          <div 
+            className="text-white" onClick="bar"
+            style={{ color: 'red' }}
+          >
+            hi
+          </div>
+        );
+      }`,
+    output: o => expect(o).toMatchInlineSnapshot(`
+      "
+      function Foo() {
+        return (
+          <div 
+            className="text-white" 
       onClick="bar"
-      style={{ color: 'red' }}
-    >
-      hi
-    </div>
-  );
-}`,
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
+            style={{ color: 'red' }}
+          >
+            hi
+          </div>
+        );
+      }"
+    `),
+    parserOptions: {
+      ecmaFeatures: {
+        jsx: true,
+      },
     },
   },
-},
-{
-  code: `function Foo() {
-  return (
-    <div 
-      className="text-white" onClick="bar"
-      style={{ color: 'red' }}
-    >
-      hi
-    </div>
-  );
-}`,
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-    },
+  // https://github.com/antfu/eslint-plugin-antfu/issues/18
+  {
+    code: $`
+      export default antfu({
+      },
+      // some comment
+      {
+        foo: 'bar'
+      },
+      {
+      }
+        // hello
+      )`,
+    output: o => expect(o).toMatchInlineSnapshot(`
+      "
+      export default antfu({
+      },
+      // some comment
+      {
+        foo: 'bar'
+      },{
+      }
+        // hello
+      )"
+    `),
   },
-},
 ]
 
-const ruleTester: RuleTester = new RuleTester({
-  parser: require.resolve('@typescript-eslint/parser'),
+const ruleTester = createRuleTester({
+  name: RULE_NAME,
+  rule,
 })
 
-// For debugging
-// valids.length = 0
-// const last = invalid[invalid.length - 1]
-// invalid.length = 0
-// invalid.push(last)
-
-ruleTester.run(RULE_NAME, rule as any, {
+ruleTester.run({
   valid: valids,
-  invalid: invalid.map(i => typeof i === 'string'
-    ? {
-        code: i,
-        errors: null,
-        onOutput: (output: string) => {
-          expect(output).toMatchSnapshot()
-        },
-      }
-    : {
-        ...i,
-        errors: null,
-        onOutput: (output: string) => {
-          expect(output).toMatchSnapshot()
-        },
-      },
+  invalid: invalid.map((i): InvalidTestCase =>
+    typeof i === 'string'
+      ? {
+          code: i,
+          output: o => expect(o).toMatchSnapshot(),
+        }
+      : i,
   ),
 })

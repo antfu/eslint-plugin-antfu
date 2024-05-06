@@ -1,73 +1,5 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`consistent-list-newline > invalid > 
-const a = (
-  <div>
-    {text.map((
-      item, index) => (
-      <p>
-      </p>
-    ))}
-  </div>
-)
-   1`] = `
-"
-const a = (
-  <div>
-    {text.map((
-      item, 
-index
-) => (
-      <p>
-      </p>
-    ))}
-  </div>
-)
-  "
-`;
-
-exports[`consistent-list-newline > invalid > 
-export default antfu({
-},
-// some comment
-{
-  foo: 'bar'
-},
-{
-}
-  // hello
-) 1`] = `
-"
-export default antfu({
-},
-// some comment
-{
-  foo: 'bar'
-},{
-}
-  // hello
-)"
-`;
-
-exports[`consistent-list-newline > invalid > 
-export default antfu({
-},
-{
-  foo: 'bar'
-}
-  // some comment
-  // hello
-) 1`] = `
-"
-export default antfu({
-},{
-  foo: 'bar'
-}
-  // some comment
-  // hello
-)"
-`;
-
 exports[`consistent-list-newline > invalid > const [
 a,b] = c 1`] = `
 "const [
@@ -105,8 +37,8 @@ exports[`consistent-list-newline > invalid > const a = {foo: "bar",
 bar: 2
 } 1`] = `"const a = {foo: "bar", bar: 2}"`;
 
-exports[`consistent-list-newline > invalid > const a = {foo: "bar", \\u000d
-bar: 2\\u000d
+exports[`consistent-list-newline > invalid > const a = {foo: "bar", 
+bar: 2
 } 1`] = `"const a = {foo: "bar", bar: 2}"`;
 
 exports[`consistent-list-newline > invalid > const foo = (
@@ -176,48 +108,6 @@ Y
 
 exports[`consistent-list-newline > invalid > foo<X,
 Y>(1, 2) 1`] = `"foo<X,Y>(1, 2)"`;
-
-exports[`consistent-list-newline > invalid > function Foo() {
-  return (
-    <div 
-      className="text-white" onClick="bar"
-      style={{ color: 'red' }}
-    >
-      hi
-    </div>
-  );
-} 1`] = `
-"function Foo() {
-  return (
-    <div 
-      className="text-white" 
-onClick="bar"
-      style={{ color: 'red' }}
-    >
-      hi
-    </div>
-  );
-}"
-`;
-
-exports[`consistent-list-newline > invalid > function Foo() {
-  return (
-    <div className="text-white"
-      onClick="bar"
-      style={{ color: 'red' }}
-    >
-      hi
-    </div>
-  );
-} 1`] = `
-"function Foo() {
-  return (
-    <div className="text-white"      onClick="bar"      style={{ color: 'red' }}    >
-      hi
-    </div>
-  );
-}"
-`;
 
 exports[`consistent-list-newline > invalid > function foo(
 a, b) {} 1`] = `

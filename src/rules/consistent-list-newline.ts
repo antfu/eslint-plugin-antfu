@@ -120,16 +120,19 @@ export default createEslintRule<Options, MessageIds>({
           const lastItem = items[idx - 1]
           if (context.sourceCode.getCommentsBefore(item).length > 0)
             return
-          context.report({
-            node: item,
-            messageId: 'shouldNotWrap',
-            data: {
-              name: node.type,
-            },
-            *fix(fixer) {
-              yield removeLines(fixer, lastItem!.range[1], item.range[0])
-            },
-          })
+          const content = context.sourceCode.text.slice(lastItem!.range[1], item.range[0])
+          if (content.includes('\n')) {
+            context.report({
+              node: item,
+              messageId: 'shouldNotWrap',
+              data: {
+                name: node.type,
+              },
+              *fix(fixer) {
+                yield removeLines(fixer, lastItem!.range[1], item.range[0])
+              },
+            })
+          }
         }
 
         lastLine = item.loc.end.line
@@ -261,8 +264,7 @@ export default createEslintRule<Options, MessageIds>({
       .forEach((key) => {
         if (options[key] === false)
           delete listenser[key]
-      },
-      )
+      })
 
     return listenser
   },
