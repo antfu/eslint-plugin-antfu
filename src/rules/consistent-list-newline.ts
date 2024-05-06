@@ -243,7 +243,7 @@ export default createEslintRule<Options, MessageIds>({
         check(node, node.elements)
       },
       JSXOpeningElement(node) {
-        if (!node.attributes.every(attr => attr.loc.start.line === attr.loc.end.line))
+        if (node.attributes.some(attr => attr.loc.start.line !== attr.loc.end.line))
           return
 
         check(node, node.attributes)
