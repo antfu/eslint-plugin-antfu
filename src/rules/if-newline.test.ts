@@ -1,4 +1,4 @@
-import { createRuleTester } from './_test'
+import { run } from './_test'
 import rule, { RULE_NAME } from './if-newline'
 
 const valids = [
@@ -13,12 +13,9 @@ const invalids = [
   ['if (true) console.log(\'hello\')', 'if (true) \nconsole.log(\'hello\')'],
 ]
 
-const ruleTester = createRuleTester({
+run({
   name: RULE_NAME,
   rule,
-})
-
-ruleTester.run({
   valid: valids,
   invalid: invalids.map(i => ({
     code: i[0],

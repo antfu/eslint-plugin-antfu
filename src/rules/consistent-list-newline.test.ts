@@ -2,7 +2,7 @@ import { expect } from 'vitest'
 import type { InvalidTestCase, ValidTestCase } from 'eslint-vitest-rule-tester'
 import { unindent as $ } from 'eslint-vitest-rule-tester'
 import rule, { RULE_NAME } from './consistent-list-newline'
-import { createRuleTester } from './_test'
+import { run } from './_test'
 
 const valids: ValidTestCase[] = [
   'const a = { foo: "bar", bar: 2 }',
@@ -172,8 +172,7 @@ const invalid: InvalidTestCase[] = [
       )
     `,
     output: o => expect(o).toMatchInlineSnapshot(`
-      "
-      const a = (
+      "const a = (
         <div>
           {text.map((
             item, 
@@ -183,8 +182,7 @@ const invalid: InvalidTestCase[] = [
             </p>
           ))}
         </div>
-      )
-      "
+      )"
     `),
     parserOptions: {
       ecmaFeatures: {
@@ -205,15 +203,13 @@ const invalid: InvalidTestCase[] = [
       )
     `,
     output: o => expect(o).toMatchInlineSnapshot(`
-      "
-      export default antfu({
+      "export default antfu({
       },{
         foo: 'bar'
       }
         // some comment
         // hello
-      )
-      "
+      )"
     `),
   },
   {
@@ -229,8 +225,7 @@ const invalid: InvalidTestCase[] = [
         );
       }`,
     output: o => expect(o).toMatchInlineSnapshot(`
-      "
-      function Foo() {
+      "function Foo() {
         return (
           <div className="text-white"      onClick="bar"      style={{ color: 'red' }}    >
             hi
@@ -257,8 +252,7 @@ const invalid: InvalidTestCase[] = [
         );
       }`,
     output: o => expect(o).toMatchInlineSnapshot(`
-      "
-      function Foo() {
+      "function Foo() {
         return (
           <div 
             className="text-white" 
@@ -290,8 +284,7 @@ const invalid: InvalidTestCase[] = [
         // hello
       )`,
     output: o => expect(o).toMatchInlineSnapshot(`
-      "
-      export default antfu({
+      "export default antfu({
       },
       // some comment
       {
@@ -304,12 +297,10 @@ const invalid: InvalidTestCase[] = [
   },
 ]
 
-const ruleTester = createRuleTester({
+run({
   name: RULE_NAME,
   rule,
-})
 
-ruleTester.run({
   valid: valids,
   invalid: invalid.map((i): InvalidTestCase =>
     typeof i === 'string'

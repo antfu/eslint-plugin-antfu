@@ -1,4 +1,4 @@
-import { createRuleTester } from './_test'
+import { run } from './_test'
 import rule, { RULE_NAME } from './import-dedupe'
 
 const valids = [
@@ -11,12 +11,9 @@ const invalids = [
   ],
 ]
 
-const ruleTester = createRuleTester({
+run({
   name: RULE_NAME,
   rule,
-})
-
-ruleTester.run({
   valid: valids,
   invalid: invalids.map(i => ({
     code: i[0],
