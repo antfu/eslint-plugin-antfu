@@ -7,18 +7,21 @@ import noImportNodeModulesByPath from './rules/no-import-node-modules-by-path'
 import noImportDist from './rules/no-import-dist'
 import noTsExportEqual from './rules/no-ts-export-equal'
 import consistentListNewline from './rules/consistent-list-newline'
+import indentUnindent from './rules/indent-unindent'
 
 const plugin = {
   meta: {
     name: 'antfu',
     version,
   },
+  // @keep-sorted
   rules: {
     'consistent-list-newline': consistentListNewline,
     'if-newline': ifNewline,
     'import-dedupe': importDedupe,
-    'no-import-node-modules-by-path': noImportNodeModulesByPath,
+    'indent-unindent': indentUnindent,
     'no-import-dist': noImportDist,
+    'no-import-node-modules-by-path': noImportNodeModulesByPath,
     'no-ts-export-equal': noTsExportEqual,
     'top-level-function': topLevelFunction,
   },

@@ -28,11 +28,11 @@ const valids: ValidTestCase[] = [
   'foo(() =>\nbar()\n)',
   `call<{\nfoo: 'bar'\n}>('')`,
   $`
-  (Object.keys(options) as KeysOptions[])
-  .forEach((key) => {
-    if (options[key] === false)
-      delete listenser[key]
-  })
+    (Object.keys(options) as KeysOptions[])
+    .forEach((key) => {
+      if (options[key] === false)
+        delete listenser[key]
+    })
   `,
   // https://github.com/antfu/eslint-plugin-antfu/issues/11
   `function fn({ foo, bar }: {\nfoo: 'foo'\nbar: 'bar'\n}) {}`,
@@ -60,10 +60,10 @@ const valids: ValidTestCase[] = [
   },
   // https://github.com/antfu/eslint-plugin-antfu/issues/15
   $`
-  export const getTodoList = request.post<
-    Params,
-    ResponseData,
-  >('/api/todo-list')
+    export const getTodoList = request.post<
+      Params,
+      ResponseData,
+    >('/api/todo-list')
   `,
   // https://github.com/antfu/eslint-plugin-antfu/issues/16
   {
@@ -74,7 +74,8 @@ const valids: ValidTestCase[] = [
           ([, params]) => getToDoList(params),
         )
         return <div></div>
-      }`,
+      }
+    `,
     parserOptions: {
       ecmaFeatures: {
         jsx: true,
@@ -82,41 +83,42 @@ const valids: ValidTestCase[] = [
     },
   },
   $`
-  bar(
-    foo => foo
-      ? ''
-      : ''
-  )
+    bar(
+      foo => foo
+        ? ''
+        : ''
+    )
   `,
   $`
-  bar(
-    (ruleName, foo) => foo
-      ? ''
-      : ''
-  )
+    bar(
+      (ruleName, foo) => foo
+        ? ''
+        : ''
+    )
   `,
   // https://github.com/antfu/eslint-plugin-antfu/issues/19
   $`
-  const a = [
-    (1),
-    (2)
-  ];
+    const a = [
+      (1),
+      (2)
+    ];
   `,
   `const a = [(1), (2)];`,
   {
     code: $`
-    function Foo() {
-      return (
-        <div 
-          className="text-white" onClick="bar"
-          style={{
-            color: 'red' 
-          }}
-        >
-          hi
-        </div>
-      );
-    }`,
+      function Foo() {
+        return (
+          <div 
+            className="text-white" onClick="bar"
+            style={{
+              color: 'red' 
+            }}
+          >
+            hi
+          </div>
+        );
+      }
+    `,
     parserOptions: {
       ecmaFeatures: {
         jsx: true,
@@ -223,7 +225,8 @@ const invalid: InvalidTestCase[] = [
             hi
           </div>
         );
-      }`,
+      }
+    `,
     output: o => expect(o).toMatchInlineSnapshot(`
       "function Foo() {
         return (
@@ -250,7 +253,8 @@ const invalid: InvalidTestCase[] = [
             hi
           </div>
         );
-      }`,
+      }
+    `,
     output: o => expect(o).toMatchInlineSnapshot(`
       "function Foo() {
         return (
@@ -282,7 +286,8 @@ const invalid: InvalidTestCase[] = [
       {
       }
         // hello
-      )`,
+      )
+    `,
     output: o => expect(o).toMatchInlineSnapshot(`
       "export default antfu({
       },
