@@ -71,7 +71,7 @@ export default createEslintRule<Options, MessageIds>({
 
     function getDelimiter(root: TSESTree.Node, current: TSESTree.Node) {
       let delimiter: string | undefined
-      if (root.type === 'TSInterfaceDeclaration') {
+      if (root.type === 'TSInterfaceDeclaration' || root.type === 'TSTypeLiteral') {
         const currentContent = context.sourceCode.text.slice(current.range[0], current.range[1])
         if (!currentContent.match(/,|;$/))
           delimiter = ','
