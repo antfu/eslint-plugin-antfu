@@ -63,10 +63,17 @@ export default createEslintRule<Options, MessageIds>({
   },
   defaultOptions: [{}],
   create: (context, [options = {}] = [{}]) => {
-    function removeLines(fixer: RuleFixer, start: number, end: number) {
+    function removeLines(fixer: RuleFixer, start: number, end: number, delimiter?: string) {
       const range = [start, end] as const
       const code = context.sourceCode.text.slice(...range)
-      return fixer.replaceTextRange(range, code.replace(/(\r\n|\n)/g, ''))
+      return fixer.replaceTextRange(range, code.replace(/(\r\n|\n)/g, delimiter ?? ''))
+    }
+
+    function getDelimiter(root: TSESTree.Node, current: TSESTree.Node) {
+      if (root.type !== 'TSInterfaceDeclaration' && root.type !== 'TSTypeLiteral')
+        return
+      const currentContent = context.sourceCode.text.slice(current.range[0], current.range[1])
+      return currentContent.match(/,|;$/) ? undefined : ','
     }
 
     function check(
@@ -129,7 +136,7 @@ export default createEslintRule<Options, MessageIds>({
                 name: node.type,
               },
               *fix(fixer) {
-                yield removeLines(fixer, lastItem!.range[1], item.range[0])
+                yield removeLines(fixer, lastItem!.range[1], item.range[0], getDelimiter(node, lastItem))
               },
             })
           }
@@ -175,7 +182,7 @@ export default createEslintRule<Options, MessageIds>({
               name: node.type,
             },
             *fix(fixer) {
-              yield removeLines(fixer, lastItem.range[1], endRange)
+              yield removeLines(fixer, lastItem.range[1], endRange, getDelimiter(node, lastItem))
             },
           })
         }

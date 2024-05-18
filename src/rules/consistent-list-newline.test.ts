@@ -141,7 +141,25 @@ const invalid: InvalidTestCase[] = [
   'const foo = (\na, b): {\na:b} => {}',
   'const foo = (\na, b): {a:b} => {}',
   'interface Foo {\na: 1,b: 2\n}',
+  {
+    description: 'Add delimiter to avoid syntax error, (interface)',
+    code: 'interface Foo {a: 1\nb: 2\n}',
+    output: o => expect(o)
+      .toMatchInlineSnapshot(`"interface Foo {a: 1,b: 2,}"`),
+  },
+  {
+    description: 'Delimiter already exists',
+    code: 'interface Foo {a: 1;\nb: 2,\nc: 3}',
+    output: o => expect(o)
+      .toMatchInlineSnapshot(`"interface Foo {a: 1;b: 2,c: 3}"`),
+  },
   'type Foo = {\na: 1,b: 2\n}',
+  {
+    description: 'Add delimiter to avoid syntax error, (type)',
+    code: 'type Foo = {a: 1\nb: 2\n}',
+    output: o => expect(o)
+      .toMatchInlineSnapshot(`"type Foo = {a: 1,b: 2,}"`),
+  },
   'type Foo = [1,2,\n3]',
   'new Foo(1,2,\n3)',
   'new Foo(\n1,2,\n3)',
