@@ -152,7 +152,6 @@ const invalid: InvalidTestCase[] = [
     code: 'type Foo = {a: 1\nb: 2\n}',
     output: o => expect(o)
       .toMatchInlineSnapshot(`"type Foo = {a: 1,b: 2,}"`),
-    only: true,
   },
   {
     description: 'Delimiter already exists',
