@@ -87,10 +87,10 @@ export default createEslintRule<Options, MessageIds>({
       const currentRange = current.range
 
       return program.comments?.some((comment) => {
-        const commentLoc = comment.range
+        const commentRange = comment.range
         return (
-          commentLoc[0] > currentRange[0]
-          && commentLoc[1] < currentRange[1]
+          commentRange[0] > currentRange[0]
+          && commentRange[1] < currentRange[1]
         )
       })
     }
