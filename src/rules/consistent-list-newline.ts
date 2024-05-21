@@ -73,7 +73,7 @@ export default createEslintRule<Options, MessageIds>({
       if (root.type !== 'TSInterfaceDeclaration' && root.type !== 'TSTypeLiteral')
         return
       const currentContent = context.sourceCode.text.slice(current.range[0], current.range[1])
-      return currentContent.match(/,|;$/) ? undefined : ','
+      return currentContent.match(/(?:,|;)$/) ? undefined : ','
     }
 
     function check(
