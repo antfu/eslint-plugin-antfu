@@ -214,6 +214,17 @@ const invalid: InvalidTestCase[] = [
     output: o => expect(o)
       .toMatchInlineSnapshot(`"interface Foo {a: 1;b: 2,c: 3}"`),
   },
+  {
+    description: 'Delimiter in the middle',
+    code: $`
+      export interface Foo {        a: 1
+        b: Pick<Bar, 'baz'>
+        c: 3
+      }
+    `,
+    output: o => expect(o)
+      .toMatchInlineSnapshot(`"export interface Foo {        a: 1,  b: Pick<Bar, 'baz'>,  c: 3,}"`),
+  },
   'type Foo = {\na: 1,b: 2\n}',
   {
     description: 'Add delimiter to avoid syntax error, (type)',
