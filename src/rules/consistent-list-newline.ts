@@ -22,6 +22,8 @@ export type Options = [{
   ObjectPattern?: boolean
   ArrayPattern?: boolean
   JSXOpeningElement?: boolean
+  JSONArrayExpression?: boolean
+  JSONObjectExpression?: boolean
 }]
 
 export default createEslintRule<Options, MessageIds>({
@@ -53,6 +55,8 @@ export default createEslintRule<Options, MessageIds>({
         ObjectPattern: { type: 'boolean' },
         ArrayPattern: { type: 'boolean' },
         JSXOpeningElement: { type: 'boolean' },
+        JSONArrayExpression: { type: 'boolean' },
+        JSONObjectExpression: { type: 'boolean' },
       } satisfies Record<keyof Options[0], { type: 'boolean' }>,
       additionalProperties: false,
     }],
@@ -257,6 +261,12 @@ export default createEslintRule<Options, MessageIds>({
           return
 
         check(node, node.attributes)
+      },
+      JSONArrayExpression(node: TSESTree.ArrayExpression) {
+        check(node, node.elements)
+      },
+      JSONObjectExpression(node: TSESTree.ObjectExpression) {
+        check(node, node.properties)
       },
     } satisfies RuleListener
 

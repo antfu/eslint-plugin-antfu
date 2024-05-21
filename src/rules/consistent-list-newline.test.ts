@@ -1,6 +1,7 @@
 import { expect } from 'vitest'
 import type { InvalidTestCase, ValidTestCase } from 'eslint-vitest-rule-tester'
 import { unindent as $ } from 'eslint-vitest-rule-tester'
+import jsoncParser from 'jsonc-eslint-parser'
 import rule, { RULE_NAME } from './consistent-list-newline'
 import { run } from './_test'
 
@@ -123,6 +124,52 @@ const valids: ValidTestCase[] = [
       ecmaFeatures: {
         jsx: true,
       },
+    },
+  },
+  {
+    code: $`
+      {
+        "foo": ["bar", "baz"]
+      }
+    `,
+    languageOptions: {
+      parser: jsoncParser,
+    },
+  },
+  {
+    code: $`
+      {
+        "foo": [
+          "bar", 
+          "baz"
+        ]
+      }
+    `,
+    languageOptions: {
+      parser: jsoncParser,
+    },
+  },
+  {
+    code: $`
+      {
+        "foo": {"a": "1", "b": "2"}
+      }
+    `,
+    languageOptions: {
+      parser: jsoncParser,
+    },
+  },
+  {
+    code: $`
+      {
+        "foo": {
+          "a": "1",
+          "b": "2"
+        }
+      }
+    `,
+    languageOptions: {
+      parser: jsoncParser,
     },
   },
 ]
@@ -316,6 +363,78 @@ const invalid: InvalidTestCase[] = [
       }
         // hello
       )"
+    `),
+  },
+  {
+    code: $`
+      {
+        "foo": ["bar",
+        "baz"],
+      }
+    `,
+    languageOptions: {
+      parser: jsoncParser,
+    },
+    output: o => expect(o).toMatchInlineSnapshot(`
+      "{
+        "foo": ["bar",  "baz"],
+      }"
+    `),
+  },
+  {
+    code: $`
+      {
+        "foo": [
+          "bar","baz"
+        ],
+      }
+    `,
+    languageOptions: {
+      parser: jsoncParser,
+    },
+    output: o => expect(o).toMatchInlineSnapshot(`
+      "{
+        "foo": [
+          "bar",
+      "baz"
+        ],
+      }"
+    `),
+  },
+  {
+    code: $`
+      {
+        "foo": {"a": "1",
+         "b": "2"}
+      }
+    `,
+    languageOptions: {
+      parser: jsoncParser,
+    },
+    output: o => expect(o).toMatchInlineSnapshot(`
+      "{
+        "foo": {"a": "1",   "b": "2"}
+      }"
+    `),
+  },
+  {
+    code: $`
+      {
+        "foo": {
+          "a": "1",         "b": "2"
+        }
+      }
+    `,
+    languageOptions: {
+      parser: jsoncParser,
+    },
+    output: o => expect(o).toMatchInlineSnapshot(`
+      "{
+        "foo": {
+          "a": "1",         
+      "b": "2"
+        }
+      }"
     `),
   },
 ]
