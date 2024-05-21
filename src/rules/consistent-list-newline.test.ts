@@ -172,6 +172,20 @@ const valids: ValidTestCase[] = [
       parser: jsoncParser,
     },
   },
+  {
+    description: 'Ignore when there is a comment',
+    code: $`
+      {
+        "foo": {          "a": "1",
+          // comment
+          "b": "2"
+        },
+      }
+    `,
+    languageOptions: {
+      parser: jsoncParser,
+    },
+  },
 ]
 
 // Check snapshot for fixed code
@@ -434,6 +448,31 @@ const invalid: InvalidTestCase[] = [
           "a": "1",         
       "b": "2"
         }
+      }"
+    `),
+  },
+  {
+    description: 'Only ignore when there is a comment',
+    code: $`
+      {
+        "foo": {          "a": "1",
+          // comment
+          "b": "2"
+        },
+        "bar": ["1",
+        "2"]
+      }
+    `,
+    languageOptions: {
+      parser: jsoncParser,
+    },
+    output: o => expect(o).toMatchInlineSnapshot(`
+      "{
+        "foo": {          "a": "1",
+          // comment
+          "b": "2"
+        },
+        "bar": ["1",  "2"]
       }"
     `),
   },

@@ -80,6 +80,21 @@ export default createEslintRule<Options, MessageIds>({
       return currentContent.match(/,|;$/) ? undefined : ','
     }
 
+    function hasComments(current: TSESTree.Node) {
+      let program: TSESTree.Node = current
+      while (program.type !== 'Program')
+        program = program.parent
+      const currentRange = current.range
+
+      return program.comments?.some((comment) => {
+        const commentLoc = comment.range
+        return (
+          commentLoc[0] > currentRange[0]
+          && commentLoc[1] < currentRange[1]
+        )
+      })
+    }
+
     function check(
       node: TSESTree.Node,
       children: (TSESTree.Node | null)[],
@@ -263,9 +278,14 @@ export default createEslintRule<Options, MessageIds>({
         check(node, node.attributes)
       },
       JSONArrayExpression(node: TSESTree.ArrayExpression) {
+        if (hasComments(node))
+          return
         check(node, node.elements)
       },
       JSONObjectExpression(node: TSESTree.ObjectExpression) {
+        if (hasComments(node))
+          return
+
         check(node, node.properties)
       },
     } satisfies RuleListener
