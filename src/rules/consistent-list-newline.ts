@@ -216,7 +216,12 @@ export default createEslintRule<Options, MessageIds>({
         check(node, node.elements)
       },
       ImportDeclaration: (node) => {
-        check(node, node.specifiers)
+        check(
+          node,
+          node.specifiers[0]?.type === 'ImportDefaultSpecifier'
+            ? node.specifiers.slice(1)
+            : node.specifiers,
+        )
       },
       ExportNamedDeclaration: (node) => {
         check(node, node.specifiers)
