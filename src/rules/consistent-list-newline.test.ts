@@ -154,7 +154,6 @@ const invalid: InvalidTestCase[] = [
       .toMatchInlineSnapshot(`"interface Foo {a: 1;b: 2,c: 3}"`),
   },
   {
-    only: true,
     description: 'Delimiter in the middle',
     code: $`
       export interface Foo {        a: 1
