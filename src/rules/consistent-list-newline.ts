@@ -22,6 +22,8 @@ export type Options = [{
   ObjectPattern?: boolean
   ArrayPattern?: boolean
   JSXOpeningElement?: boolean
+  JSONArrayExpression?: boolean
+  JSONObjectExpression?: boolean
 }]
 
 export default createEslintRule<Options, MessageIds>({
@@ -53,6 +55,8 @@ export default createEslintRule<Options, MessageIds>({
         ObjectPattern: { type: 'boolean' },
         ArrayPattern: { type: 'boolean' },
         JSXOpeningElement: { type: 'boolean' },
+        JSONArrayExpression: { type: 'boolean' },
+        JSONObjectExpression: { type: 'boolean' },
       } satisfies Record<keyof Options[0], { type: 'boolean' }>,
       additionalProperties: false,
     }],
@@ -74,6 +78,21 @@ export default createEslintRule<Options, MessageIds>({
         return
       const currentContent = context.sourceCode.text.slice(current.range[0], current.range[1])
       return currentContent.match(/(?:,|;)$/) ? undefined : ','
+    }
+
+    function hasComments(current: TSESTree.Node) {
+      let program: TSESTree.Node = current
+      while (program.type !== 'Program')
+        program = program.parent
+      const currentRange = current.range
+
+      return program.comments?.some((comment) => {
+        const commentRange = comment.range
+        return (
+          commentRange[0] > currentRange[0]
+          && commentRange[1] < currentRange[1]
+        )
+      })
     }
 
     function check(
@@ -257,6 +276,17 @@ export default createEslintRule<Options, MessageIds>({
           return
 
         check(node, node.attributes)
+      },
+      JSONArrayExpression(node: TSESTree.ArrayExpression) {
+        if (hasComments(node))
+          return
+        check(node, node.elements)
+      },
+      JSONObjectExpression(node: TSESTree.ObjectExpression) {
+        if (hasComments(node))
+          return
+
+        check(node, node.properties)
       },
     } satisfies RuleListener
 
