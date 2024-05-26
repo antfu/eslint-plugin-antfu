@@ -8,6 +8,7 @@ import noImportDist from './rules/no-import-dist'
 import noTsExportEqual from './rules/no-ts-export-equal'
 import consistentListNewline from './rules/consistent-list-newline'
 import indentUnindent from './rules/indent-unindent'
+import curly from './rules/curly'
 
 const plugin = {
   meta: {
@@ -17,6 +18,7 @@ const plugin = {
   // @keep-sorted
   rules: {
     'consistent-list-newline': consistentListNewline,
+    'curly': curly,
     'if-newline': ifNewline,
     'import-dedupe': importDedupe,
     'indent-unindent': indentUnindent,
