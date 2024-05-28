@@ -28,8 +28,12 @@ export default createEslintRule<Options, MessageIds>({
       // nested statements
       if (['IfStatement', 'WhileStatement', 'DoWhileStatement', 'ForStatement', 'ForInStatement', 'ForOfStatement'].includes(body.type))
         return true
+
+      const statement = body.type === 'ExpressionStatement'
+        ? body.expression
+        : body
       // multiline
-      if (body.loc.start.line !== body.loc.end.line)
+      if (statement.loc.start.line !== statement.loc.end.line)
         return true
       return false
     }

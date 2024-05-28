@@ -34,6 +34,25 @@ run({
         console.log('baz')
       }
     `,
+    $`
+      function identity(x) {
+        if (foo)
+          console.log('bar')
+      }
+    `,
+    $`
+      function identity(x) {
+        if (foo)
+          console.log('bar')
+        ;console.log('baz')
+      }
+    `,
+    $`
+      function identity(x) {
+        if (foo)
+          return x;
+      }
+    `,
   ],
   invalid: [
     {
