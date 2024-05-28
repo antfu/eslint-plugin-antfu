@@ -43,8 +43,9 @@ export default createEslintRule<Options, MessageIds>({
         if (
           declaration.init.body.type !== 'BlockStatement'
           && declaration.id?.loc.start.line === declaration.init?.body.loc.end.line
-        )
+        ) {
           return
+        }
 
         const arrowFn = declaration.init
         const body = declaration.init.body
