@@ -105,6 +105,16 @@ const valids: ValidTestCase[] = [
     ];
   `,
   `const a = [(1), (2)];`,
+  // https://github.com/antfu/eslint-plugin-antfu/issues/22
+  $`
+    import Icon, {
+      MailOutlined,
+      NumberOutlined,
+      QuestionCircleOutlined,
+      QuestionOutlined,
+      UserOutlined,
+    } from '@ant-design/icons';
+  `,
   {
     code: $`
       function Foo() {
