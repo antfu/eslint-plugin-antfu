@@ -21,14 +21,15 @@ export default createEslintRule<Options, MessageIds>({
   },
   defaultOptions: [],
   create: (context) => {
-    function requireCurly(body: TSESTree.Statement) {
+    function requireCurly(body: TSESTree.Statement | TSESTree.Expression) {
+      if (!body)
+        return false
       // already has curly brackets
       if (body.type === 'BlockStatement')
         return true
       // nested statements
       if (['IfStatement', 'WhileStatement', 'DoWhileStatement', 'ForStatement', 'ForInStatement', 'ForOfStatement'].includes(body.type))
         return true
-
       const statement = body.type === 'ExpressionStatement'
         ? body.expression
         : body
@@ -52,8 +53,8 @@ export default createEslintRule<Options, MessageIds>({
       })
     }
 
-    function check(...bodies: TSESTree.Statement[]) {
-      const requires = bodies.map(body => requireCurly(body))
+    function check(bodies: TSESTree.Statement[], additionalChecks: TSESTree.Expression[] = []) {
+      const requires = [...bodies, ...additionalChecks].map(body => requireCurly(body))
 
       // If any of the bodies requires curly brackets, wrap all of them to be consistent
       if (requires.some(i => i))
@@ -68,8 +69,11 @@ export default createEslintRule<Options, MessageIds>({
           return
 
         const statements: TSESTree.Statement[] = []
+        const tests: TSESTree.Expression[] = []
         function addIf(node: TSESTree.IfStatement) {
           statements.push(node.consequent)
+          if (node.test)
+            tests.push(node.test)
           if (node.alternate) {
             if (node.alternate.type === 'IfStatement')
               addIf(node.alternate)
@@ -78,22 +82,22 @@ export default createEslintRule<Options, MessageIds>({
           }
         }
         addIf(node)
-        check(...statements)
+        check(statements, tests)
       },
       WhileStatement(node) {
-        check(node.body)
+        check([node.body], [node.test])
       },
       DoWhileStatement(node) {
-        check(node.body)
+        check([node.body], [node.test])
       },
       ForStatement(node) {
-        check(node.body)
+        check([node.body])
       },
       ForInStatement(node) {
-        check(node.body)
+        check([node.body])
       },
       ForOfStatement(node) {
-        check(node.body)
+        check([node.body])
       },
     }
   },

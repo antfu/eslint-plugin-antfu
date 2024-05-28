@@ -148,5 +148,23 @@ run({
         }
       `,
     },
+    {
+      description: 'multiline-test',
+      code: $`
+        if (
+          foo 
+          || bar
+        )
+          return true
+      `,
+      output: $`
+        if (
+          foo 
+          || bar
+        ) {
+          return true
+        }
+      `,
+    },
   ],
 })
