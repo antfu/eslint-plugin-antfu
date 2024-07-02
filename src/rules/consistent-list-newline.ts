@@ -109,6 +109,15 @@ export default createEslintRule<Options, MessageIds>({
       let startToken = ['CallExpression', 'NewExpression'].includes(node.type)
         ? undefined
         : context.sourceCode.getFirstToken(node)
+      if (node.type === 'CallExpression') {
+        startToken = context.sourceCode.getTokenAfter(
+          node.typeArguments
+            ? node.typeArguments
+            : node.callee.type === 'MemberExpression'
+              ? node.callee.property
+              : node.callee,
+        )
+      }
       if (startToken?.type !== 'Punctuator')
         startToken = context.sourceCode.getTokenBefore(items[0])
 

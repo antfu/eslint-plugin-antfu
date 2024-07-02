@@ -104,6 +104,28 @@ const valids: ValidTestCase[] = [
       (2)
     ];
   `,
+  // https://github.com/antfu/eslint-plugin-antfu/issues/27
+  $`
+    this.foobar(
+      (x),
+      y,
+      z
+    )
+  `,
+  $`
+    foobar(
+      (x),
+      y,
+      z
+    )
+  `,
+  $`
+    foobar<A>(
+      (x),
+      y,
+      z
+    )
+  `,
   `const a = [(1), (2)];`,
   // https://github.com/antfu/eslint-plugin-antfu/issues/22
   $`
