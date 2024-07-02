@@ -104,6 +104,7 @@ const valids: ValidTestCase[] = [
       (2)
     ];
   `,
+  `const a = [(1), (2)];`,
   // https://github.com/antfu/eslint-plugin-antfu/issues/27
   $`
     this.foobar(
@@ -126,7 +127,6 @@ const valids: ValidTestCase[] = [
       z
     )
   `,
-  `const a = [(1), (2)];`,
   // https://github.com/antfu/eslint-plugin-antfu/issues/22
   $`
     import Icon, {
