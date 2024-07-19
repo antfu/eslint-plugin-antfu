@@ -19,8 +19,8 @@ export default createEslintRule<Options, MessageIds>({
   },
   defaultOptions: [],
   create: (context) => {
-    function isDist(path: string) {
-      return (path.startsWith('.') && path.match(/\/dist(\/|$)/))
+    function isDist(path: string): boolean {
+      return Boolean((path.startsWith('.') && path.match(/\/dist(\/|$)/)))
         || path === 'dist'
     }
 

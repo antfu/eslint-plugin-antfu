@@ -1,4 +1,4 @@
-import type { RuleFixer, RuleListener } from '@typescript-eslint/utils/ts-eslint'
+import type { RuleFix, RuleFixer, RuleListener } from '@typescript-eslint/utils/ts-eslint'
 import type { TSESTree } from '@typescript-eslint/utils'
 import { createEslintRule } from '../utils'
 
@@ -67,26 +67,26 @@ export default createEslintRule<Options, MessageIds>({
   },
   defaultOptions: [{}],
   create: (context, [options = {}] = [{}]) => {
-    function removeLines(fixer: RuleFixer, start: number, end: number, delimiter?: string) {
+    function removeLines(fixer: RuleFixer, start: number, end: number, delimiter?: string): RuleFix {
       const range = [start, end] as const
       const code = context.sourceCode.text.slice(...range)
       return fixer.replaceTextRange(range, code.replace(/(\r\n|\n)/g, delimiter ?? ''))
     }
 
-    function getDelimiter(root: TSESTree.Node, current: TSESTree.Node) {
+    function getDelimiter(root: TSESTree.Node, current: TSESTree.Node): string | undefined {
       if (root.type !== 'TSInterfaceDeclaration' && root.type !== 'TSTypeLiteral')
         return
       const currentContent = context.sourceCode.text.slice(current.range[0], current.range[1])
       return currentContent.match(/(?:,|;)$/) ? undefined : ','
     }
 
-    function hasComments(current: TSESTree.Node) {
+    function hasComments(current: TSESTree.Node): boolean {
       let program: TSESTree.Node = current
       while (program.type !== 'Program')
         program = program.parent
       const currentRange = current.range
 
-      return program.comments?.some((comment) => {
+      return !!program.comments?.some((comment) => {
         const commentRange = comment.range
         return (
           commentRange[0] > currentRange[0]
@@ -99,7 +99,7 @@ export default createEslintRule<Options, MessageIds>({
       node: TSESTree.Node,
       children: (TSESTree.Node | null)[],
       nextNode?: TSESTree.Node,
-    ) {
+    ): void {
       const items = children.filter(Boolean) as TSESTree.Node[]
       if (items.length === 0)
         return
@@ -321,5 +321,5 @@ export default createEslintRule<Options, MessageIds>({
   },
 })
 
-// eslint-disable-next-line unused-imports/no-unused-vars
+// eslint-disable-next-line unused-imports/no-unused-vars, ts/explicit-function-return-type
 function exportType<A, B extends A>() {}

@@ -5,6 +5,9 @@ const local = await tsImport('./src/index.ts', import.meta.url).then(r => r.defa
 
 export default antfu(
   {
+    type: 'lib',
+  },
+  {
     ignores: ['vendor'],
   },
   {
