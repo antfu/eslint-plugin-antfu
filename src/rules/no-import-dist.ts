@@ -10,7 +10,6 @@ export default createEslintRule<Options, MessageIds>({
     type: 'problem',
     docs: {
       description: 'Prevent importing modules in `dist` folder',
-      recommended: 'recommended',
     },
     schema: [],
     messages: {

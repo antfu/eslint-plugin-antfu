@@ -11,7 +11,6 @@ export default createEslintRule<Options, MessageIds>({
     type: 'layout',
     docs: {
       description: 'Enforce Anthony\'s style of curly bracket',
-      recommended: 'stylistic',
     },
     fixable: 'whitespace',
     schema: [],

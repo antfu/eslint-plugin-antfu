@@ -32,7 +32,6 @@ export default createEslintRule<Options, MessageIds>({
     type: 'layout',
     docs: {
       description: 'Having line breaks styles to object, array and named imports',
-      recommended: 'stylistic',
     },
     fixable: 'whitespace',
     schema: [{

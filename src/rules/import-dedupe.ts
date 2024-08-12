@@ -10,7 +10,6 @@ export default createEslintRule<Options, MessageIds>({
     type: 'problem',
     docs: {
       description: 'Fix duplication in imports',
-      recommended: 'strict',
     },
     fixable: 'code',
     schema: [],

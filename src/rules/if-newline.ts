@@ -10,7 +10,6 @@ export default createEslintRule<Options, MessageIds>({
     type: 'layout',
     docs: {
       description: 'Newline after if',
-      recommended: 'stylistic',
     },
     fixable: 'whitespace',
     schema: [],
