@@ -1,18 +1,18 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`consistent-list-newline > invalid > const [
-a,b] = c 1`] = `
-"const [
-a,
-b
-] = c"
+exports[`consistent-list-newline > invalid > Invalid #0: const a = {
+foo: "bar", bar: 2 } 1`] = `
+"const a = {
+foo: "bar", 
+bar: 2
+ }"
 `;
 
-exports[`consistent-list-newline > invalid > const {a,
-b
-} = c 1`] = `"const {a,b} = c"`;
+exports[`consistent-list-newline > invalid > Invalid #1: const a = {foo: "bar", 
+bar: 2
+} 1`] = `"const a = {foo: "bar", bar: 2}"`;
 
-exports[`consistent-list-newline > invalid > const a = [
+exports[`consistent-list-newline > invalid > Invalid #2: const a = [
 1, 2, 3] 1`] = `
 "const a = [
 1, 
@@ -21,23 +21,38 @@ exports[`consistent-list-newline > invalid > const a = [
 ]"
 `;
 
-exports[`consistent-list-newline > invalid > const a = [1, 
+exports[`consistent-list-newline > invalid > Invalid #3: const a = [1, 
 2, 3
 ] 1`] = `"const a = [1, 2, 3]"`;
 
-exports[`consistent-list-newline > invalid > const a = {
-foo: "bar", bar: 2 } 1`] = `
-"const a = {
-foo: "bar", 
-bar: 2
- }"
+exports[`consistent-list-newline > invalid > Invalid #4: import {
+foo, bar } from "foo" 1`] = `
+"import {
+foo, 
+bar
+ } from "foo""
 `;
 
-exports[`consistent-list-newline > invalid > const a = {foo: "bar", 
-bar: 2
-} 1`] = `"const a = {foo: "bar", bar: 2}"`;
+exports[`consistent-list-newline > invalid > Invalid #5: import { foo, 
+bar } from "foo" 1`] = `"import { foo, bar } from "foo""`;
 
-exports[`consistent-list-newline > invalid > const foo = (
+exports[`consistent-list-newline > invalid > Invalid #6: log(
+a, b) 1`] = `
+"log(
+a, 
+b
+)"
+`;
+
+exports[`consistent-list-newline > invalid > Invalid #7: function foo(
+a, b) {} 1`] = `
+"function foo(
+a, 
+b
+) {}"
+`;
+
+exports[`consistent-list-newline > invalid > Invalid #8: const foo = (
 a, b) => {} 1`] = `
 "const foo = (
 a, 
@@ -45,7 +60,7 @@ b
 ) => {}"
 `;
 
-exports[`consistent-list-newline > invalid > const foo = (
+exports[`consistent-list-newline > invalid > Invalid #9: const foo = (
 a, b): {
 a:b} => {} 1`] = `
 "const foo = (
@@ -56,7 +71,7 @@ a:b
 } => {}"
 `;
 
-exports[`consistent-list-newline > invalid > const foo = (
+exports[`consistent-list-newline > invalid > Invalid #10: const foo = (
 a, b): {a:b} => {} 1`] = `
 "const foo = (
 a, 
@@ -64,7 +79,41 @@ b
 ): {a:b} => {}"
 `;
 
-exports[`consistent-list-newline > invalid > foo(
+exports[`consistent-list-newline > invalid > Invalid #11: interface Foo {
+a: 1,b: 2
+} 1`] = `
+"interface Foo {
+a: 1,
+b: 2
+}"
+`;
+
+exports[`consistent-list-newline > invalid > Invalid #15: type Foo = {
+a: 1,b: 2
+} 1`] = `
+"type Foo = {
+a: 1,
+b: 2
+}"
+`;
+
+exports[`consistent-list-newline > invalid > Invalid #17: type Foo = [1,2,
+3] 1`] = `"type Foo = [1,2,3]"`;
+
+exports[`consistent-list-newline > invalid > Invalid #18: new Foo(1,2,
+3) 1`] = `"new Foo(1,2,3)"`;
+
+exports[`consistent-list-newline > invalid > Invalid #19: new Foo(
+1,2,
+3) 1`] = `
+"new Foo(
+1,
+2,
+3
+)"
+`;
+
+exports[`consistent-list-newline > invalid > Invalid #20: foo(
 ()=>bar(),
 ()=>
 baz()) 1`] = `
@@ -75,22 +124,17 @@ baz()
 )"
 `;
 
-exports[`consistent-list-newline > invalid > foo(()=>bar(),
+exports[`consistent-list-newline > invalid > Invalid #21: foo(()=>bar(),
 ()=>
 baz()) 1`] = `
 "foo(()=>bar(),()=>
 baz())"
 `;
 
-exports[`consistent-list-newline > invalid > foo(([
-a,b]) => {}) 1`] = `
-"foo(([
-a,
-b
-]) => {})"
-`;
+exports[`consistent-list-newline > invalid > Invalid #22: foo<X,
+Y>(1, 2) 1`] = `"foo<X,Y>(1, 2)"`;
 
-exports[`consistent-list-newline > invalid > foo<
+exports[`consistent-list-newline > invalid > Invalid #23: foo<
 X,Y>(
 1, 2) 1`] = `
 "foo<
@@ -102,18 +146,7 @@ Y
 )"
 `;
 
-exports[`consistent-list-newline > invalid > foo<X,
-Y>(1, 2) 1`] = `"foo<X,Y>(1, 2)"`;
-
-exports[`consistent-list-newline > invalid > function foo(
-a, b) {} 1`] = `
-"function foo(
-a, 
-b
-) {}"
-`;
-
-exports[`consistent-list-newline > invalid > function foo<
+exports[`consistent-list-newline > invalid > Invalid #24: function foo<
 X,Y>() {} 1`] = `
 "function foo<
 X,
@@ -121,55 +154,22 @@ Y
 >() {}"
 `;
 
-exports[`consistent-list-newline > invalid > import {
-foo, bar } from "foo" 1`] = `
-"import {
-foo, 
-bar
- } from "foo""
-`;
-
-exports[`consistent-list-newline > invalid > import { foo, 
-bar } from "foo" 1`] = `"import { foo, bar } from "foo""`;
-
-exports[`consistent-list-newline > invalid > interface Foo {
-a: 1,b: 2
-} 1`] = `
-"interface Foo {
-a: 1,
-b: 2
-}"
-`;
-
-exports[`consistent-list-newline > invalid > log(
-a, b) 1`] = `
-"log(
-a, 
+exports[`consistent-list-newline > invalid > Invalid #25: const {a,
 b
-)"
+} = c 1`] = `"const {a,b} = c"`;
+
+exports[`consistent-list-newline > invalid > Invalid #26: const [
+a,b] = c 1`] = `
+"const [
+a,
+b
+] = c"
 `;
 
-exports[`consistent-list-newline > invalid > new Foo(
-1,2,
-3) 1`] = `
-"new Foo(
-1,
-2,
-3
-)"
-`;
-
-exports[`consistent-list-newline > invalid > new Foo(1,2,
-3) 1`] = `"new Foo(1,2,3)"`;
-
-exports[`consistent-list-newline > invalid > type Foo = [1,2,
-3] 1`] = `"type Foo = [1,2,3]"`;
-
-exports[`consistent-list-newline > invalid > type Foo = {
-a: 1,b: 2
-} 1`] = `
-"type Foo = {
-a: 1,
-b: 2
-}"
+exports[`consistent-list-newline > invalid > Invalid #27: foo(([
+a,b]) => {}) 1`] = `
+"foo(([
+a,
+b
+]) => {})"
 `;
