@@ -519,6 +519,27 @@ const invalid: InvalidTestCase[] = [
       }"
     `),
   },
+  {
+    description: 'Check for function arguments in type',
+    code: $`
+      interface Foo {
+        bar: (
+          foo: string, bar: {
+            bar: string, baz: string }) => void
+      }
+    `,
+    output: o => expect(o).toMatchInlineSnapshot(`
+      "interface Foo {
+        bar: (
+          foo: string, 
+      bar: {
+            bar: string, 
+      baz: string
+       }
+      ) => void
+      }"
+    `),
+  },
 ]
 
 run({

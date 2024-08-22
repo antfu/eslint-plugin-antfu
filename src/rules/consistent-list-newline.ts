@@ -6,24 +6,25 @@ export const RULE_NAME = 'consistent-list-newline'
 export type MessageIds = 'shouldWrap' | 'shouldNotWrap'
 export type Options = [{
   ArrayExpression?: boolean
+  ArrayPattern?: boolean
   ArrowFunctionExpression?: boolean
   CallExpression?: boolean
   ExportNamedDeclaration?: boolean
   FunctionDeclaration?: boolean
   FunctionExpression?: boolean
   ImportDeclaration?: boolean
+  JSONArrayExpression?: boolean
+  JSONObjectExpression?: boolean
+  JSXOpeningElement?: boolean
   NewExpression?: boolean
   ObjectExpression?: boolean
+  ObjectPattern?: boolean
+  TSFunctionType?: boolean
   TSInterfaceDeclaration?: boolean
   TSTupleType?: boolean
   TSTypeLiteral?: boolean
   TSTypeParameterDeclaration?: boolean
   TSTypeParameterInstantiation?: boolean
-  ObjectPattern?: boolean
-  ArrayPattern?: boolean
-  JSXOpeningElement?: boolean
-  JSONArrayExpression?: boolean
-  JSONObjectExpression?: boolean
 }]
 
 export default createEslintRule<Options, MessageIds>({
@@ -38,24 +39,25 @@ export default createEslintRule<Options, MessageIds>({
       type: 'object',
       properties: {
         ArrayExpression: { type: 'boolean' },
+        ArrayPattern: { type: 'boolean' },
         ArrowFunctionExpression: { type: 'boolean' },
         CallExpression: { type: 'boolean' },
         ExportNamedDeclaration: { type: 'boolean' },
         FunctionDeclaration: { type: 'boolean' },
         FunctionExpression: { type: 'boolean' },
         ImportDeclaration: { type: 'boolean' },
+        JSONArrayExpression: { type: 'boolean' },
+        JSONObjectExpression: { type: 'boolean' },
+        JSXOpeningElement: { type: 'boolean' },
         NewExpression: { type: 'boolean' },
         ObjectExpression: { type: 'boolean' },
+        ObjectPattern: { type: 'boolean' },
+        TSFunctionType: { type: 'boolean' },
         TSInterfaceDeclaration: { type: 'boolean' },
         TSTupleType: { type: 'boolean' },
         TSTypeLiteral: { type: 'boolean' },
         TSTypeParameterDeclaration: { type: 'boolean' },
         TSTypeParameterInstantiation: { type: 'boolean' },
-        ObjectPattern: { type: 'boolean' },
-        ArrayPattern: { type: 'boolean' },
-        JSXOpeningElement: { type: 'boolean' },
-        JSONArrayExpression: { type: 'boolean' },
-        JSONObjectExpression: { type: 'boolean' },
       } satisfies Record<keyof Options[0], { type: 'boolean' }>,
       additionalProperties: false,
     }],
@@ -268,6 +270,9 @@ export default createEslintRule<Options, MessageIds>({
       },
       TSTupleType: (node) => {
         check(node, node.elementTypes)
+      },
+      TSFunctionType: (node) => {
+        check(node, node.params)
       },
       NewExpression: (node) => {
         check(node, node.arguments)
