@@ -2,10 +2,14 @@ import type { RuleListener, RuleWithMeta, RuleWithMetaAndName } from '@typescrip
 import type { RuleContext } from '@typescript-eslint/utils/ts-eslint'
 import type { Rule } from 'eslint'
 
+// @keep-sorted
 const hasDocs = [
+  'consistent-chaining',
   'consistent-list-newline',
+  'curly',
   'if-newline',
   'import-dedupe',
+  'indent-unindent',
   'top-level-function',
 ]
 

@@ -826,7 +826,7 @@ packages:
     resolution: {integrity: sha512-1/sA4dwrzBAyeUoQ6oxahHKmrZvsnLCg4RfxW3ZFGGmQkSNQPFNLV9CUEFQP1x9EYXHTo5p6xdhZM1Ne9p/AfA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
-      eslint: ^9.9.0
+      eslint: ^6.0.0 || ^7.0.0 || >=8.0.0
 
   '@eslint-community/regexpp@4.11.0':
     resolution: {integrity: sha512-G/M/tIiMrTAxEWRfLfQJMmGNX28IxBg4PBz8XqQhqUHLFI6TL2htpIB1iQCj144V5ee/JaKyT9/WZ0MGZWfA7A==}
@@ -1739,7 +1739,7 @@ packages:
     resolution: {integrity: sha512-3RQOsJEoAExM3KHAayvTpRJQOYxTETP89RS9x0QRBK4cvCut0Tyjmb1xVQWY8ibC49M0B+QeSGrVZhtbcxOl4Q==}
     peerDependencies:
       eslint: ^9.0.0
-      vitest: ^2.0.5
+      vitest: ^1.0.0 || ^2.0.0
 
   eslint@9.9.0:
     resolution: {integrity: sha512-JfiKJrbx0506OEerjK2Y1QlldtBxkAlLxT5OEcRF8uaQ86noDe2k31Vw9rnSWv+MXZHj7OOUV/dA0AhdLFcyvA==}

@@ -7,6 +7,7 @@ import noImportNodeModulesByPath from './rules/no-import-node-modules-by-path'
 import noImportDist from './rules/no-import-dist'
 import noTsExportEqual from './rules/no-ts-export-equal'
 import consistentListNewline from './rules/consistent-list-newline'
+import consistentChaining from './rules/consistent-chaining'
 import indentUnindent from './rules/indent-unindent'
 import curly from './rules/curly'
 
@@ -17,6 +18,7 @@ const plugin = {
   },
   // @keep-sorted
   rules: {
+    'consistent-chaining': consistentChaining,
     'consistent-list-newline': consistentListNewline,
     'curly': curly,
     'if-newline': ifNewline,
