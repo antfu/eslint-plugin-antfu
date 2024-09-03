@@ -17,6 +17,12 @@ export default antfu(
       'antfu/indent-unindent': 'error',
     },
   },
+  {
+    rules: {
+      'unicorn/consistent-function-scoping': 'off',
+      'antfu/consistent-chaining': 'error',
+    },
+  },
 )
   // replace local config
   .onResolved((configs) => {

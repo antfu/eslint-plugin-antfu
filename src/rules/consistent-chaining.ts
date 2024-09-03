@@ -45,14 +45,10 @@ export default createEslintRule<Options, MessageIds>({
               current = current.callee
               break
             }
-            case 'Identifier': {
+            default: {
+              // Other type of note, that means we are probably reaching out the head
               current = undefined
               break
-            }
-            default: {
-              console.warn(`[eslint-plugin-antfu/consistent-chaining] Unexpected token ${current.type}, it's likely a bug of the rule. Please report to https://github.com/antfu/eslint-plugin-antfu.`)
-              console.warn('Token', current)
-              throw new Error('unknown node')
             }
           }
         }
