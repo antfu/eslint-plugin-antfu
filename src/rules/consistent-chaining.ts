@@ -68,6 +68,9 @@ export default createEslintRule<Options, MessageIds>({
             context.report({
               messageId: mode === 'single' ? 'shouldNotWrap' : 'shouldWrap',
               loc: token.loc,
+              data: {
+                name: root.type,
+              },
               fix(fixer) {
                 if (mode === 'multi')
                   return fixer.insertTextAfter(tokenBefore, '\n')
