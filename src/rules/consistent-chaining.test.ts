@@ -13,6 +13,12 @@ const valids: ValidTestCase[] = [
       .baz()
       .boo()
   `,
+  $`
+    Math.random()
+      .toString()
+      .split('')
+      .map(Number)
+  `,
 ]
 
 // Check snapshot for fixed code
@@ -76,6 +82,68 @@ const invalid: InvalidTestCase[] = [
           .baz[1]()
         .boo
         .bar()"
+      `),
+  },
+  {
+    code: $`
+      Math.random()
+        .toString()
+        .split('').map(Number)
+    `,
+    output: o => expect(o)
+      .toMatchInlineSnapshot(`
+        "Math.random()
+          .toString()
+          .split('')
+        .map(Number)"
+      `),
+  },
+  {
+    code: $`
+      this.foo
+        .toString()
+        .split('').map(Number)
+    `,
+    output: o => expect(o)
+      .toMatchInlineSnapshot(`
+        "this.foo
+          .toString()
+          .split('')
+        .map(Number)"
+      `),
+  },
+  {
+    code: $`
+      Math
+        .random() .toString() .split('').map(Number)
+    `,
+    output: o => expect(o)
+      .toMatchInlineSnapshot(`
+        "Math
+          .random()
+         .toString()
+         .split('')
+        .map(Number)"
+      `),
+  },
+  {
+    code: $`
+      [foo].map(x => x)
+        .filter(x => x)
+    `,
+    output: o => expect(o)
+      .toMatchInlineSnapshot(`"[foo].map(x => x).filter(x => x)"`),
+  },
+  {
+    code: $`
+      [foo]
+        .map(x => x).filter(x => x)
+    `,
+    output: o => expect(o)
+      .toMatchInlineSnapshot(`
+        "[foo]
+          .map(x => x)
+        .filter(x => x)"
       `),
   },
 ]

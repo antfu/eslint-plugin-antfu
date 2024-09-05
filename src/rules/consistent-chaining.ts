@@ -3,7 +3,11 @@ import { createEslintRule } from '../utils'
 
 export const RULE_NAME = 'consistent-chaining'
 export type MessageIds = 'shouldWrap' | 'shouldNotWrap'
-export type Options = []
+export type Options = [
+  {
+    allowFirstPropertyAccess?: boolean
+  },
+]
 
 export default createEslintRule<Options, MessageIds>({
   name: RULE_NAME,
@@ -13,15 +17,36 @@ export default createEslintRule<Options, MessageIds>({
       description: 'Having line breaks styles to object, array and named imports',
     },
     fixable: 'whitespace',
-    schema: [],
+    schema: [
+      {
+        type: 'object',
+        properties: {
+          allowFirstPropertyAccess: {
+            type: 'boolean',
+            description: 'Allow first property access to be on the same line',
+            default: true,
+          },
+        },
+        additionalProperties: false,
+      },
+    ],
     messages: {
       shouldWrap: 'Should have line breaks between items, in node {{name}}',
       shouldNotWrap: 'Should not have line breaks between items, in node {{name}}',
     },
   },
-  defaultOptions: [],
+  defaultOptions: [
+    {
+      allowFirstPropertyAccess: true,
+    },
+  ],
   create: (context) => {
     const knownRoot = new WeakSet<any>()
+
+    const {
+      allowFirstPropertyAccess = true,
+    } = context.options[0] || {}
+
     return {
       MemberExpression(node) {
         let root: TSESTree.Node = node
@@ -53,13 +78,22 @@ export default createEslintRule<Options, MessageIds>({
           }
         }
 
-        let mode: 'single' | 'multi' = 'multi'
+        let mode: 'single' | 'multi' | null = null
 
         members.forEach((m, idx) => {
           const token = context.sourceCode.getTokenBefore(m.property)!
           const tokenBefore = context.sourceCode.getTokenBefore(token)!
           const currentMode: 'single' | 'multi' = token.loc.start.line === tokenBefore.loc.end.line ? 'single' : 'multi'
-          if (idx === 0) {
+
+          if (
+            idx === 0
+            && allowFirstPropertyAccess
+            && (m.object.type === 'ThisExpression' || m.object.type === 'Identifier')
+            && currentMode === 'single'
+          ) {
+            return
+          }
+          if (mode == null) {
             mode = currentMode
             return
           }
