@@ -19,6 +19,18 @@ const valids: ValidTestCase[] = [
       .split('')
       .map(Number)
   `,
+  $`
+    foo.bar.baz()
+      .toString()
+      .split('')
+      .map(Number)
+  `,
+  $`
+    foo.bar.baz
+      .toString()
+      .split('')
+      .map(Number)
+  `,
 ]
 
 // Check snapshot for fixed code
@@ -144,6 +156,18 @@ const invalid: InvalidTestCase[] = [
         "[foo]
           .map(x => x)
         .filter(x => x)"
+      `),
+  },
+  {
+    code: $`
+      foo.bar.bar
+        .filter().map()
+    `,
+    output: o => expect(o)
+      .toMatchInlineSnapshot(`
+        "foo.bar.bar
+          .filter()
+        .map()"
       `),
   },
 ]

@@ -5,7 +5,7 @@ export const RULE_NAME = 'consistent-chaining'
 export type MessageIds = 'shouldWrap' | 'shouldNotWrap'
 export type Options = [
   {
-    allowFirstPropertyAccess?: boolean
+    allowLeadingPropertyAccess?: boolean
   },
 ]
 
@@ -21,9 +21,9 @@ export default createEslintRule<Options, MessageIds>({
       {
         type: 'object',
         properties: {
-          allowFirstPropertyAccess: {
+          allowLeadingPropertyAccess: {
             type: 'boolean',
-            description: 'Allow first property access to be on the same line',
+            description: 'Allow leading property access to be on the same line',
             default: true,
           },
         },
@@ -37,14 +37,14 @@ export default createEslintRule<Options, MessageIds>({
   },
   defaultOptions: [
     {
-      allowFirstPropertyAccess: true,
+      allowLeadingPropertyAccess: true,
     },
   ],
   create: (context) => {
     const knownRoot = new WeakSet<any>()
 
     const {
-      allowFirstPropertyAccess = true,
+      allowLeadingPropertyAccess = true,
     } = context.options[0] || {}
 
     return {
@@ -78,21 +78,23 @@ export default createEslintRule<Options, MessageIds>({
           }
         }
 
+        let leadingPropertyAcccess = allowLeadingPropertyAccess
         let mode: 'single' | 'multi' | null = null
 
-        members.forEach((m, idx) => {
+        members.forEach((m) => {
           const token = context.sourceCode.getTokenBefore(m.property)!
           const tokenBefore = context.sourceCode.getTokenBefore(token)!
           const currentMode: 'single' | 'multi' = token.loc.start.line === tokenBefore.loc.end.line ? 'single' : 'multi'
 
           if (
-            idx === 0
-            && allowFirstPropertyAccess
-            && (m.object.type === 'ThisExpression' || m.object.type === 'Identifier')
+            leadingPropertyAcccess
+            && (m.object.type === 'ThisExpression' || m.object.type === 'Identifier' || m.object.type === 'MemberExpression' || m.object.type === 'Literal')
             && currentMode === 'single'
           ) {
             return
           }
+
+          leadingPropertyAcccess = false
           if (mode == null) {
             mode = currentMode
             return
