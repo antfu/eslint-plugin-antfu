@@ -1,5 +1,5 @@
-import type { RuleFix, RuleFixer, RuleListener } from '@typescript-eslint/utils/ts-eslint'
 import type { TSESTree } from '@typescript-eslint/utils'
+import type { RuleFix, RuleFixer, RuleListener } from '@typescript-eslint/utils/ts-eslint'
 import { createEslintRule } from '../utils'
 
 export const RULE_NAME = 'consistent-list-newline'

@@ -1,8 +1,8 @@
+import { unindent as $ } from 'eslint-vitest-rule-tester'
 import { expect } from 'vitest'
 import type { InvalidTestCase, ValidTestCase } from 'eslint-vitest-rule-tester'
-import { unindent as $ } from 'eslint-vitest-rule-tester'
-import rule, { RULE_NAME } from './consistent-chaining'
 import { run } from './_test'
+import rule, { RULE_NAME } from './consistent-chaining'
 
 const valids: ValidTestCase[] = [
   'foo().bar().baz()[1].dar',

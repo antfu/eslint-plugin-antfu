@@ -1,9 +1,9 @@
-import { expect } from 'vitest'
-import type { InvalidTestCase, ValidTestCase } from 'eslint-vitest-rule-tester'
 import { unindent as $ } from 'eslint-vitest-rule-tester'
 import jsoncParser from 'jsonc-eslint-parser'
-import rule, { RULE_NAME } from './consistent-list-newline'
+import { expect } from 'vitest'
+import type { InvalidTestCase, ValidTestCase } from 'eslint-vitest-rule-tester'
 import { run } from './_test'
+import rule, { RULE_NAME } from './consistent-list-newline'
 
 const valids: ValidTestCase[] = [
   'const a = { foo: "bar", bar: 2 }',

@@ -1,15 +1,15 @@
 import type { ESLint, Linter } from 'eslint'
 import { version } from '../package.json'
+import consistentChaining from './rules/consistent-chaining'
+import consistentListNewline from './rules/consistent-list-newline'
+import curly from './rules/curly'
 import ifNewline from './rules/if-newline'
 import importDedupe from './rules/import-dedupe'
-import topLevelFunction from './rules/top-level-function'
-import noImportNodeModulesByPath from './rules/no-import-node-modules-by-path'
-import noImportDist from './rules/no-import-dist'
-import noTsExportEqual from './rules/no-ts-export-equal'
-import consistentListNewline from './rules/consistent-list-newline'
-import consistentChaining from './rules/consistent-chaining'
 import indentUnindent from './rules/indent-unindent'
-import curly from './rules/curly'
+import noImportDist from './rules/no-import-dist'
+import noImportNodeModulesByPath from './rules/no-import-node-modules-by-path'
+import noTsExportEqual from './rules/no-ts-export-equal'
+import topLevelFunction from './rules/top-level-function'
 
 const plugin = {
   meta: {
