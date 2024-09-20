@@ -8,6 +8,7 @@ import importDedupe from './rules/import-dedupe'
 import indentUnindent from './rules/indent-unindent'
 import noImportDist from './rules/no-import-dist'
 import noImportNodeModulesByPath from './rules/no-import-node-modules-by-path'
+import noTopLevelAwait from './rules/no-top-level-await'
 import noTsExportEqual from './rules/no-ts-export-equal'
 import topLevelFunction from './rules/top-level-function'
 
@@ -26,6 +27,7 @@ const plugin = {
     'indent-unindent': indentUnindent,
     'no-import-dist': noImportDist,
     'no-import-node-modules-by-path': noImportNodeModulesByPath,
+    'no-top-level-await': noTopLevelAwait,
     'no-ts-export-equal': noTsExportEqual,
     'top-level-function': topLevelFunction,
   },
