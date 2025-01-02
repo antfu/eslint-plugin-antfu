@@ -15,9 +15,9 @@ const hasDocs = [
 
 const blobUrl = 'https://github.com/antfu/eslint-plugin-antfu/blob/main/src/rules/'
 
-export interface RuleModule<
+export type RuleModule<
   T extends readonly unknown[],
-> extends Rule.RuleModule {
+> = Rule.RuleModule & {
   defaultOptions: T
 }
 
