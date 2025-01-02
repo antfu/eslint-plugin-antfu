@@ -48,6 +48,30 @@ const invalids = [
     'export const foo = async () => \n({})',
     'export async function foo () {\n  return {}\n}',
   ],
+  [
+    'const foo = function () {}',
+    'function foo () {}',
+  ],
+  [
+    'const foo = function (as: string, bar: number) { return as + bar }',
+    'function foo (as: string, bar: number) { return as + bar }',
+  ],
+  [
+    'const foo = function <K, T extends Boolean>(as: string, bar: number): Omit<T, K> { return as + bar }',
+    'function foo <K, T extends Boolean>(as: string, bar: number): Omit<T, K> { return as + bar }',
+  ],
+  [
+    'export const foo = function () {}',
+    'export function foo () {}',
+  ],
+  [
+    'export const foo = function () { \nreturn {} }',
+    'export function foo () { \nreturn {} }',
+  ],
+  [
+    'export const foo = async function () { \nreturn {}\n }',
+    'export async function foo () { \nreturn {}\n }',
+  ],
 ]
 
 run({
