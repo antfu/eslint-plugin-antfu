@@ -176,9 +176,9 @@ export default createEslintRule<Options, MessageIds>({
 
       const endRange = nextNode
         ? Math.min(
-          context.sourceCode.getTokenBefore(nextNode)!.range[0],
-          node.range[1],
-        )
+            context.sourceCode.getTokenBefore(nextNode)!.range[0],
+            node.range[1],
+          )
         : node.range[1]
       const endLoc = context.sourceCode.getLocFromIndex(endRange)
 
