@@ -540,6 +540,117 @@ const invalid: InvalidTestCase[] = [
       }"
     `),
   },
+  {
+    code: $`
+      interface foo {
+      a:1}
+    `,
+    output: o => expect(o).toMatchInlineSnapshot(`
+      "interface foo {
+      a:1
+      }"
+    `),
+  },
+  {
+    code: $`
+      interface foo {a:1
+      }
+    `,
+    output: o => expect(o).toMatchInlineSnapshot(`
+      "interface foo {a:1}"
+    `),
+  },
+  {
+    code: $`
+      type foo = {
+      a:1}
+    `,
+    output: o => expect(o).toMatchInlineSnapshot(`
+      "type foo = {
+      a:1
+      }"
+    `),
+  },
+  {
+    code: $`
+      type foo = {a:1
+      }
+    `,
+    output: o => expect(o).toMatchInlineSnapshot(`
+      "type foo = {a:1}"
+    `),
+  },
+  {
+    code: $`
+      type foo = [
+      1]
+    `,
+    output: o => expect(o).toMatchInlineSnapshot(`
+      "type foo = [
+      1
+      ]"
+    `),
+  },
+  {
+    code: $`
+      type foo = [1
+      ]
+    `,
+    output: o => expect(o).toMatchInlineSnapshot(`
+      "type foo = [1]"
+    `),
+  },
+  {
+    code: $`
+      const foo = [
+      1]
+    `,
+    output: o => expect(o).toMatchInlineSnapshot(`
+      "const foo = [
+      1
+      ]"
+    `),
+  },
+  {
+    code: $`
+      const foo = {
+      a:1}
+    `,
+    output: o => expect(o).toMatchInlineSnapshot(`
+      "const foo = {
+      a:1
+      }"
+    `),
+  },
+  {
+    code: $`
+      const foo = {a:1
+      }
+    `,
+    output: o => expect(o).toMatchInlineSnapshot(`
+      "const foo = {a:1}"
+    `),
+  },
+  {
+    code: $`
+      function foo(a
+      ){}
+    `,
+    output: o => expect(o).toMatchInlineSnapshot(`
+      "function foo(a){}"
+    `),
+  },
+  {
+    code: $`
+      function foo(
+      a){}
+    `,
+    output: o => expect(o).toMatchInlineSnapshot(`
+      "function foo(
+      a
+      ){}"
+    `),
+  },
 ]
 
 run({

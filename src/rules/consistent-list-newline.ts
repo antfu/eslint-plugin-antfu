@@ -1,4 +1,4 @@
-import type { TSESTree } from '@typescript-eslint/utils'
+import type { AST_NODE_TYPES, TSESTree } from '@typescript-eslint/utils'
 import type { RuleFix, RuleFixer, RuleListener } from '@typescript-eslint/utils/ts-eslint'
 import { createEslintRule } from '../utils'
 
@@ -68,6 +68,15 @@ export default createEslintRule<Options, MessageIds>({
   },
   defaultOptions: [{}],
   create: (context, [options = {}] = [{}]) => {
+    const multilineNodes = new Set([
+      'ArrayExpression',
+      'FunctionDeclaration',
+      'ObjectExpression',
+      'ObjectPattern',
+      'TSTypeLiteral',
+      'TSTupleType',
+      'TSInterfaceDeclaration'
+    ])
     function removeLines(fixer: RuleFixer, start: number, end: number, delimiter?: string): RuleFix {
       const range = [start, end] as const
       const code = context.sourceCode.text.slice(...range)
@@ -197,7 +206,7 @@ export default createEslintRule<Options, MessageIds>({
       }
       else if (mode === 'inline' && endLoc.line !== lastLine) {
         // If there is only one multiline item, we allow the closing bracket to be on the a different line
-        if (items.length === 1 && items[0].loc.start.line !== items[1]?.loc.start.line)
+        if (items.length === 1 && !(multilineNodes as Set<AST_NODE_TYPES>).has(node.type))
           return
         if (context.sourceCode.getCommentsAfter(lastItem).length > 0)
           return
@@ -211,7 +220,8 @@ export default createEslintRule<Options, MessageIds>({
               name: node.type,
             },
             *fix(fixer) {
-              yield removeLines(fixer, lastItem.range[1], endRange, getDelimiter(node, lastItem))
+              const delimiter = items.length === 1 ? '' : getDelimiter(node, lastItem)
+              yield removeLines(fixer, lastItem.range[1], endRange, delimiter)
             },
           })
         }
