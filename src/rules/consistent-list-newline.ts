@@ -75,7 +75,7 @@ export default createEslintRule<Options, MessageIds>({
       'ObjectPattern',
       'TSTypeLiteral',
       'TSTupleType',
-      'TSInterfaceDeclaration'
+      'TSInterfaceDeclaration',
     ])
     function removeLines(fixer: RuleFixer, start: number, end: number, delimiter?: string): RuleFix {
       const range = [start, end] as const
@@ -156,7 +156,7 @@ export default createEslintRule<Options, MessageIds>({
             data: {
               name: node.type,
             },
-            *fix(fixer) {
+            * fix(fixer) {
               yield fixer.insertTextBefore(item, '\n')
             },
           })
@@ -173,7 +173,7 @@ export default createEslintRule<Options, MessageIds>({
               data: {
                 name: node.type,
               },
-              *fix(fixer) {
+              * fix(fixer) {
                 yield removeLines(fixer, lastItem!.range[1], item.range[0], getDelimiter(node, lastItem))
               },
             })
@@ -199,7 +199,7 @@ export default createEslintRule<Options, MessageIds>({
           data: {
             name: node.type,
           },
-          *fix(fixer) {
+          * fix(fixer) {
             yield fixer.insertTextAfter(lastItem, '\n')
           },
         })
@@ -219,7 +219,7 @@ export default createEslintRule<Options, MessageIds>({
             data: {
               name: node.type,
             },
-            *fix(fixer) {
+            * fix(fixer) {
               const delimiter = items.length === 1 ? '' : getDelimiter(node, lastItem)
               yield removeLines(fixer, lastItem.range[1], endRange, delimiter)
             },

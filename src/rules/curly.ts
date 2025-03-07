@@ -44,7 +44,7 @@ export default createEslintRule<Options, MessageIds>({
       context.report({
         node: body,
         messageId: 'missingCurlyBrackets',
-        *fix(fixer) {
+        * fix(fixer) {
           yield fixer.insertTextAfter(body, '\n}')
           const token = context.sourceCode.getTokenBefore(body)
           yield fixer.insertTextAfterRange(token!.range, ' {')
