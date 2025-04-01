@@ -31,6 +31,24 @@ const valids: ValidTestCase[] = [
       .split('')
       .map(Number)
   `,
+  $`
+    foo.bar!.baz
+      .toString()
+      .split('')
+      .map(Number)
+  `,
+  $`
+    foo.bar.baz
+      .toString()!
+      .split('')
+      .map(Number)
+  `,
+  $`
+    foo.bar.baz!
+      .toString()
+      .split('')
+      .map(Number)
+  `,
 ]
 
 // Check snapshot for fixed code
@@ -168,6 +186,64 @@ const invalid: InvalidTestCase[] = [
         "foo.bar.bar
           .filter()
         .map()"
+      `),
+  },
+  {
+    code: $`
+      foo.bar.bar
+        .filter()!.map()
+    `,
+    output: o => expect(o)
+      .toMatchInlineSnapshot(`
+        "foo.bar.bar
+          .filter()!
+        .map()"
+      `),
+  },
+  {
+    code: $`
+      Math
+        .random()! .toString() .split('')!.map(Number)
+    `,
+    output: o => expect(o)
+      .toMatchInlineSnapshot(`
+        "Math
+          .random()!
+         .toString()
+         .split('')!
+        .map(Number)"
+      `),
+  },
+  {
+    code: $`
+      foo({
+        bar: true
+      })!
+        .bar!
+        .baz().boo()
+    `,
+    output: o => expect(o)
+      .toMatchInlineSnapshot(`
+        "foo({
+          bar: true
+        })!
+          .bar!
+          .baz()
+        .boo()"
+      `),
+  },
+  {
+    code: $`
+      this.foo!
+        .toString()
+        .split('').map(Number)
+    `,
+    output: o => expect(o)
+      .toMatchInlineSnapshot(`
+        "this.foo!
+          .toString()
+          .split('')
+        .map(Number)"
       `),
   },
 ]

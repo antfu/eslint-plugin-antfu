@@ -70,6 +70,10 @@ export default createEslintRule<Options, MessageIds>({
               current = current.callee
               break
             }
+            case 'TSNonNullExpression': {
+              current = current.expression
+              break
+            }
             default: {
               // Other type of note, that means we are probably reaching out the head
               current = undefined
@@ -85,10 +89,10 @@ export default createEslintRule<Options, MessageIds>({
           const token = context.sourceCode.getTokenBefore(m.property)!
           const tokenBefore = context.sourceCode.getTokenBefore(token)!
           const currentMode: 'single' | 'multi' = token.loc.start.line === tokenBefore.loc.end.line ? 'single' : 'multi'
-
+          const object = m.object.type === 'TSNonNullExpression' ? m.object.expression : m.object
           if (
             leadingPropertyAcccess
-            && (m.object.type === 'ThisExpression' || m.object.type === 'Identifier' || m.object.type === 'MemberExpression' || m.object.type === 'Literal')
+            && (object.type === 'ThisExpression' || object.type === 'Identifier' || object.type === 'MemberExpression' || object.type === 'Literal')
             && currentMode === 'single'
           ) {
             return
