@@ -54,7 +54,7 @@ You can configure your environment by setting `"files.eol": "\n"` in VSCode or u
 
 ---
 
-**Why LF?**  
+**Why LF?**
 - Avoids mixed line endings in collaborative environments
 - Aligns with Unix/Linux/macOS standards and modern toolchains
 - Eliminates Git diff noise caused by CRLF/LF conflicts
