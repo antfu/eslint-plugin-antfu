@@ -208,7 +208,8 @@ export default createEslintRule<Options, MessageIds>({
         // If there is only one multiline item, we allow the closing bracket to be on the a different line
         if (items.length === 1 && !(multilineNodes as Set<AST_NODE_TYPES>).has(node.type))
           return
-        if (context.sourceCode.getCommentsAfter(lastItem).length > 0)
+        const nextToken = context.sourceCode.getTokenAfter(lastItem)
+        if (context.sourceCode.getCommentsAfter(nextToken?.value === ',' ? nextToken : lastItem).length > 0)
           return
 
         const content = context.sourceCode.text.slice(lastItem.range[1], endRange)
