@@ -1,5 +1,6 @@
 import type { AST_NODE_TYPES, TSESTree } from '@typescript-eslint/utils'
 import type { RuleFix, RuleFixer, RuleListener } from '@typescript-eslint/utils/ts-eslint'
+import { isCommaToken } from '@typescript-eslint/utils/ast-utils'
 import { createEslintRule } from '../utils'
 
 export const RULE_NAME = 'consistent-list-newline'
@@ -209,7 +210,7 @@ export default createEslintRule<Options, MessageIds>({
         if (items.length === 1 && !(multilineNodes as Set<AST_NODE_TYPES>).has(node.type))
           return
         const nextToken = context.sourceCode.getTokenAfter(lastItem)
-        if (context.sourceCode.getCommentsAfter(nextToken?.value === ',' ? nextToken : lastItem).length > 0)
+        if (context.sourceCode.getCommentsAfter(nextToken && isCommaToken(nextToken) ? nextToken : lastItem).length > 0)
           return
 
         const content = context.sourceCode.text.slice(lastItem.range[1], endRange)
