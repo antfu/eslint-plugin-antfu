@@ -337,6 +337,18 @@ const invalid: InvalidTestCase[] = [
     `),
   },
   {
+    description: 'comment after last item with comma',
+    code: $`
+      const a = b(c,
+          d, // comment
+        )
+    `,
+    output: o => expect(o).toMatchInlineSnapshot(`
+      "const a = b(c,    d, // comment
+        )"
+    `),
+  },
+  {
     code: $`
       function Foo() {
         return (
