@@ -173,3 +173,13 @@ a,
 b
 ]) => {})"
 `;
+
+exports[`consistent-list-newline > invalid > Invalid #28: if (
+a) {} 1`] = `
+"if (
+a
+) {}"
+`;
+
+exports[`consistent-list-newline > invalid > Invalid #29: if (a
+) {} 1`] = `"if (a) {}"`;
