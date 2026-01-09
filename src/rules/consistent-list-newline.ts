@@ -13,6 +13,7 @@ export type Options = [{
   ExportNamedDeclaration?: boolean
   FunctionDeclaration?: boolean
   FunctionExpression?: boolean
+  IfStatement?: boolean
   ImportDeclaration?: boolean
   JSONArrayExpression?: boolean
   JSONObjectExpression?: boolean
@@ -46,6 +47,7 @@ export default createEslintRule<Options, MessageIds>({
         ExportNamedDeclaration: { type: 'boolean' },
         FunctionDeclaration: { type: 'boolean' },
         FunctionExpression: { type: 'boolean' },
+        IfStatement: { type: 'boolean' },
         ImportDeclaration: { type: 'boolean' },
         JSONArrayExpression: { type: 'boolean' },
         JSONObjectExpression: { type: 'boolean' },
@@ -72,6 +74,7 @@ export default createEslintRule<Options, MessageIds>({
     const multilineNodes = new Set([
       'ArrayExpression',
       'FunctionDeclaration',
+      'IfStatement',
       'ObjectExpression',
       'ObjectPattern',
       'TSTypeLiteral',
@@ -261,6 +264,9 @@ export default createEslintRule<Options, MessageIds>({
           node.params,
           node.returnType || node.body,
         )
+      },
+      IfStatement: (node) => {
+        check(node, [node.test])
       },
       ArrowFunctionExpression: (node) => {
         if (node.params.length <= 1)

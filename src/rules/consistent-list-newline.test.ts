@@ -6,6 +6,8 @@ import { run } from './_test'
 import rule, { RULE_NAME } from './consistent-list-newline'
 
 const valids: ValidTestCase[] = [
+  'if (a) {}',
+  'if (\na\n) {}',
   'const a = { foo: "bar", bar: 2 }',
   'const a = {\nfoo: "bar",\nbar: 2\n}',
   'const a = [1, 2, 3]',
@@ -275,6 +277,8 @@ const invalid: InvalidTestCase[] = [
   'const {a,\nb\n} = c',
   'const [\na,b] = c',
   'foo(([\na,b]) => {})',
+  'if (\na) {}',
+  'if (a\n) {}',
 
   {
     description: 'CRLF',
