@@ -19,6 +19,6 @@ console.log('✓ Updated package.json with ESLint v10 resolution')
 
 // Reinstall dependencies
 console.log('Installing dependencies with ESLint v10...')
-execSync('pnpm install', { stdio: 'inherit' })
+execSync('pnpm install --no-frozen-lockfile', { stdio: 'inherit' })
 
 console.log('✓ Successfully installed ESLint v10')
