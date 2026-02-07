@@ -62,7 +62,7 @@ export default createEslintRule<Options, MessageIds>({
           },
           messageId: 'topLevelFunctionDeclaration',
           fix(fixer) {
-            const code = context.getSourceCode().text
+            const code = context.sourceCode.text
             const textName = code.slice(id.range[0], id.range[1])
             const textArgs = fnExpression.params.length
               ? code.slice(fnExpression.params[0].range[0], fnExpression.params[fnExpression.params.length - 1].range[1])
