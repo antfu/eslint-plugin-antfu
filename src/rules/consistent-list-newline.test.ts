@@ -8,11 +8,13 @@ import rule, { RULE_NAME } from './consistent-list-newline'
 const valids: ValidTestCase[] = [
   'if (a) {}',
   'if (\na\n) {}',
-  `if (true
-  && true) {
-  obj.a = ''
-  obj.b = true
-}`,
+  $`
+    if (true
+      && true) {
+      obj.a = ''
+      obj.b = true
+    }
+  `,
   'const a = { foo: "bar", bar: 2 }',
   'const a = {\nfoo: "bar",\nbar: 2\n}',
   'const a = [1, 2, 3]',
