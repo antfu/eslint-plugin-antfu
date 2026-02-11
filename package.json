@@ -2,7 +2,7 @@
   "name": "eslint-plugin-antfu",
   "type": "module",
   "version": "3.2.0",
-  "packageManager": "pnpm@10.28.2",
+  "packageManager": "pnpm@10.29.2",
   "description": "Anthony's opinionated ESLint rules",
   "author": "Anthony Fu <anthonyfu117@hotmail.com>",
   "license": "MIT",
@@ -41,20 +41,20 @@
     "eslint": "*"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^7.2.0",
+    "@antfu/eslint-config": "^7.4.2",
     "@antfu/ni": "^28.2.0",
     "@antfu/utils": "^9.3.0",
     "@types/eslint": "^9.6.1",
-    "@types/node": "^25.2.1",
-    "@typescript-eslint/typescript-estree": "^8.54.0",
-    "@typescript-eslint/utils": "^8.54.0",
+    "@types/node": "^25.2.3",
+    "@typescript-eslint/typescript-estree": "^8.55.0",
+    "@typescript-eslint/utils": "^8.55.0",
     "bumpp": "^10.4.1",
-    "eslint": "^9.39.2",
+    "eslint": "^10.0.0",
     "eslint-vitest-rule-tester": "^3.1.0",
     "jsonc-eslint-parser": "^2.4.2",
     "lint-staged": "^16.2.7",
     "simple-git-hooks": "^2.13.1",
-    "skills-npm": "^0.1.0",
+    "skills-npm": "^1.0.0",
     "tsup": "^8.5.1",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
@@ -63,6 +63,7 @@
     "vitest": "^4.0.18"
   },
   "resolutions": {
+    "eslint": "^10.0.0",
     "eslint-plugin-antfu": "workspace:*"
   },
   "simple-git-hooks": {
