@@ -1,6 +1,5 @@
 import type { AST_NODE_TYPES, TSESTree } from '@typescript-eslint/utils'
 import type { RuleFix, RuleFixer, RuleListener } from '@typescript-eslint/utils/ts-eslint'
-import { isCommaToken } from '@typescript-eslint/utils/ast-utils'
 import { createEslintRule } from '../utils'
 
 export const RULE_NAME = 'consistent-list-newline'
@@ -28,6 +27,10 @@ export type Options = [{
   TSTypeParameterDeclaration?: boolean
   TSTypeParameterInstantiation?: boolean
 }]
+
+function isCommaToken(token: TSESTree.Token): boolean {
+  return token.type === 'Punctuator' && token.value === ','
+}
 
 export default createEslintRule<Options, MessageIds>({
   name: RULE_NAME,
