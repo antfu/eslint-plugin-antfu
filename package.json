@@ -2,7 +2,7 @@
   "name": "eslint-plugin-antfu",
   "type": "module",
   "version": "3.2.2",
-  "packageManager": "pnpm@10.29.2",
+  "packageManager": "pnpm@11.0.9",
   "description": "Anthony's opinionated ESLint rules",
   "author": "Anthony Fu <anthonyfu117@hotmail.com>",
   "license": "MIT",
@@ -41,30 +41,26 @@
     "eslint": "*"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^7.4.2",
-    "@antfu/ni": "^28.2.0",
+    "@antfu/eslint-config": "^8.2.0",
+    "@antfu/ni": "^30.1.0",
     "@antfu/utils": "^9.3.0",
     "@types/eslint": "^9.6.1",
-    "@types/node": "^25.2.3",
-    "@typescript-eslint/typescript-estree": "^8.55.0",
-    "@typescript-eslint/utils": "^8.55.0",
-    "bumpp": "^10.4.1",
-    "eslint": "^10.0.0",
+    "@types/node": "^25.6.2",
+    "@typescript-eslint/typescript-estree": "^8.59.2",
+    "@typescript-eslint/utils": "^8.59.2",
+    "bumpp": "^11.1.0",
+    "eslint": "^10.3.0",
     "eslint-vitest-rule-tester": "^3.1.0",
-    "jsonc-eslint-parser": "^2.4.2",
-    "lint-staged": "^16.2.7",
+    "jsonc-eslint-parser": "^3.1.0",
+    "lint-staged": "^17.0.4",
     "simple-git-hooks": "^2.13.1",
-    "skills-npm": "^1.0.0",
+    "skills-npm": "^1.1.1",
     "tsup": "^8.5.1",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.3",
     "unbuild": "^3.6.1",
-    "vite": "^7.3.1",
-    "vitest": "^4.0.18"
-  },
-  "resolutions": {
-    "eslint": "^10.0.0",
-    "eslint-plugin-antfu": "workspace:*"
+    "vite": "^8.0.11",
+    "vitest": "^4.1.5"
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"

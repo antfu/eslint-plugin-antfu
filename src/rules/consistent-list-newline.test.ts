@@ -1,6 +1,6 @@
 import type { InvalidTestCase, ValidTestCase } from 'eslint-vitest-rule-tester'
 import { unindent as $ } from 'eslint-vitest-rule-tester'
-import jsoncParser from 'jsonc-eslint-parser'
+import * as jsoncParser from 'jsonc-eslint-parser'
 import { expect } from 'vitest'
 import { run } from './_test'
 import rule, { RULE_NAME } from './consistent-list-newline'

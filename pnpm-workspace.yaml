@@ -7,6 +7,15 @@ packages:
   - playground
   - examples/*
 
+overrides:
+  chokidar: ^5.0.0
+  eslint: ^10.3.0
+  eslint-plugin-antfu: 'workspace:*'
+
 onlyBuiltDependencies:
   - esbuild
   - simple-git-hooks
+
+allowBuilds:
+  esbuild: true
+  simple-git-hooks: true
