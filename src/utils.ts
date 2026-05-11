@@ -2,17 +2,6 @@ import type { RuleListener, RuleWithMeta, RuleWithMetaAndName } from '@typescrip
 import type { RuleContext } from '@typescript-eslint/utils/ts-eslint'
 import type { Rule } from 'eslint'
 
-// @keep-sorted
-const hasDocs = [
-  'consistent-chaining',
-  'consistent-list-newline',
-  'curly',
-  'if-newline',
-  'import-dedupe',
-  'indent-unindent',
-  'top-level-function',
-]
-
 const blobUrl = 'https://github.com/antfu/eslint-plugin-antfu/blob/main/src/rules/'
 
 export type RuleModule<
@@ -83,9 +72,7 @@ function createRule<
 }
 
 export const createEslintRule = RuleCreator(
-  ruleName => hasDocs.includes(ruleName)
-    ? `${blobUrl}${ruleName}.md`
-    : `${blobUrl}${ruleName}.test.ts`,
+  ruleName => `${blobUrl}${ruleName}.md`,
 ) as any as <TOptions extends readonly unknown[], TMessageIds extends string>({ name, meta, ...rule }: Readonly<RuleWithMetaAndName<TOptions, TMessageIds>>) => RuleModule<TOptions>
 
 const warned = new Set<string>()
