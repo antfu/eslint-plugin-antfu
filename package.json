@@ -12,7 +12,9 @@
     "type": "git",
     "url": "git+https://github.com/antfu/eslint-plugin-antfu.git"
   },
-  "bugs": "https://github.com/antfu/eslint-plugin-antfu/issues",
+  "bugs": {
+    "url": "https://github.com/antfu/eslint-plugin-antfu/issues"
+  },
   "keywords": [
     "eslint-plugin"
   ],
