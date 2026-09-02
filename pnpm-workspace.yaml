@@ -9,7 +9,7 @@ packages:
 
 overrides:
   chokidar: ^5.0.0
-  eslint: ^10.3.0
+  eslint: ^10.9.1
   eslint-plugin-antfu: 'workspace:*'
 
 onlyBuiltDependencies:
