@@ -18,10 +18,9 @@
   ],
   "sideEffects": false,
   "exports": {
-    ".": "./dist/index.mjs"
+    ".": "./dist/index.mjs",
+    "./package.json": "./package.json"
   },
-  "main": "./dist/index.mjs",
-  "module": "./dist/index.mjs",
   "types": "./dist/index.d.mts",
   "files": [
     "dist"
@@ -66,5 +65,8 @@
   },
   "lint-staged": {
     "*": "eslint --fix"
+  },
+  "inlinedDependencies": {
+    "@antfu/utils": "9.3.0"
   }
 }

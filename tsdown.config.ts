@@ -6,6 +6,7 @@ export default defineConfig({
   ],
   dts: true,
   clean: true,
+  exports: true,
   deps: {
     neverBundle: [
       /^@typescript-eslint\//,
