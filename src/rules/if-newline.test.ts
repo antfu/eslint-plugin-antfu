@@ -20,6 +20,8 @@ run({
   invalid: invalids.map(i => ({
     code: i[0],
     output: i[1],
-    errors: [{ messageId: 'missingIfNewline' }],
+    errors: [
+      { messageId: 'missingIfNewline' },
+    ],
   })),
 })

@@ -27,8 +27,16 @@ export default createEslintRule<Options, MessageIds>({
       if (body.type === 'BlockStatement')
         return true
       // nested statements
-      if (['IfStatement', 'WhileStatement', 'DoWhileStatement', 'ForStatement', 'ForInStatement', 'ForOfStatement'].includes(body.type))
+      if ([
+        'IfStatement',
+        'WhileStatement',
+        'DoWhileStatement',
+        'ForStatement',
+        'ForInStatement',
+        'ForOfStatement',
+      ].includes(body.type)) {
         return true
+      }
       const statement = body.type === 'ExpressionStatement'
         ? body.expression
         : body
@@ -53,7 +61,10 @@ export default createEslintRule<Options, MessageIds>({
     }
 
     function check(bodies: TSESTree.Statement[], additionalChecks: TSESTree.Expression[] = []): void {
-      const requires = [...bodies, ...additionalChecks].map(body => requireCurly(body))
+      const requires = [
+        ...bodies,
+        ...additionalChecks,
+      ].map(body => requireCurly(body))
 
       // If any of the bodies requires curly brackets, wrap all of them to be consistent
       if (requires.some(i => i))

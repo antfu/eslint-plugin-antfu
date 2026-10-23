@@ -88,8 +88,12 @@ export default createEslintRule<Options, MessageIds>({
         members.forEach((m) => {
           const token = context.sourceCode.getTokenBefore(m.property)!
           const tokenBefore = context.sourceCode.getTokenBefore(token)!
-          const currentMode: 'single' | 'multi' = token.loc.start.line === tokenBefore.loc.end.line ? 'single' : 'multi'
-          const object = m.object.type === 'TSNonNullExpression' ? m.object.expression : m.object
+          const currentMode: 'single' | 'multi' = token.loc.start.line === tokenBefore.loc.end.line
+            ? 'single'
+            : 'multi'
+          const object = m.object.type === 'TSNonNullExpression'
+            ? m.object.expression
+            : m.object
           if (
             leadingPropertyAcccess
             && (object.type === 'ThisExpression' || object.type === 'Identifier' || object.type === 'MemberExpression' || object.type === 'Literal')
@@ -106,7 +110,9 @@ export default createEslintRule<Options, MessageIds>({
 
           if (mode !== currentMode) {
             context.report({
-              messageId: mode === 'single' ? 'shouldNotWrap' : 'shouldWrap',
+              messageId: mode === 'single'
+                ? 'shouldNotWrap'
+                : 'shouldWrap',
               loc: token.loc,
               data: {
                 name: root.type,

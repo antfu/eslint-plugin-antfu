@@ -21,6 +21,8 @@ run({
   valid: valids,
   invalid: invalids.map(i => ({
     code: i,
-    errors: [{ messageId: 'noImportNodeModulesByPath' }],
+    errors: [
+      { messageId: 'noImportNodeModulesByPath' },
+    ],
   })),
 })

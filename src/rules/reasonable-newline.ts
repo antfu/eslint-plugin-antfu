@@ -95,16 +95,18 @@ export default createEslintRule<Options, MessageIds>({
       description: 'Enforce multiline objects, arrays and ternaries when they are complex',
     },
     fixable: 'whitespace',
-    schema: [{
-      type: 'object',
-      properties: {
-        minObjectProperties: { type: 'integer', minimum: 1 },
-        objectLineLength: { type: 'integer', minimum: 0 },
-        minArrayItems: { type: 'integer', minimum: 1 },
-        arrayLineLength: { type: 'integer', minimum: 0 },
+    schema: [
+      {
+        type: 'object',
+        properties: {
+          minObjectProperties: { type: 'integer', minimum: 1 },
+          objectLineLength: { type: 'integer', minimum: 0 },
+          minArrayItems: { type: 'integer', minimum: 1 },
+          arrayLineLength: { type: 'integer', minimum: 0 },
+        },
+        additionalProperties: false,
       },
-      additionalProperties: false,
-    }],
+    ],
     messages: {
       shouldBreakKeys: 'Objects with {{count}} or more properties on a line longer than {{length}} should have line breaks between items',
       shouldBreakItems: 'Arrays with {{count}} or more items on a line longer than {{length}} should have line breaks between items',
@@ -113,7 +115,14 @@ export default createEslintRule<Options, MessageIds>({
       shouldBreakTernary: 'Complex ternaries should have line breaks before `{{token}}`',
     },
   },
-  defaultOptions: [{ minObjectProperties: 4, objectLineLength: 40, minArrayItems: 4, arrayLineLength: 40 }],
+  defaultOptions: [
+    {
+      minObjectProperties: 4,
+      objectLineLength: 40,
+      minArrayItems: 4,
+      arrayLineLength: 40,
+    },
+  ],
   create: (context, [options = {}] = [{}]) => {
     const { sourceCode } = context
     const minObjectProperties = options.minObjectProperties ?? 4
@@ -122,8 +131,15 @@ export default createEslintRule<Options, MessageIds>({
     const arrayLineLength = options.arrayLineLength ?? 40
 
     function isLong(node: TSESTree.Node, limit: number): boolean {
+      // Only measure the node itself, not the code around it on the same line
       for (let line = node.loc.start.line; line <= node.loc.end.line; line++) {
-        if (sourceCode.lines[line - 1].length > limit)
+        const start = line === node.loc.start.line
+          ? node.loc.start.column
+          : 0
+        const end = line === node.loc.end.line
+          ? node.loc.end.column
+          : sourceCode.lines[line - 1].length
+        if (end - start > limit)
           return true
       }
       return false
@@ -151,14 +167,19 @@ export default createEslintRule<Options, MessageIds>({
         return
 
       // The first token after the opening bracket, after each comma, and the closing bracket
-      const targets: TSESTree.Token[] = [sourceCode.getFirstToken(node)!]
+      const targets: TSESTree.Token[] = [
+        sourceCode.getFirstToken(node)!,
+      ]
       targets[0] = sourceCode.getTokenAfter(targets[0])!
       for (const item of nodes.slice(0, -1))
         targets.push(sourceCode.getTokenAfter(sourceCode.getTokenAfter(item, { filter: isComma })!)!)
       targets.push(sourceCode.getLastToken(node)!)
 
       const gaps = targets
-        .map(target => ({ target, prev: sourceCode.getTokenBefore(target, { includeComments: true })! }))
+        .map(target => ({
+          target,
+          prev: sourceCode.getTokenBefore(target, { includeComments: true })!,
+        }))
         .filter(({ target, prev }) => prev.loc.end.line === target.loc.start.line)
       if (!gaps.length)
         return
@@ -181,8 +202,12 @@ export default createEslintRule<Options, MessageIds>({
         return
 
       const tokens = [
-        sourceCode.getTokenAfter(node.test, { filter: t => t.type === 'Punctuator' && t.value === '?' })!,
-        sourceCode.getTokenAfter(node.consequent, { filter: t => t.type === 'Punctuator' && t.value === ':' })!,
+        sourceCode.getTokenAfter(node.test, {
+          filter: t => t.type === 'Punctuator' && t.value === '?',
+        })!,
+        sourceCode.getTokenAfter(node.consequent, {
+          filter: t => t.type === 'Punctuator' && t.value === ':',
+        })!,
       ]
       for (const token of tokens) {
         const prev = sourceCode.getTokenBefore(token, { includeComments: true })!

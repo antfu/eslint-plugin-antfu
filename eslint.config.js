@@ -21,6 +21,7 @@ export default antfu(
     rules: {
       'unicorn/consistent-function-scoping': 'off',
       'antfu/consistent-chaining': 'error',
+      'antfu/reasonable-newline': 'error',
     },
   },
 )

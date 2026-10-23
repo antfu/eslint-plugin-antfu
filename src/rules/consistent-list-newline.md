@@ -35,9 +35,12 @@ Every node type the rule handles can be individually disabled. Set a key to `fal
 ```ts
 export default {
   rules: {
-    'antfu/consistent-list-newline': ['error', {
-      ObjectExpression: false, // don't check object literals
-    }],
+    'antfu/consistent-list-newline': [
+      'error',
+      {
+        ObjectExpression: false, // don't check object literals
+      }
+    ],
   },
 }
 ```

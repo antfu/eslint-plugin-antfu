@@ -49,10 +49,13 @@ By default it affects the template tag named `unindent`, `unIndent` or `$`. This
 ```ts
 export default {
   rules: {
-    'antfu/indent-unindent': ['error', {
-      indent: 2,
-      tags: ['$', 'unindent', 'unIndent'],
-    }],
+    'antfu/indent-unindent': [
+      'error',
+      {
+        indent: 2,
+        tags: ['$', 'unindent', 'unIndent'],
+      }
+    ],
   },
 }
 ```

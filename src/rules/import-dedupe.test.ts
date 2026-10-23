@@ -18,6 +18,10 @@ run({
   invalid: invalids.map(i => ({
     code: i[0],
     output: i[1],
-    errors: [{ messageId: 'importDedupe' }, { messageId: 'importDedupe' }, { messageId: 'importDedupe' }],
+    errors: [
+      { messageId: 'importDedupe' },
+      { messageId: 'importDedupe' },
+      { messageId: 'importDedupe' },
+    ],
   })),
 })

@@ -40,33 +40,35 @@ export default createEslintRule<Options, MessageIds>({
       description: 'Enforce consistent line breaks inside braces and parentheses',
     },
     fixable: 'whitespace',
-    schema: [{
-      type: 'object',
-      properties: {
-        ArrayExpression: { type: 'boolean' },
-        ArrayPattern: { type: 'boolean' },
-        ArrowFunctionExpression: { type: 'boolean' },
-        CallExpression: { type: 'boolean' },
-        ExportNamedDeclaration: { type: 'boolean' },
-        FunctionDeclaration: { type: 'boolean' },
-        FunctionExpression: { type: 'boolean' },
-        IfStatement: { type: 'boolean' },
-        ImportDeclaration: { type: 'boolean' },
-        JSONArrayExpression: { type: 'boolean' },
-        JSONObjectExpression: { type: 'boolean' },
-        JSXOpeningElement: { type: 'boolean' },
-        NewExpression: { type: 'boolean' },
-        ObjectExpression: { type: 'boolean' },
-        ObjectPattern: { type: 'boolean' },
-        TSFunctionType: { type: 'boolean' },
-        TSInterfaceDeclaration: { type: 'boolean' },
-        TSTupleType: { type: 'boolean' },
-        TSTypeLiteral: { type: 'boolean' },
-        TSTypeParameterDeclaration: { type: 'boolean' },
-        TSTypeParameterInstantiation: { type: 'boolean' },
-      } satisfies Record<keyof Options[0], { type: 'boolean' }>,
-      additionalProperties: false,
-    }],
+    schema: [
+      {
+        type: 'object',
+        properties: {
+          ArrayExpression: { type: 'boolean' },
+          ArrayPattern: { type: 'boolean' },
+          ArrowFunctionExpression: { type: 'boolean' },
+          CallExpression: { type: 'boolean' },
+          ExportNamedDeclaration: { type: 'boolean' },
+          FunctionDeclaration: { type: 'boolean' },
+          FunctionExpression: { type: 'boolean' },
+          IfStatement: { type: 'boolean' },
+          ImportDeclaration: { type: 'boolean' },
+          JSONArrayExpression: { type: 'boolean' },
+          JSONObjectExpression: { type: 'boolean' },
+          JSXOpeningElement: { type: 'boolean' },
+          NewExpression: { type: 'boolean' },
+          ObjectExpression: { type: 'boolean' },
+          ObjectPattern: { type: 'boolean' },
+          TSFunctionType: { type: 'boolean' },
+          TSInterfaceDeclaration: { type: 'boolean' },
+          TSTupleType: { type: 'boolean' },
+          TSTypeLiteral: { type: 'boolean' },
+          TSTypeParameterDeclaration: { type: 'boolean' },
+          TSTypeParameterInstantiation: { type: 'boolean' },
+        } satisfies Record<keyof Options[0], { type: 'boolean' }>,
+        additionalProperties: false,
+      },
+    ],
     messages: {
       shouldWrap: 'Should have line breaks between items, in node {{name}}',
       shouldNotWrap: 'Should not have line breaks between items, in node {{name}}',
@@ -94,7 +96,9 @@ export default createEslintRule<Options, MessageIds>({
       if (root.type !== 'TSInterfaceDeclaration' && root.type !== 'TSTypeLiteral')
         return
       const currentContent = context.sourceCode.text.slice(current.range[0], current.range[1])
-      return /(?:,|;)$/.test(currentContent) ? undefined : ','
+      return /(?:,|;)$/.test(currentContent)
+        ? undefined
+        : ','
     }
 
     function hasComments(current: TSESTree.Node): boolean {
@@ -149,7 +153,9 @@ export default createEslintRule<Options, MessageIds>({
 
       items.forEach((item, idx) => {
         if (mode == null) {
-          mode = item.loc.start.line === lastLine ? 'inline' : 'newline'
+          mode = item.loc.start.line === lastLine
+            ? 'inline'
+            : 'newline'
           lastLine = item.loc.end.line
           return
         }
@@ -216,8 +222,11 @@ export default createEslintRule<Options, MessageIds>({
         if (items.length === 1 && !(multilineNodes as Set<AST_NODE_TYPES>).has(node.type))
           return
         const nextToken = context.sourceCode.getTokenAfter(lastItem)
-        if (context.sourceCode.getCommentsAfter(nextToken && isCommaToken(nextToken) ? nextToken : lastItem).length > 0)
+        if (context.sourceCode.getCommentsAfter(nextToken && isCommaToken(nextToken)
+          ? nextToken
+          : lastItem).length > 0) {
           return
+        }
 
         const content = context.sourceCode.text.slice(lastItem.range[1], endRange)
         if (content.includes('\n')) {
@@ -228,7 +237,9 @@ export default createEslintRule<Options, MessageIds>({
               name: node.type,
             },
             * fix(fixer) {
-              const delimiter = items.length === 1 ? '' : getDelimiter(node, lastItem)
+              const delimiter = items.length === 1
+                ? ''
+                : getDelimiter(node, lastItem)
               yield removeLines(fixer, lastItem.range[1], endRange, delimiter)
             },
           })

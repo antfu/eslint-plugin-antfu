@@ -6,8 +6,8 @@ Enforce multiline objects, arrays and ternaries when they are complex. It only i
 
 An object or array must be multiline when any of these is true:
 
-- An object has 4 or more properties **and** its line is longer than 40 characters (see `minObjectProperties` and `objectLineLength`)
-- An array has 4 or more items **and** its line is longer than 40 characters (see `minArrayItems` and `arrayLineLength`)
+- An object has 4 or more properties **and** it is longer than 40 characters (see `minObjectProperties` and `objectLineLength`)
+- An array has 4 or more items **and** it is longer than 40 characters (see `minArrayItems` and `arrayLineLength`)
 - It has more than one spread element
 - It has a child that is a call (`foo()`, `new Foo()`), a function (`() => {}`, methods), a ternary, a spread of anything other than an identifier / member chain (`...a ?? []`, `...foo()`), or a non-empty nested object / array
 
@@ -67,7 +67,7 @@ The rule only inserts breaks. Indentation and trailing commas are left to other 
 {
   // Objects with at least this many properties must be multiline...
   minObjectProperties?: number // default: 4
-  // ...when their line is longer than this
+  // ...when they are longer than this
   objectLineLength?: number // default: 40
   // Same for arrays
   minArrayItems?: number // default: 4

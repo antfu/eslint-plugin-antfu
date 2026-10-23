@@ -31,9 +31,12 @@ It will check the newline style of the **first** property access and apply the s
 ```ts
 export default {
   rules: {
-    'antfu/consistent-chaining': ['error', {
-      allowLeadingPropertyAccess: true,
-    }],
+    'antfu/consistent-chaining': [
+      'error',
+      {
+        allowLeadingPropertyAccess: true,
+      }
+    ],
   },
 }
 ```

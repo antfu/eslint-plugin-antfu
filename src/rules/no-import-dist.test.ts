@@ -20,6 +20,8 @@ run({
   valid: valids,
   invalid: invalids.map(i => ({
     code: i,
-    errors: [{ messageId: 'noImportDist' }],
+    errors: [
+      { messageId: 'noImportDist' },
+    ],
   })),
 })

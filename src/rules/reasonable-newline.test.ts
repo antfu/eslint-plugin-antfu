@@ -35,15 +35,21 @@ const valids: ValidTestCase[] = [
   'const a = [\'aa\', \'bb\', \'cc\', \'dd\']',
   {
     code: 'const a = [\'fluent-vue\', \'fluent-vue-loader\', \'rollup-plugin-fluent-vue\', \'unplugin-fluent-vue\']',
-    options: [{ arrayLineLength: 100 }],
+    options: [
+      { arrayLineLength: 100 },
+    ],
   },
   {
     code: 'const a = { aaaaaaaaaa: 1, bbbbbbbbbb: 2, cccccccccc: 3, dddddddddd: 4, eeeeeeeeee: 5 }',
-    options: [{ minObjectProperties: 6 }],
+    options: [
+      { minObjectProperties: 6 },
+    ],
   },
   {
     code: 'const a = { aaaaaaaaaa: 1, bbbbbbbbbb: 2, cccccccccc: 3, dddddddddd: 4, eeeeeeeeee: 5 }',
-    options: [{ objectLineLength: 100 }],
+    options: [
+      { objectLineLength: 100 },
+    ],
   },
 ]
 
@@ -57,7 +63,9 @@ const invalids: InvalidTestCase[] = [
       ...defaults.namespace.byFile
       }
     `,
-    errors: [{ messageId: 'shouldBreakSpreads' }],
+    errors: [
+      { messageId: 'shouldBreakSpreads' },
+    ],
   },
   {
     description: 'array spreads',
@@ -68,7 +76,9 @@ const invalids: InvalidTestCase[] = [
       ...data.scanners?.calls ?? []
       ]
     `,
-    errors: [{ messageId: 'shouldBreakSpreads' }],
+    errors: [
+      { messageId: 'shouldBreakSpreads' },
+    ],
   },
   {
     description: 'spread of ternary',
@@ -118,7 +128,9 @@ const invalids: InvalidTestCase[] = [
       placeholders: [braces]
       })
     `,
-    errors: [{ messageId: 'shouldBreakKeys' }],
+    errors: [
+      { messageId: 'shouldBreakKeys' },
+    ],
   },
   {
     description: 'nested non-empty array in object',
@@ -129,7 +141,9 @@ const invalids: InvalidTestCase[] = [
       patterns: ['i18n']
       }
     `,
-    errors: [{ messageId: 'shouldBreakChild' }],
+    errors: [
+      { messageId: 'shouldBreakChild' },
+    ],
   },
   {
     description: 'long array',
@@ -142,7 +156,9 @@ const invalids: InvalidTestCase[] = [
       'unplugin-fluent-vue'
       ]
     `,
-    errors: [{ messageId: 'shouldBreakItems' }],
+    errors: [
+      { messageId: 'shouldBreakItems' },
+    ],
   },
   {
     description: 'functions as property values',
@@ -164,7 +180,9 @@ const invalids: InvalidTestCase[] = [
     description: 'partially broken',
     code: 'const a = [\n  foo(), bar()]',
     output: 'const a = [\n  foo(),\nbar()\n]',
-    errors: [{ messageId: 'shouldBreakChild' }],
+    errors: [
+      { messageId: 'shouldBreakChild' },
+    ],
   },
   {
     description: 'complex ternary',
@@ -179,14 +197,20 @@ const invalids: InvalidTestCase[] = [
     description: 'only the missing break',
     code: 'const a = b === 1\n  ? foo() : bar',
     output: 'const a = b === 1\n  ? foo()\n: bar',
-    errors: [{ messageId: 'shouldBreakTernary' }],
+    errors: [
+      { messageId: 'shouldBreakTernary' },
+    ],
   },
   {
     description: 'custom threshold',
     code: 'const a = { a: 1, b: 2 }',
-    options: [{ minObjectProperties: 2, objectLineLength: 0 }],
+    options: [
+      { minObjectProperties: 2, objectLineLength: 0 },
+    ],
     output: 'const a = {\na: 1,\nb: 2\n}',
-    errors: [{ messageId: 'shouldBreakKeys' }],
+    errors: [
+      { messageId: 'shouldBreakKeys' },
+    ],
   },
 ]
 
