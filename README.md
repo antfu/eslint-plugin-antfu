@@ -51,6 +51,7 @@ export default [
 | [`no-import-node-modules-by-path`](./src/rules/no-import-node-modules-by-path.md)   | Prevent importing from `node_modules` by relative or absolute path                       |     |     |
 | [`no-top-level-await`](./src/rules/no-top-level-await.md)                           | Prevent top-level `await`                                                                |     |     |
 | [`no-ts-export-equal`](./src/rules/no-ts-export-equal.md)                           | Prevent TypeScript's `export =` syntax in `.ts`/`.tsx`/`.mts`/`.cts` files               |     |     |
+| [`reasonable-newline`](./src/rules/reasonable-newline.md)                           | Enforce multiline objects, arrays and ternaries when they are complex                    | 🔧  | ⚙️  |
 | [`top-level-function`](./src/rules/top-level-function.md)                           | Enforce top-level functions to be declared with the `function` keyword                   | 🔧  |     |
 
 ## Sponsors
